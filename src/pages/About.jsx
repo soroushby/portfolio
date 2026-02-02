@@ -406,7 +406,7 @@ const About = () => {
                   British Columbia Institute of Technology (BCIT)
                 </p>
                 <p className="text-sm text-text-secondary">
-                  2023 - 2026 (Completed)
+                  2025 - 2026 (Completed)
                 </p>
               </div>
             </div>
