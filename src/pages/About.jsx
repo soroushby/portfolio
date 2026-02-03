@@ -65,7 +65,6 @@ const About = () => {
           name: "Final Cut Pro",
           description: "Advanced video editing workflows",
         },
-        { name: "DaVinci Resolve", description: "Color grading and editing" },
         {
           name: "Photoshop & Illustrator",
           description: "Graphic design and image editing",
@@ -253,7 +252,9 @@ const About = () => {
                   key={index}
                   className={`flex items-center ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
                 >
-                  <div className={`flex-1 ${index % 2 === 0 ? "md:pr-8" : "md:pl-8"}`}>
+                  <div
+                    className={`flex-1 ${index % 2 === 0 ? "md:pr-8" : "md:pl-8"}`}
+                  >
                     <div className="bg-background-tertiary border border-primary/30 rounded-lg p-4 shadow-glow-sm hover:shadow-glow-md hover:border-primary/50 transition-all text-left">
                       <span className="inline-block px-3 py-1 bg-primary/20 border border-primary/30 text-primary text-sm font-semibold rounded-full mb-2">
                         {item.year}
