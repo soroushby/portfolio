@@ -253,15 +253,15 @@ const About = () => {
                   key={index}
                   className={`flex items-center ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
                 >
-                  <div className="flex-1 md:text-right md:pr-8 md:pl-0 md:even:text-left md:even:pr-0 md:even:pl-8">
-                    <div className="bg-background-tertiary border border-primary/30 rounded-lg p-4 shadow-glow-sm hover:shadow-glow-md hover:border-primary/50 transition-all">
+                  <div className={`flex-1 ${index % 2 === 0 ? "md:pr-8" : "md:pl-8"}`}>
+                    <div className="bg-background-tertiary border border-primary/30 rounded-lg p-4 shadow-glow-sm hover:shadow-glow-md hover:border-primary/50 transition-all text-left">
                       <span className="inline-block px-3 py-1 bg-primary/20 border border-primary/30 text-primary text-sm font-semibold rounded-full mb-2">
                         {item.year}
                       </span>
                       <p className="text-text-secondary">{item.event}</p>
                     </div>
                   </div>
-                  <div className="hidden md:block w-4 h-4 bg-primary rounded-full border-4 border-background-secondary shadow-glow-sm z-10"></div>
+                  <div className="hidden md:block w-4 h-4 bg-primary rounded-full border-4 border-background-secondary shadow-glow-sm z-10 flex-shrink-0"></div>
                   <div className="flex-1"></div>
                 </div>
               ))}
