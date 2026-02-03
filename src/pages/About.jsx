@@ -128,7 +128,7 @@ const About = () => {
     { year: "2021", event: "First developer role at MD Swiss Pharma" },
     { year: "2022", event: "Joined Ultimate System as Web Developer" },
     {
-      year: "2023-2026",
+      year: "2025-2026",
       event: "Graduated BCIT - New Media Design & Web Development",
     },
     { year: "2025", event: "Expanding React/Next.js expertise" },
