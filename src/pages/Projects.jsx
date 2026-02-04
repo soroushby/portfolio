@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Code2, Calendar, Layers } from 'lucide-react'
+import { Code2, Calendar, Layers, Github } from 'lucide-react'
 
 const Projects = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -64,6 +64,7 @@ const Projects = () => {
       company: 'Personal Project',
       duration: 'February 2026',
       type: 'Web Application',
+      github: 'https://github.com/soroushby/WeatherApp',
       description: 'Modern weather application built with React, TanStack Router, and TanStack Query, demonstrating advanced frontend patterns and API integration. Features multi-page routing, real-time weather data from OpenWeather API, and sophisticated data caching. Implements geolocation for automatic weather detection, favorites management with localStorage, and search history. Dark purple theme with dynamic weather-specific accent colors that adapt based on conditions.',
       technologies: ['React 18', 'TanStack Router', 'TanStack Query', 'Tailwind CSS', 'OpenWeather API', 'Vite'],
       features: [
@@ -129,6 +130,17 @@ const Projects = () => {
               <div className="hidden sm:block absolute top-4 left-4 font-mono text-xs text-text-muted opacity-0 group-hover:opacity-100 transition-opacity">
                 {`// index: ${index}`}
               </div>
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 sm:p-2.5 glass border border-primary/30 rounded-lg hover:border-primary/50 hover:shadow-glow-md transition-all duration-200 group/github z-10"
+                  aria-label="View on GitHub"
+                >
+                  <Github className="w-4 h-4 sm:w-5 sm:h-5 text-text-secondary group-hover/github:text-primary transition-colors" />
+                </a>
+              )}
               <div className="p-4 sm:p-6 md:p-8 lg:p-10 relative">
                 {/* Project Header */}
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
