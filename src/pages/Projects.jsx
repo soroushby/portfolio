@@ -60,20 +60,23 @@ const Projects = () => {
       ]
     },
     {
-      title: 'E-Commerce Platform Frontend',
-      company: 'Freelance Project',
-      duration: '2023',
-      type: 'E-Commerce',
-      description: 'Modern e-commerce frontend built with Next.js and TypeScript, featuring server-side rendering for optimal performance and SEO. Integrated with Stripe for payment processing and implemented advanced product filtering, cart management, and checkout flows. Focused on conversion optimization and user experience.',
-      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Stripe API', 'Server Components'],
+      title: 'WeatherNow - Weather Dashboard',
+      company: 'Personal Project',
+      duration: 'February 2026',
+      type: 'Web Application',
+      description: 'Modern weather application built with React, TanStack Router, and TanStack Query, demonstrating advanced frontend patterns and API integration. Features multi-page routing, real-time weather data from OpenWeather API, and sophisticated data caching. Implements geolocation for automatic weather detection, favorites management with localStorage, and search history. Dark purple theme with dynamic weather-specific accent colors that adapt based on conditions.',
+      technologies: ['React 18', 'TanStack Router', 'TanStack Query', 'Tailwind CSS', 'OpenWeather API', 'Vite'],
       features: [
-        'Server-side rendering with Next.js for SEO benefits',
-        'Stripe payment integration for secure transactions',
-        'Advanced product filtering and search functionality',
-        'Shopping cart with persistent state',
-        'Responsive design for all device sizes',
-        'Image optimization with Next.js Image component',
-        'Fast page loads with code splitting'
+        'Multi-page routing with TanStack Router and lazy-loaded components',
+        'Advanced data fetching and caching with TanStack Query',
+        'Real-time weather data: current conditions, 24-hour forecast, 5-day forecast',
+        'Geolocation API integration for automatic city detection',
+        'Custom useWeather hook following React best practices',
+        'Temperature unit toggle (Celsius/Fahrenheit) with persistent preference',
+        'Favorites system and search history stored in localStorage',
+        'Weather alerts banner and air quality index display',
+        'Dynamic accent colors based on weather conditions',
+        'Fully responsive design for desktop and mobile devices'
       ]
     },
     {
