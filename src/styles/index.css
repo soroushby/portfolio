@@ -24,9 +24,21 @@
       0 4px 6px -1px rgba(0, 0, 0, 0.3),
       0 2px 4px -1px rgba(0, 0, 0, 0.2),
       inset 0 0 0 1px rgba(139, 92, 246, 0.1);
-    padding: 2rem;
+    padding: 1rem;
     position: relative;
     overflow: hidden;
+  }
+
+  @media (min-width: 640px) {
+    .modern-card {
+      padding: 1.5rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .modern-card {
+      padding: 2rem;
+    }
   }
 
   .modern-card::before {
@@ -54,9 +66,10 @@
     background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
     border: none;
     color: #ffffff;
-    padding: 0.75rem 1.5rem;
+    padding: 0.625rem 1.25rem;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
+    font-size: 0.875rem;
     border-radius: 0.5rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow:
@@ -68,6 +81,13 @@
     gap: 0.5rem;
     position: relative;
     overflow: hidden;
+  }
+
+  @media (min-width: 640px) {
+    .modern-btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+    }
   }
 
   .modern-btn::before {
@@ -102,9 +122,10 @@
     background-color: transparent;
     border: 2px solid #8b5cf6;
     color: #a78bfa;
-    padding: 0.75rem 1.5rem;
+    padding: 0.625rem 1.25rem;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
+    font-size: 0.875rem;
     border-radius: 0.5rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: inline-flex;
@@ -112,6 +133,13 @@
     gap: 0.5rem;
     position: relative;
     overflow: hidden;
+  }
+
+  @media (min-width: 640px) {
+    .modern-btn-outline {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+    }
   }
 
   .modern-btn-outline::before {

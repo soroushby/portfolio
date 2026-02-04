@@ -92,54 +92,55 @@ const ContentCreation = () => {
   ]
 
   return (
-    <div className="pt-24 pb-20 px-6 bg-background-secondary min-h-screen tech-grid">
+    <div className="pt-20 sm:pt-24 pb-12 sm:pb-20 px-4 sm:px-6 bg-background-secondary min-h-screen tech-grid">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center space-x-3 glass border border-primary/30 px-6 py-3 rounded-full mb-6">
-            <Youtube className="w-6 h-6 text-primary" />
-            <span className="font-semibold font-mono text-primary">Digital Products</span>
+        <div className={`text-center mb-10 sm:mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="inline-flex items-center space-x-2 sm:space-x-3 glass border border-primary/30 px-4 sm:px-6 py-2 sm:py-3 rounded-full mb-4 sm:mb-6">
+            <Youtube className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+            <span className="font-semibold font-mono text-primary text-sm sm:text-base">Digital Products</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold font-mono text-text-primary mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-mono text-text-primary mb-4">
             YouTube Football Network
           </h1>
-          <p className="text-lg text-text-secondary max-w-3xl mx-auto">
-            Building and scaling a multi-channel media network from scratch
-            <br/>
-            A case study in product management, analytics, growth strategy, and digital content creation.
+          <p className="text-sm sm:text-base md:text-lg text-text-secondary max-w-3xl mx-auto">
+            Building and scaling a multi-channel media network from scratch.
+            <span className="hidden sm:inline"><br/></span>
+            <span className="sm:hidden"> </span>
+            A case study in product management, analytics, and growth strategy.
           </p>
         </div>
 
         {/* Network Overview Stats */}
-        <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 mb-20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '100ms' }}>
-          <div className="glass border border-primary/30 rounded-lg p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-            <Users className="w-8 h-8 text-primary mb-3" />
-            <p className="text-3xl font-bold font-mono text-primary mb-1 neon-glow">40K+</p>
-            <p className="text-sm text-text-secondary">YouTube Subscribers</p>
+        <div className={`grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-12 sm:mb-20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '100ms' }}>
+          <div className="glass border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
+            <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3" />
+            <p className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-1 neon-glow">40K+</p>
+            <p className="text-xs sm:text-sm text-text-secondary">YouTube Subscribers</p>
           </div>
-          <div className="glass border border-primary/30 rounded-lg p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-            <Eye className="w-8 h-8 text-primary mb-3" />
-            <p className="text-3xl font-bold font-mono text-primary mb-1 neon-glow">190K+</p>
-            <p className="text-sm text-text-secondary">Instagram Followers</p>
+          <div className="glass border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
+            <Eye className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3" />
+            <p className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-1 neon-glow">190K+</p>
+            <p className="text-xs sm:text-sm text-text-secondary">Instagram Followers</p>
           </div>
-          <div className="glass border border-primary/30 rounded-lg p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-            <TrendingUp className="w-8 h-8 text-primary mb-3" />
-            <p className="text-3xl font-bold font-mono text-primary mb-1 neon-glow">4</p>
-            <p className="text-sm text-text-secondary">Active Channels</p>
+          <div className="glass border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
+            <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3" />
+            <p className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-1 neon-glow">4</p>
+            <p className="text-xs sm:text-sm text-text-secondary">Active Channels</p>
           </div>
-          <div className="glass border border-primary/30 rounded-lg p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-            <Clock className="w-8 h-8 text-primary mb-3" />
-            <p className="text-3xl font-bold font-mono text-primary mb-1 neon-glow">1000+</p>
-            <p className="text-sm text-text-secondary">Videos Published</p>
+          <div className="glass border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
+            <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3" />
+            <p className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-1 neon-glow">1000+</p>
+            <p className="text-xs sm:text-sm text-text-secondary">Videos Published</p>
           </div>
         </div>
 
         {/* Introduction */}
-        <div className="modern-card mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold font-mono text-primary mb-4">
+        <div className="modern-card !p-4 sm:!p-6 md:!p-8 mb-10 sm:mb-16">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-primary mb-3 sm:mb-4">
             Beyond Code
           </h2>
-          <p className="text-text-secondary leading-relaxed text-lg">
+          <p className="text-sm sm:text-base md:text-lg text-text-secondary leading-relaxed">
             Beyond web development, I've built and scaled a multi-channel football media network from scratch,
             demonstrating my ability to not just write code, but to understand users, analyze data, and grow digital products.
             This project showcases product management, data analytics, SEO optimization, visual design, and audience
@@ -148,22 +149,22 @@ const ContentCreation = () => {
         </div>
 
         {/* Channels Breakdown */}
-        <div className="space-y-8 mb-16">
+        <div className="space-y-6 sm:space-y-8 mb-10 sm:mb-16">
           {channels.map((channel, index) => (
             <div
               key={index}
-              className={`modern-card hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 overflow-hidden ${
+              className={`modern-card !p-0 hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 overflow-hidden ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
               style={{ transitionDelay: `${200 + index * 100}ms` }}
             >
-              <div className="p-8 md:p-10">
+              <div className="p-4 sm:p-6 md:p-8 lg:p-10">
                 {/* Channel Header */}
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6 gap-4">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
                   <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-3">
-                      <Youtube className="w-6 h-6 text-primary" />
-                      <h2 className="text-2xl md:text-3xl font-bold font-mono text-text-primary">
+                    <div className="flex items-center space-x-2 mb-2 sm:mb-3">
+                      <Youtube className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-text-primary">
                         {channel.name}
                       </h2>
                     </div>
@@ -171,16 +172,16 @@ const ContentCreation = () => {
                       href={channel.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:text-primary-light transition-colors font-medium mb-3 inline-block"
+                      className="text-primary hover:text-primary-light transition-colors font-medium mb-2 sm:mb-3 inline-block text-sm sm:text-base"
                     >
                       {channel.handle}
                     </a>
-                    <div className="flex flex-wrap gap-3 mt-3">
-                      <span className="inline-flex items-center px-3 py-1 glass border border-primary/30 text-primary text-sm font-semibold rounded-full">
-                        <Youtube className="w-4 h-4 mr-1" />
+                    <div className="flex flex-wrap gap-2 sm:gap-3 mt-2 sm:mt-3">
+                      <span className="inline-flex items-center px-2 sm:px-3 py-1 glass border border-primary/30 text-primary text-xs sm:text-sm font-semibold rounded-full">
+                        <Youtube className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                         {channel.youtube}
                       </span>
-                      <span className="inline-flex items-center px-3 py-1 glass border border-primary/30 text-primary text-sm font-semibold rounded-full">
+                      <span className="inline-flex items-center px-2 sm:px-3 py-1 glass border border-primary/30 text-primary text-xs sm:text-sm font-semibold rounded-full">
                         📸 {channel.instagram}
                       </span>
                     </div>
@@ -188,18 +189,18 @@ const ContentCreation = () => {
                 </div>
 
                 {/* Description */}
-                <p className="text-text-secondary leading-relaxed mb-6">
+                <p className="text-sm sm:text-base text-text-secondary leading-relaxed mb-4 sm:mb-6">
                   {channel.description}
                 </p>
 
                 {/* Highlights */}
                 <div>
-                  <h3 className="text-sm font-semibold font-mono text-text-primary mb-3">Key Highlights</h3>
-                  <ul className="space-y-2">
+                  <h3 className="text-xs sm:text-sm font-semibold font-mono text-text-primary mb-2 sm:mb-3">Key Highlights</h3>
+                  <ul className="space-y-1.5 sm:space-y-2">
                     {channel.highlights.map((highlight, idx) => (
-                      <li key={idx} className="flex items-start space-x-3 text-text-secondary">
-                        <span className="text-primary mt-1 flex-shrink-0 font-mono">{'>'}</span>
-                        <span className="text-sm leading-relaxed">{highlight}</span>
+                      <li key={idx} className="flex items-start space-x-2 sm:space-x-3 text-text-secondary">
+                        <span className="text-primary mt-0.5 sm:mt-1 flex-shrink-0 font-mono text-xs sm:text-base">{'>'}</span>
+                        <span className="text-xs sm:text-sm leading-relaxed">{highlight}</span>
                       </li>
                     ))}
                   </ul>
@@ -210,30 +211,30 @@ const ContentCreation = () => {
         </div>
 
         {/* Skills Demonstrated Section */}
-        <div className="modern-card mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold font-mono text-primary mb-6 text-center">
+        <div className="modern-card !p-4 sm:!p-6 md:!p-8 mb-10 sm:mb-16">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-primary mb-4 sm:mb-6 text-center">
             Transferable Skills
           </h2>
-          <p className="text-text-secondary mb-12 text-center max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base text-text-secondary mb-6 sm:mb-12 text-center max-w-3xl mx-auto">
             This project demonstrates skills beyond coding that are essential for product-minded engineers
           </p>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
             {skillsDemonstrated.map((skill, index) => {
               const Icon = skill.icon
               return (
                 <div
                   key={index}
-                  className="glass border border-primary/20 rounded-lg p-6 hover:border-primary/50 hover:shadow-glow-md transition-all"
+                  className="glass border border-primary/20 rounded-lg p-4 sm:p-6 hover:border-primary/50 hover:shadow-glow-md transition-all"
                 >
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start space-x-3 sm:space-x-4">
                     <div className="flex-shrink-0">
-                      <div className="w-12 h-12 bg-primary/20 border border-primary/30 rounded-lg flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-primary" />
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 border border-primary/30 rounded-lg flex items-center justify-center">
+                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                       </div>
                     </div>
-                    <div>
-                      <h3 className="font-bold font-mono text-text-primary mb-2">{skill.title}</h3>
-                      <p className="text-sm text-text-secondary leading-relaxed">{skill.description}</p>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-bold font-mono text-text-primary mb-1 sm:mb-2 text-sm sm:text-base">{skill.title}</h3>
+                      <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">{skill.description}</p>
                     </div>
                   </div>
                 </div>
@@ -243,12 +244,12 @@ const ContentCreation = () => {
         </div>
 
         {/* Technical Skills Used */}
-        <div className="modern-card">
-          <h2 className="text-2xl font-bold font-mono text-text-primary mb-6">Technical & Creative Tools</h2>
-          <div className="grid md:grid-cols-3 gap-6">
+        <div className="modern-card !p-4 sm:!p-6 md:!p-8">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold font-mono text-text-primary mb-4 sm:mb-6">Technical & Creative Tools</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             <div>
-              <h3 className="font-semibold font-mono text-primary mb-3">Video Production</h3>
-              <ul className="space-y-2 text-sm text-text-secondary">
+              <h3 className="font-semibold font-mono text-primary mb-2 sm:mb-3 text-sm sm:text-base">Video Production</h3>
+              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-text-secondary">
                 <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Adobe Premiere Pro</li>
                 <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>CapCut</li>
                 <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>OBS Studio</li>
@@ -256,8 +257,8 @@ const ContentCreation = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold font-mono text-primary mb-3">Design & Graphics</h3>
-              <ul className="space-y-2 text-sm text-text-secondary">
+              <h3 className="font-semibold font-mono text-primary mb-2 sm:mb-3 text-sm sm:text-base">Design & Graphics</h3>
+              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-text-secondary">
                 <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Adobe Photoshop</li>
                 <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Adobe Illustrator</li>
                 <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Thumbnail Design</li>
@@ -265,9 +266,9 @@ const ContentCreation = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold font-mono text-primary mb-3">Analytics & Strategy</h3>
-              <ul className="space-y-2 text-sm text-text-secondary">
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>YouTube Studio Analytics</li>
+              <h3 className="font-semibold font-mono text-primary mb-2 sm:mb-3 text-sm sm:text-base">Analytics & Strategy</h3>
+              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-text-secondary">
+                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>YouTube Analytics</li>
                 <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Instagram Insights</li>
                 <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>SEO Optimization</li>
                 <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Growth Strategies</li>

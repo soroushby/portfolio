@@ -134,15 +134,15 @@ const About = () => {
   ];
 
   return (
-    <div className="pt-24 pb-20 px-6 bg-background-secondary min-h-screen tech-grid">
+    <div className="pt-20 sm:pt-24 pb-12 sm:pb-20 px-4 sm:px-6 bg-background-secondary min-h-screen tech-grid">
       <div className="max-w-6xl mx-auto">
         {/* Hero Section with Photo */}
         <div
-          className={`text-center mb-20 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`text-center mb-12 sm:mb-20 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
           {/* Profile Photo */}
-          <div className="mb-8 flex justify-center">
-            <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-primary shadow-glow-lg ring-4 ring-primary/20 hover:ring-8 hover:ring-primary/30 transition-all duration-300">
+          <div className="mb-6 sm:mb-8 flex justify-center">
+            <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-primary shadow-glow-lg ring-4 ring-primary/20 hover:ring-8 hover:ring-primary/30 transition-all duration-300">
               <img
                 src={profileImage}
                 alt="Soroush Bayanati"
@@ -153,12 +153,12 @@ const About = () => {
           </div>
 
           <p className="code-comment text-sm mb-3">Developer Profile</p>
-          <h1 className="text-4xl md:text-5xl font-bold font-mono text-text-primary mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-mono text-text-primary mb-4">
             <span className="text-primary">const</span> developer
             <span className="text-text-muted"> = </span>
             <span className="text-primary neon-glow">"Soroush Bayanati"</span>
           </h1>
-          <p className="text-xl text-text-secondary mb-6 font-mono">
+          <p className="text-base sm:text-lg md:text-xl text-text-secondary mb-6 font-mono">
             <span className="text-primary">role</span>:{" "}
             <span className="font-semibold">
               "Frontend Developer & Content Creator"
@@ -234,36 +234,41 @@ const About = () => {
 
         {/* Timeline */}
         <div
-          className={`mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`mb-12 sm:mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           style={{ transitionDelay: "200ms" }}
         >
           <p className="code-comment text-sm mb-3 text-center">Career Path</p>
-          <h2 className="text-3xl font-bold font-mono text-primary mb-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-6 sm:mb-8 text-center">
             timeline<span className="text-text-muted">[]</span>
           </h2>
           <div className="relative">
-            {/* Timeline Line */}
+            {/* Timeline Line - Desktop */}
             <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-primary/30"></div>
+            {/* Timeline Line - Mobile */}
+            <div className="md:hidden absolute left-4 top-0 w-0.5 h-full bg-primary/30"></div>
 
             {/* Timeline Items */}
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               {timeline.map((item, index) => (
                 <div
                   key={index}
-                  className={`flex items-center ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
+                  className={`flex items-start md:items-center ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
                 >
+                  {/* Mobile dot */}
+                  <div className="md:hidden w-3 h-3 bg-primary rounded-full border-2 border-background-secondary shadow-glow-sm z-10 flex-shrink-0 mt-5 mr-4"></div>
                   <div
                     className={`flex-1 ${index % 2 === 0 ? "md:pr-8" : "md:pl-8"}`}
                   >
-                    <div className="bg-background-tertiary border border-primary/30 rounded-lg p-4 shadow-glow-sm hover:shadow-glow-md hover:border-primary/50 transition-all text-left">
-                      <span className="inline-block px-3 py-1 bg-primary/20 border border-primary/30 text-primary text-sm font-semibold rounded-full mb-2">
+                    <div className="bg-background-tertiary border border-primary/30 rounded-lg p-3 sm:p-4 shadow-glow-sm hover:shadow-glow-md hover:border-primary/50 transition-all text-left">
+                      <span className="inline-block px-2 sm:px-3 py-1 bg-primary/20 border border-primary/30 text-primary text-xs sm:text-sm font-semibold rounded-full mb-2">
                         {item.year}
                       </span>
-                      <p className="text-text-secondary">{item.event}</p>
+                      <p className="text-sm sm:text-base text-text-secondary">{item.event}</p>
                     </div>
                   </div>
+                  {/* Desktop dot */}
                   <div className="hidden md:block w-4 h-4 bg-primary rounded-full border-4 border-background-secondary shadow-glow-sm z-10 flex-shrink-0"></div>
-                  <div className="flex-1"></div>
+                  <div className="hidden md:block flex-1"></div>
                 </div>
               ))}
             </div>
@@ -272,42 +277,42 @@ const About = () => {
 
         {/* Skills Breakdown */}
         <div
-          className={`mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`mb-12 sm:mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           style={{ transitionDelay: "300ms" }}
         >
           <p className="code-comment text-sm mb-3 text-center">
             Technical Stack
           </p>
-          <h2 className="text-3xl font-bold font-mono text-primary mb-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-6 sm:mb-8 text-center">
             skills<span className="text-text-muted">.</span>map
             <span className="text-text-muted">()</span>
           </h2>
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {skillCategories.map((category, index) => (
-              <div key={index} className="modern-card">
-                <h3 className="text-xl font-bold font-mono text-text-primary mb-6 flex items-center">
-                  <Code className="w-6 h-6 mr-2 text-primary" />
-                  <span className="text-primary">
+              <div key={index} className="modern-card !p-4 sm:!p-6 md:!p-8">
+                <h3 className="text-base sm:text-lg md:text-xl font-bold font-mono text-text-primary mb-4 sm:mb-6 flex items-center flex-wrap">
+                  <Code className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-primary" />
+                  <span className="text-primary break-all">
                     {category.category.toLowerCase().replace(/ /g, "_")}
                   </span>
                   <span className="text-text-muted">: {"{"}</span>
                 </h3>
-                <div className="grid md:grid-cols-2 gap-4 pl-6">
+                <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 pl-2 sm:pl-6">
                   {category.skills.map((skill, skillIndex) => (
                     <div
                       key={skillIndex}
-                      className="flex items-start space-x-3 p-4 glass border border-primary/20 rounded-lg hover:border-primary/50 hover:shadow-glow-md transition-all duration-200 group"
+                      className="flex items-start space-x-2 sm:space-x-3 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-primary/50 hover:shadow-glow-md transition-all duration-200 group"
                     >
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <div className="mb-1 flex items-center">
-                          <span className="text-primary font-mono mr-2 group-hover:scale-125 transition-transform">
+                          <span className="text-primary font-mono mr-2 group-hover:scale-125 transition-transform flex-shrink-0">
                             {">"}
                           </span>
-                          <span className="font-semibold font-mono text-text-primary">
+                          <span className="font-semibold font-mono text-text-primary text-sm sm:text-base truncate">
                             {skill.name}
                           </span>
                         </div>
-                        <p className="text-sm text-text-secondary pl-4">
+                        <p className="text-xs sm:text-sm text-text-secondary pl-4">
                           {skill.description}
                         </p>
                       </div>
@@ -328,55 +333,53 @@ const About = () => {
           <p className="code-comment text-sm mb-3 text-center">
             Personal Interests
           </p>
-          <h2 className="text-3xl font-bold font-mono text-primary mb-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-6 sm:mb-8 text-center">
             hobbies<span className="text-text-muted">.</span>list
             <span className="text-text-muted">()</span>
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-background-tertiary border border-primary/30 rounded-lg p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 border border-primary/30">
-                <Heart className="w-6 h-6 text-primary" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+            <div className="bg-background-tertiary border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-3 sm:mb-4 border border-primary/30">
+                <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
               </div>
-              <h3 className="font-bold text-text-primary mb-2">
+              <h3 className="font-bold text-text-primary mb-1 sm:mb-2 text-sm sm:text-base">
                 Football Analysis
               </h3>
-              <p className="text-sm text-text-secondary">
-                Passionate about tactical analysis, match breakdowns, and the
-                beautiful game
+              <p className="text-xs sm:text-sm text-text-secondary">
+                Passionate about tactical analysis and the beautiful game
               </p>
             </div>
 
-            <div className="bg-background-tertiary border border-primary/30 rounded-lg p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 border border-primary/30">
-                <Music className="w-6 h-6 text-primary" />
+            <div className="bg-background-tertiary border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-3 sm:mb-4 border border-primary/30">
+                <Music className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
               </div>
-              <h3 className="font-bold text-text-primary mb-2">
-                House/Techno Music
+              <h3 className="font-bold text-text-primary mb-1 sm:mb-2 text-sm sm:text-base">
+                House/Techno
               </h3>
-              <p className="text-sm text-text-secondary">
-                Love discovering new artists and attending electronic music
-                events
+              <p className="text-xs sm:text-sm text-text-secondary">
+                Discovering artists and attending electronic music events
               </p>
             </div>
 
-            <div className="bg-background-tertiary border border-primary/30 rounded-lg p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 border border-primary/30">
-                <BookOpen className="w-6 h-6 text-primary" />
+            <div className="bg-background-tertiary border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-3 sm:mb-4 border border-primary/30">
+                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
               </div>
-              <h3 className="font-bold text-text-primary mb-2">
+              <h3 className="font-bold text-text-primary mb-1 sm:mb-2 text-sm sm:text-base">
                 Tech Exploration
               </h3>
-              <p className="text-sm text-text-secondary">
-                Always learning new frameworks, tools, and best practices
+              <p className="text-xs sm:text-sm text-text-secondary">
+                Learning new frameworks, tools, and best practices
               </p>
             </div>
 
-            <div className="bg-background-tertiary border border-primary/30 rounded-lg p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 border border-primary/30">
-                <Plane className="w-6 h-6 text-primary" />
+            <div className="bg-background-tertiary border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-3 sm:mb-4 border border-primary/30">
+                <Plane className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
               </div>
-              <h3 className="font-bold text-text-primary mb-2">Travel</h3>
-              <p className="text-sm text-text-secondary">
+              <h3 className="font-bold text-text-primary mb-1 sm:mb-2 text-sm sm:text-base">Travel</h3>
+              <p className="text-xs sm:text-sm text-text-secondary">
                 Exploring new places, cultures, and perspectives
               </p>
             </div>
@@ -385,94 +388,94 @@ const About = () => {
 
         {/* Education & Certifications */}
         <div
-          className={`mt-16 modern-card transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`mt-12 sm:mt-16 modern-card !p-4 sm:!p-6 md:!p-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           style={{ transitionDelay: "500ms" }}
         >
           <p className="code-comment text-sm mb-3">Academic Background</p>
-          <h2 className="text-2xl font-bold font-mono text-text-primary mb-6 flex items-center">
-            <Award className="w-7 h-7 mr-3 text-primary" />
+          <h2 className="text-xl sm:text-2xl font-bold font-mono text-text-primary mb-4 sm:mb-6 flex items-center">
+            <Award className="w-6 h-6 sm:w-7 sm:h-7 mr-2 sm:mr-3 text-primary" />
             <span className="text-primary">education</span>
             <span className="text-text-muted">[]</span>
           </h2>
-          <div className="space-y-6">
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
-                <span className="text-2xl">🎓</span>
+          <div className="space-y-4 sm:space-y-6">
+            <div className="flex items-start space-x-3 sm:space-x-4">
+              <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
+                <span className="text-xl sm:text-2xl">🎓</span>
               </div>
-              <div className="flex-1">
-                <h3 className="font-bold text-text-primary">
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-text-primary text-sm sm:text-base">
                   Diploma - New Media Design & Web Development
                 </h3>
-                <p className="text-primary font-semibold">
+                <p className="text-primary font-semibold text-sm sm:text-base">
                   British Columbia Institute of Technology (BCIT)
                 </p>
-                <p className="text-sm text-text-secondary">
+                <p className="text-xs sm:text-sm text-text-secondary">
                   2025 - 2026 (Completed)
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
-                <span className="text-2xl">📜</span>
+            <div className="flex items-start space-x-3 sm:space-x-4">
+              <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
+                <span className="text-xl sm:text-2xl">📜</span>
               </div>
-              <div className="flex-1">
-                <h3 className="font-bold text-text-primary">
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-text-primary text-sm sm:text-base">
                   Front-End JavaScript Frameworks (Angular)
                 </h3>
-                <p className="text-primary font-semibold">
+                <p className="text-primary font-semibold text-sm sm:text-base">
                   University of Michigan - Coursera
                 </p>
-                <p className="text-sm text-text-secondary">
+                <p className="text-xs sm:text-sm text-text-secondary">
                   2021 • Includes HTML5 & JavaScript Interactivity
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
-                <span className="text-2xl">📜</span>
+            <div className="flex items-start space-x-3 sm:space-x-4">
+              <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
+                <span className="text-xl sm:text-2xl">📜</span>
               </div>
-              <div className="flex-1">
-                <h3 className="font-bold text-text-primary">
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-text-primary text-sm sm:text-base">
                   Front-End JavaScript Frameworks
                 </h3>
-                <p className="text-primary font-semibold">
-                  Hong Kong University of Science & Technology - Coursera
+                <p className="text-primary font-semibold text-sm sm:text-base truncate">
+                  HK University of Science & Technology - Coursera
                 </p>
-                <p className="text-sm text-text-secondary">
+                <p className="text-xs sm:text-sm text-text-secondary">
                   2021 • Angular framework specialization
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
-                <span className="text-2xl">📜</span>
+            <div className="flex items-start space-x-3 sm:space-x-4">
+              <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
+                <span className="text-xl sm:text-2xl">📜</span>
               </div>
-              <div className="flex-1">
-                <h3 className="font-bold text-text-primary">
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-text-primary text-sm sm:text-base">
                   Web Development Fundamentals
                 </h3>
-                <p className="text-primary font-semibold">Sematec Institute</p>
-                <p className="text-sm text-text-secondary">
+                <p className="text-primary font-semibold text-sm sm:text-base">Sematec Institute</p>
+                <p className="text-xs sm:text-sm text-text-secondary">
                   2020 • HTML, CSS, JavaScript, Bootstrap
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
-                <span className="text-2xl">💻</span>
+            <div className="flex items-start space-x-3 sm:space-x-4">
+              <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
+                <span className="text-xl sm:text-2xl">💻</span>
               </div>
-              <div className="flex-1">
-                <h3 className="font-bold text-text-primary">
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-text-primary text-sm sm:text-base">
                   Self-Taught Learning
                 </h3>
-                <p className="text-primary font-semibold">
+                <p className="text-primary font-semibold text-sm sm:text-base">
                   Udemy, Frontend Masters, Packt, Pluralsight
                 </p>
-                <p className="text-sm text-text-secondary">
+                <p className="text-xs sm:text-sm text-text-secondary">
                   Ongoing • React, Next.js, TypeScript, Testing, and more
                 </p>
               </div>

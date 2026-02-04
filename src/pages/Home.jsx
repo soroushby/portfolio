@@ -36,7 +36,7 @@ const Home = ({ setCurrentPage }) => {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center px-6 py-20 bg-background-primary tech-grid relative">
+      <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 py-12 sm:py-20 bg-background-primary tech-grid relative">
         <div className={`max-w-6xl w-full transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Text Content */}
@@ -46,11 +46,11 @@ const Home = ({ setCurrentPage }) => {
                 <p className="font-mono text-sm text-text-secondary mb-2">
                   <span className="text-primary">const</span> developer = {'{'}
                 </p>
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-text-primary mb-4 pl-4">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-text-primary mb-4 pl-4">
                   Hi, I'm{' '}
                   <span className="text-primary font-mono neon-glow">Soroush</span>
                 </h1>
-                <h2 className="text-2xl md:text-3xl text-text-primary pl-4 font-mono">
+                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-text-primary pl-4 font-mono">
                   role: <span className="text-primary-light">"Frontend Developer"</span>,
                   <br />
                   stack: <span className="text-primary-light">["React", "Next.js"]</span>
@@ -131,7 +131,7 @@ const Home = ({ setCurrentPage }) => {
             {/* Right Column - Visual Element */}
             <div className="relative">
               {/* Card */}
-              <div className="relative modern-card shadow-glow-lg border-animate">
+              <div className="relative modern-card !p-4 sm:!p-6 shadow-glow-lg border-animate">
                 <div className="flex items-center justify-between mb-6 pb-2 border-b border-primary/20">
                   <span className="text-sm font-mono font-semibold text-primary">$ system --status</span>
                   <div className="flex items-center space-x-2">
@@ -140,17 +140,17 @@ const Home = ({ setCurrentPage }) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-2 sm:gap-4">
                   {stats.map((stat, index) => {
                     const Icon = stat.icon
                     return (
                       <div
                         key={index}
-                        className="glass p-4 rounded-lg border border-primary/20 hover:border-primary/50 hover:shadow-glow-md transition-all duration-300 group cursor-pointer"
+                        className="glass p-3 sm:p-4 rounded-lg border border-primary/20 hover:border-primary/50 hover:shadow-glow-md transition-all duration-300 group cursor-pointer"
                       >
-                        <Icon className="w-6 h-6 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                        <p className="text-2xl font-bold font-mono text-primary mb-1 neon-glow">{stat.value}</p>
-                        <p className="text-xs text-text-secondary font-mono">{stat.label}</p>
+                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                        <p className="text-xl sm:text-2xl font-bold font-mono text-primary mb-1 neon-glow">{stat.value}</p>
+                        <p className="text-[10px] sm:text-xs text-text-secondary font-mono">{stat.label}</p>
                       </div>
                     )
                   })}
@@ -175,11 +175,11 @@ const Home = ({ setCurrentPage }) => {
       </section>
 
       {/* Primary Skills Section */}
-      <section className="py-20 px-6 bg-background-secondary tech-grid">
+      <section className="py-12 sm:py-20 px-4 sm:px-6 bg-background-secondary tech-grid">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8 sm:mb-12">
             <p className="code-comment text-sm mb-3">Primary Tech Stack</p>
-            <h2 className="text-3xl md:text-4xl font-bold font-mono text-primary mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-mono text-primary mb-4">
               tech.skills<span className="text-text-muted">()</span>
             </h2>
             <p className="text-lg text-text-secondary max-w-2xl mx-auto font-mono text-sm">
@@ -215,12 +215,12 @@ const Home = ({ setCurrentPage }) => {
       </section>
 
       {/* Quick About Section */}
-      <section className="py-20 px-6 bg-background-primary">
+      <section className="py-12 sm:py-20 px-4 sm:px-6 bg-background-primary">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-text-primary mb-6">
             Beyond the Code
           </h2>
-          <p className="text-lg text-text-secondary leading-relaxed mb-8">
+          <p className="text-base sm:text-lg text-text-secondary leading-relaxed mb-8">
             Beyond web development, I've built and scaled a multi-channel YouTube network to{' '}
             <span className="font-semibold text-primary neon-glow">40,000+ subscribers</span> and{' '}
             <span className="font-semibold text-primary neon-glow">190,000+ Instagram followers</span>.
