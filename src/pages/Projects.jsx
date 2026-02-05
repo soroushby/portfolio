@@ -47,6 +47,7 @@ const Projects = () => {
       company: 'Personal Project',
       duration: '2025',
       type: 'Portfolio Website',
+      github: 'https://github.com/soroushby/portfolio',
       description: 'Modern, responsive portfolio website built with React and best practices for showcasing technical skills and projects. Features clean component architecture, smooth animations, and optimized performance. Designed with accessibility and user experience in mind, following current web development standards and trends.',
       technologies: ['React 18', 'Tailwind CSS', 'Vite', 'JavaScript ES6+', 'Responsive Design'],
       features: [
