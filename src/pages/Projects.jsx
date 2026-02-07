@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Code2, Calendar, Layers, Github } from 'lucide-react'
+import { Code2, Calendar, Layers, Github, ExternalLink } from 'lucide-react'
 
 const Projects = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -48,6 +48,7 @@ const Projects = () => {
       duration: '2025',
       type: 'Portfolio Website',
       github: 'https://github.com/soroushby/portfolio',
+      live: 'https://soroushby.github.io/portfolio/',
       description: 'Modern, responsive portfolio website built with React and best practices for showcasing technical skills and projects. Features clean component architecture, smooth animations, and optimized performance. Designed with accessibility and user experience in mind, following current web development standards and trends.',
       technologies: ['React 18', 'Tailwind CSS', 'Vite', 'JavaScript ES6+', 'Responsive Design'],
       features: [
@@ -66,6 +67,7 @@ const Projects = () => {
       duration: 'February 2026',
       type: 'Web Application',
       github: 'https://github.com/soroushby/WeatherApp',
+      live: 'https://soroushby.github.io/WeatherApp/',
       description: 'Modern weather application built with React, TanStack Router, and TanStack Query, demonstrating advanced frontend patterns and API integration. Features multi-page routing, real-time weather data from OpenWeather API, and sophisticated data caching. Implements geolocation for automatic weather detection, favorites management with localStorage, and search history. Dark purple theme with dynamic weather-specific accent colors that adapt based on conditions.',
       technologies: ['React 18', 'TanStack Router', 'TanStack Query', 'Tailwind CSS', 'OpenWeather API', 'Vite'],
       features: [
@@ -131,16 +133,31 @@ const Projects = () => {
               <div className="hidden sm:block absolute top-4 left-4 font-mono text-xs text-text-muted opacity-0 group-hover:opacity-100 transition-opacity">
                 {`// index: ${index}`}
               </div>
-              {project.github && (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 sm:p-2.5 glass border border-primary/30 rounded-lg hover:border-primary/50 hover:shadow-glow-md transition-all duration-200 group/github z-10"
-                  aria-label="View on GitHub"
-                >
-                  <Github className="w-4 h-4 sm:w-5 sm:h-5 text-text-secondary group-hover/github:text-primary transition-colors" />
-                </a>
+              {(project.github || project.live) && (
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 flex items-center gap-2 z-10">
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 sm:p-2.5 glass border border-primary/30 rounded-lg hover:border-primary/50 hover:shadow-glow-md transition-all duration-200 group/live"
+                      aria-label="View Live Demo"
+                    >
+                      <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 text-text-secondary group-hover/live:text-primary transition-colors" />
+                    </a>
+                  )}
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 sm:p-2.5 glass border border-primary/30 rounded-lg hover:border-primary/50 hover:shadow-glow-md transition-all duration-200 group/github"
+                      aria-label="View on GitHub"
+                    >
+                      <Github className="w-4 h-4 sm:w-5 sm:h-5 text-text-secondary group-hover/github:text-primary transition-colors" />
+                    </a>
+                  )}
+                </div>
               )}
               <div className="p-4 sm:p-6 md:p-8 lg:p-10 relative">
                 {/* Project Header */}
