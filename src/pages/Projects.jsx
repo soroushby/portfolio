@@ -11,38 +11,6 @@ const Projects = () => {
 
   const projects = [
     {
-      title: 'Ultimate System Web Application',
-      company: 'Ultimate System',
-      duration: 'August 2022 - Present',
-      type: 'Web Application',
-      description: 'Web application built with Angular, TypeScript, and RxJS for a Vancouver-based tech company. This comprehensive system features complex UI components using Angular Material and Kendo UI. Implemented modular architecture for scalability and maintainability, ensuring the application can grow with business needs.',
-      technologies: ['Angular', 'TypeScript', 'RxJS', 'Angular Material', 'Kendo UI', 'ag-Grid'],
-      features: [
-        'Modular component architecture for code reusability and maintainability',
-        'Responsive design with Angular Material ensuring mobile compatibility',
-        'Complex data grids with ag-Grid for efficient data visualization',
-        'RESTful API integration for backend communication',
-        'Comprehensive unit and integration testing'
-      ]
-    },
-    {
-      title: 'MD Swiss Pharma Patient Management System',
-      company: 'MD Swiss Pharma GmbH',
-      duration: 'June 2021 - July 2022',
-      type: 'Healthcare Application',
-      description: 'Pharmaceutical industry web application for comprehensive patient management. Developed custom UI components with React and TypeScript, implementing full REST API integration for seamless data management. Optimized UI performance to handle large datasets efficiently while maintaining smooth user experience. Collaborated closely with QA team to ensure application stability and quality across all releases.',
-      technologies: ['React', 'TypeScript', 'REST API', 'CSS3', 'JavaScript ES6+', 'Git'],
-      features: [
-        'Patient data management dashboard with real-time updates',
-        'Custom React components for complex form handling',
-        'Full REST API integration for backend data operations',
-        'Responsive UI design for desktop and tablet devices',
-        'Performance optimization for handling large patient datasets',
-        'Comprehensive error handling and validation',
-        'Close collaboration with QA for bug identification and resolution'
-      ]
-    },
-    {
       title: 'Modern Developer Portfolio',
       company: 'Personal Project',
       duration: '2025',
@@ -81,6 +49,38 @@ const Projects = () => {
         'Weather alerts banner and air quality index display',
         'Dynamic accent colors based on weather conditions',
         'Fully responsive design for desktop and mobile devices'
+      ]
+    },
+    {
+      title: 'Ultimate System Web Application',
+      company: 'Ultimate System',
+      duration: 'August 2022 - Present',
+      type: 'Web Application',
+      description: 'Web application built with Angular, TypeScript, and RxJS for a Vancouver-based tech company. This comprehensive system features complex UI components using Angular Material and Kendo UI. Implemented modular architecture for scalability and maintainability, ensuring the application can grow with business needs.',
+      technologies: ['Angular', 'TypeScript', 'RxJS', 'Angular Material', 'Kendo UI', 'ag-Grid'],
+      features: [
+        'Modular component architecture for code reusability and maintainability',
+        'Responsive design with Angular Material ensuring mobile compatibility',
+        'Complex data grids with ag-Grid for efficient data visualization',
+        'RESTful API integration for backend communication',
+        'Comprehensive unit and integration testing'
+      ]
+    },
+    {
+      title: 'MD Swiss Pharma Patient Management System',
+      company: 'MD Swiss Pharma GmbH',
+      duration: 'June 2021 - July 2022',
+      type: 'Healthcare Application',
+      description: 'Pharmaceutical industry web application for comprehensive patient management. Developed custom UI components with React and TypeScript, implementing full REST API integration for seamless data management. Optimized UI performance to handle large datasets efficiently while maintaining smooth user experience. Collaborated closely with QA team to ensure application stability and quality across all releases.',
+      technologies: ['React', 'TypeScript', 'REST API', 'CSS3', 'JavaScript ES6+', 'Git'],
+      features: [
+        'Patient data management dashboard with real-time updates',
+        'Custom React components for complex form handling',
+        'Full REST API integration for backend data operations',
+        'Responsive UI design for desktop and tablet devices',
+        'Performance optimization for handling large patient datasets',
+        'Comprehensive error handling and validation',
+        'Close collaboration with QA for bug identification and resolution'
       ]
     },
     {

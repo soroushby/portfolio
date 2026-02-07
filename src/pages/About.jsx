@@ -20,32 +20,51 @@ const About = () => {
 
   const skillCategories = [
     {
-      category: "Frontend Development",
+      category: "Frontend & Backend Development",
       skills: [
         {
-          name: "React & Next.js",
-          description: "Building modern, performant web applications",
+          name: "React 18/19",
+          description: "Hooks (useState, useEffect, useContext, useReducer, useMemo, useCallback), custom hooks, component composition, Context API",
+        },
+        {
+          name: "TanStack Router",
+          description: "Multi-page routing, lazy loading, route parameters, protected routes",
+        },
+        {
+          name: "TanStack Query",
+          description: "Data fetching, caching strategies, mutations, optimistic updates, infinite queries",
+        },
+        {
+          name: "Next.js",
+          description: "App Router, Server Components, API routes, SSR/SSG, image optimization",
         },
         {
           name: "TypeScript",
-          description: "Type-safe development for scalable codebases",
+          description: "Type safety, interfaces, generics, utility types, type inference",
         },
-        { name: "Angular", description: "Enterprise application development" },
         {
-          name: "HTML5/CSS3",
-          description: "Semantic markup and modern styling",
+          name: "Node.js",
+          description: "Server-side JavaScript runtime, asynchronous programming",
+        },
+        {
+          name: "Express",
+          description: "RESTful API development, middleware, routing, error handling",
         },
         {
           name: "Tailwind CSS",
-          description: "Utility-first responsive design",
+          description: "Utility-first styling, custom configurations, responsive design, dark mode",
         },
         {
-          name: "RxJS",
-          description: "Reactive programming and state management",
+          name: "Vite",
+          description: "Modern build tool, fast HMR, optimized production builds",
         },
         {
-          name: "REST APIs",
-          description: "Backend integration and data fetching",
+          name: "Git/GitHub",
+          description: "Version control, branching strategies, pull requests, collaborative workflows",
+        },
+        {
+          name: "Angular",
+          description: "Enterprise application development with RxJS and Angular Material",
         },
       ],
     },
@@ -64,10 +83,6 @@ const About = () => {
         {
           name: "Final Cut Pro",
           description: "Advanced video editing workflows",
-        },
-        {
-          name: "Photoshop & Illustrator",
-          description: "Graphic design and image editing",
         },
         {
           name: "Canva",

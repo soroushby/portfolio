@@ -122,6 +122,8 @@ const Home = ({ setCurrentPage }) => {
     { name: 'React', icon: '⚛️', description: 'Building modern, component-based UIs' },
     { name: 'Next.js', icon: '▲', description: 'Full-stack React framework with SSR' },
     { name: 'TypeScript', icon: '📘', description: 'Type-safe JavaScript development' },
+    { name: 'Node.js', icon: '🟢', description: 'Server-side JavaScript runtime' },
+    { name: 'Express', icon: '⚡', description: 'Fast, minimalist web framework' },
   ]
 
   const stats = [
