@@ -43,10 +43,6 @@ const About = () => {
           description: "Type safety, interfaces, generics, utility types, type inference",
         },
         {
-          name: "Node.js",
-          description: "Server-side JavaScript runtime, asynchronous programming",
-        },
-        {
           name: "Express",
           description: "RESTful API development, middleware, routing, error handling",
         },
