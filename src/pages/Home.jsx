@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useMotionValue, useTransform, useInView, animate } from 'framer-motion'
 import { Code2, Rocket, Users, Briefcase, ArrowRight, Github, Linkedin, Mail, Youtube } from 'lucide-react'
+import reactLogo from '../assets/React-icon.svg.png'
+import nextjsLogo from '../assets/nextjs.svg'
+import typescriptLogo from '../assets/typescript.svg'
+import expressLogo from '../assets/express-js-logo-png_seeklogo-339850.png'
 
 // Animated counter component
 const AnimatedCounter = ({ value, duration = 2 }) => {
@@ -395,10 +399,10 @@ const Home = ({ setCurrentPage }) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {[
-              { name: 'React', icon: '⚛️', description: 'Component-based UI' },
-              { name: 'Next.js', icon: '▲', description: 'Full-stack framework' },
-              { name: 'TypeScript', icon: '📘', description: 'Type-safe development' },
-              { name: 'Express', icon: '⚡', description: 'Web framework' },
+              { name: 'React', logo: reactLogo, description: 'Component-based UI' },
+              { name: 'Next.js', logo: nextjsLogo, description: 'Full-stack framework' },
+              { name: 'TypeScript', logo: typescriptLogo, description: 'Type-safe development' },
+              { name: 'Express', logo: expressLogo, description: 'Web framework' },
             ].map((skill, index) => (
               <motion.div
                 key={index}
@@ -413,11 +417,17 @@ const Home = ({ setCurrentPage }) => {
                   {`0${index + 1}`}
                 </div>
                 <motion.div
-                  className="text-4xl mb-3"
+                  className="w-16 h-16 mb-3 flex items-center justify-center"
                   whileHover={{ scale: 1.2, rotate: 10 }}
                   transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  {skill.icon}
+                  <img
+                    src={skill.logo}
+                    alt={`${skill.name} logo`}
+                    className={`w-full h-full object-contain ${
+                      skill.name === 'Next.js' || skill.name === 'Express' ? 'brightness-0 invert' : ''
+                    }`}
+                  />
                 </motion.div>
                 <h3 className="text-xl font-bold font-mono text-primary mb-2 group-hover:neon-glow transition-all">
                   {skill.name}
