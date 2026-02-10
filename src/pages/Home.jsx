@@ -30,7 +30,7 @@ const codeSnippets = [
   '</>', 'import', 'return', 'props', 'tsx', '.map()', 'await', 'fetch', 'query', 'route'
 ]
 
-const FloatingParticle = ({ snippet, index }) => {
+const FloatingParticle = ({ snippet }) => {
   const randomX = Math.random() * 100
   const randomDelay = Math.random() * 5
   const randomDuration = 15 + Math.random() * 20
@@ -117,13 +117,6 @@ const Home = ({ setCurrentPage }) => {
     mouseX.set((e.clientX - rect.left) / rect.width)
     mouseY.set((e.clientY - rect.top) / rect.height)
   }
-
-  const primarySkills = [
-    { name: 'React', icon: '⚛️', description: 'Building modern, component-based UIs' },
-    { name: 'Next.js', icon: '▲', description: 'Full-stack React framework with SSR' },
-    { name: 'TypeScript', icon: '📘', description: 'Type-safe JavaScript development' },
-    { name: 'Express', icon: '⚡', description: 'Fast, minimalist web framework' },
-  ]
 
   const stats = [
     { label: 'Years Experience', value: '3+', icon: Briefcase },
@@ -400,22 +393,27 @@ const Home = ({ setCurrentPage }) => {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {primarySkills.map((skill, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {[
+              { name: 'React', icon: '⚛️', description: 'Component-based UI' },
+              { name: 'Next.js', icon: '▲', description: 'Full-stack framework' },
+              { name: 'TypeScript', icon: '📘', description: 'Type-safe development' },
+              { name: 'Express', icon: '⚡', description: 'Web framework' },
+            ].map((skill, index) => (
               <motion.div
                 key={index}
                 className="group modern-card hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 cursor-pointer relative overflow-hidden"
                 initial={{ opacity: 0, y: 50, rotateX: 10 }}
                 whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -8, scale: 1.03 }}
               >
                 <div className="absolute top-2 right-2 font-mono text-xs text-text-muted">
                   {`0${index + 1}`}
                 </div>
                 <motion.div
-                  className="text-4xl mb-4"
+                  className="text-4xl mb-3"
                   whileHover={{ scale: 1.2, rotate: 10 }}
                   transition={{ type: 'spring', stiffness: 300 }}
                 >
