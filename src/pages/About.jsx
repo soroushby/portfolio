@@ -183,7 +183,7 @@ const About = () => {
 
           {/* Download Resume Button */}
           <a
-            href="/Soroush_Bayanati_Resume.pdf"
+            href="/portfolio/Soroush_Bayanati_Resume.pdf"
             download="Soroush_Bayanati_Resume.pdf"
             className="inline-flex items-center space-x-2 modern-btn group"
           >
