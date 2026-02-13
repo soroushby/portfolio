@@ -7,6 +7,7 @@ import {
   Code,
   Award,
   BookOpen,
+  Download,
 } from "lucide-react";
 import profileImage from "../assets/profile.jpg";
 
@@ -175,10 +176,20 @@ const About = () => {
               "Frontend Developer & Content Creator"
             </span>
           </p>
-          <div className="flex items-center justify-center space-x-2 text-text-secondary">
+          <div className="flex items-center justify-center space-x-2 text-text-secondary mb-6">
             <MapPin className="w-5 h-5 text-primary" />
             <span>Vancouver, BC, Canada</span>
           </div>
+
+          {/* Download Resume Button */}
+          <a
+            href="/Soroush_Bayanati_Resume.pdf"
+            download="Soroush_Bayanati_Resume.pdf"
+            className="inline-flex items-center space-x-2 modern-btn group"
+          >
+            <Download className="w-5 h-5" />
+            <span>Download Resume</span>
+          </a>
         </div>
 
         {/* My Journey Story */}

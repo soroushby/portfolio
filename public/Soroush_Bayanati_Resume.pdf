@@ -1,0 +1,274 @@
+%PDF-1.7
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 595 842]
+/Contents 4 0 R
+/Resources << /Font << /F1 5 0 R /F2 6 0 R /F3 7 0 R >> >>
+>>
+endobj
+4 0 obj
+<< /Length 4500 >>
+stream
+BT
+/F1 28 Tf
+50 790 Td
+(SOROUSH BAYANATI) Tj
+ET
+BT
+/F2 12 Tf
+50 765 Td
+(Frontend Developer) Tj
+ET
+0.58 0.36 0.96 rg
+50 760 495 1 re f
+BT
+/F3 9 Tf
+0 0 0 rg
+50 740 Td
+(Vancouver, BC, Canada) Tj
+200 0 Td
+(sorosh.bayanati@gmail.com) Tj
+ET
+BT
+/F3 9 Tf
+50 725 Td
+(github.com/soroushby) Tj
+200 0 Td
+(linkedin.com/in/soroush-bayanati-3546723a5) Tj
+ET
+
+BT
+/F1 14 Tf
+50 690 Td
+(PROFESSIONAL SUMMARY) Tj
+ET
+0.58 0.36 0.96 rg
+50 685 495 0.5 re f
+BT
+/F3 10 Tf
+0 0 0 rg
+50 665 Td
+(Experienced Frontend Developer with 3+ years specializing in React, Next.js, and TypeScript.) Tj
+0 -14 Td
+(Proven track record building scalable web applications for healthcare and enterprise clients.) Tj
+0 -14 Td
+(Strong expertise in modern frameworks, API integration, and responsive design principles.) Tj
+ET
+
+BT
+/F1 14 Tf
+50 605 Td
+(TECHNICAL SKILLS) Tj
+ET
+0.58 0.36 0.96 rg
+50 600 495 0.5 re f
+BT
+/F3 10 Tf
+0 0 0 rg
+50 580 Td
+(Frontend:) Tj
+/F2 10 Tf
+85 0 Td
+(React 18/19, Next.js, TypeScript, Angular, JavaScript ES6+) Tj
+ET
+BT
+/F3 10 Tf
+50 566 Td
+(Backend:) Tj
+/F2 10 Tf
+85 0 Td
+(Express, Node.js, REST APIs) Tj
+ET
+BT
+/F3 10 Tf
+50 552 Td
+(State Mgmt:) Tj
+/F2 10 Tf
+85 0 Td
+(TanStack Query, TanStack Router, Context API, RxJS) Tj
+ET
+BT
+/F3 10 Tf
+50 538 Td
+(Styling:) Tj
+/F2 10 Tf
+85 0 Td
+(Tailwind CSS, CSS3, Angular Material, Kendo UI) Tj
+ET
+BT
+/F3 10 Tf
+50 524 Td
+(Tools:) Tj
+/F2 10 Tf
+85 0 Td
+(Vite, Git/GitHub, npm, ag-Grid, Framer Motion) Tj
+ET
+
+BT
+/F1 14 Tf
+50 490 Td
+(PROFESSIONAL EXPERIENCE) Tj
+ET
+0.58 0.36 0.96 rg
+50 485 495 0.5 re f
+
+BT
+/F2 11 Tf
+0 0 0 rg
+50 465 Td
+(Frontend Developer) Tj
+/F3 10 Tf
+420 0 Td
+(Aug 2022 - Present) Tj
+ET
+BT
+/F3 10 Tf
+50 450 Td
+(Ultimate System | Vancouver, BC) Tj
+ET
+BT
+/F3 9 Tf
+60 434 Td
+(• Built enterprise web application using Angular, TypeScript, and RxJS with Material UI) Tj
+0 -13 Td
+(• Implemented modular component architecture ensuring scalability and maintainability) Tj
+0 -13 Td
+(• Integrated complex data grids with ag-Grid for efficient data visualization) Tj
+0 -13 Td
+(• Developed RESTful API integration and comprehensive testing strategies) Tj
+ET
+
+BT
+/F2 11 Tf
+50 370 Td
+(Frontend Developer) Tj
+/F3 10 Tf
+420 0 Td
+(Jun 2021 - Jul 2022) Tj
+ET
+BT
+/F3 10 Tf
+50 355 Td
+(MD Swiss Pharma GmbH | Remote) Tj
+ET
+BT
+/F3 9 Tf
+60 339 Td
+(• Developed patient management system with React and TypeScript) Tj
+0 -13 Td
+(• Built custom UI components with full REST API integration) Tj
+0 -13 Td
+(• Optimized performance for handling large patient datasets efficiently) Tj
+0 -13 Td
+(• Collaborated with QA team ensuring application stability across releases) Tj
+ET
+
+BT
+/F1 14 Tf
+50 270 Td
+(FEATURED PROJECTS) Tj
+ET
+0.58 0.36 0.96 rg
+50 265 495 0.5 re f
+
+BT
+/F2 10 Tf
+0 0 0 rg
+50 245 Td
+(WeatherNow - Weather Dashboard) Tj
+/F3 9 Tf
+250 0 Td
+(| React, TanStack Router, TanStack Query) Tj
+ET
+BT
+/F3 9 Tf
+60 230 Td
+(• Real-time weather application with multi-page routing and lazy loading) Tj
+0 -13 Td
+(• Advanced data caching and geolocation integration with OpenWeather API) Tj
+0 -13 Td
+(• https://github.com/soroushby/WeatherApp) Tj
+ET
+
+BT
+/F2 10 Tf
+50 185 Td
+(Modern Developer Portfolio) Tj
+/F3 9 Tf
+250 0 Td
+(| React 18, Tailwind CSS, Framer Motion) Tj
+ET
+BT
+/F3 9 Tf
+60 170 Td
+(• Responsive portfolio with glassmorphism effects and smooth animations) Tj
+0 -13 Td
+(• Optimized performance with Vite bundler and SEO best practices) Tj
+0 -13 Td
+(• https://github.com/soroushby/portfolio) Tj
+ET
+
+BT
+/F1 14 Tf
+50 125 Td
+(CONTENT CREATION) Tj
+ET
+0.58 0.36 0.96 rg
+50 120 495 0.5 re f
+BT
+/F3 9 Tf
+0 0 0 rg
+60 105 Td
+(• YouTube: 40,000+ subscribers | Instagram: 190,000+ followers) Tj
+0 -13 Td
+(• Video editing, content strategy, and community engagement experience) Tj
+ET
+
+BT
+/F1 14 Tf
+50 70 Td
+(EDUCATION) Tj
+ET
+0.58 0.36 0.96 rg
+50 65 495 0.5 re f
+BT
+/F3 10 Tf
+0 0 0 rg
+50 45 Td
+(Web Development & Computer Science) Tj
+ET
+
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique >>
+endobj
+xref
+0 8
+0000000000 65535 f
+0000000015 00000 n
+0000000068 00000 n
+0000000125 00000 n
+0000000270 00000 n
+0000004825 00000 n
+0000004908 00000 n
+0000004987 00000 n
+trailer
+<< /Size 8 /Root 1 0 R >>
+startxref
+5072
+%%EOF
