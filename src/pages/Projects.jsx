@@ -82,23 +82,6 @@ const Projects = () => {
         'Comprehensive error handling and validation',
         'Close collaboration with QA for bug identification and resolution'
       ]
-    },
-    {
-      title: 'Task Management Dashboard',
-      company: 'Personal Project',
-      duration: '2024',
-      type: 'Productivity Tool',
-      description: 'Full-featured task management application built with React and Firebase. Implements drag-and-drop functionality, real-time collaboration, and advanced filtering. Users can create projects, assign tasks, set deadlines, and track progress with visual dashboards.',
-      technologies: ['React', 'Firebase', 'Firestore', 'Tailwind CSS', 'React DnD', 'Chart.js'],
-      features: [
-        'Drag-and-drop task organization',
-        'Real-time collaboration with multiple users',
-        'Advanced filtering and sorting options',
-        'Visual progress tracking with charts',
-        'Due date reminders and notifications',
-        'Project and task templates',
-        'Export functionality for reports'
-      ]
     }
   ]
 
