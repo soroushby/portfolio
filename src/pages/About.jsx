@@ -48,6 +48,14 @@ const About = () => {
           description: "RESTful API development, middleware, routing, error handling",
         },
         {
+          name: "MongoDB",
+          description: "NoSQL database, document-based data storage, aggregation pipelines, indexing",
+        },
+        {
+          name: "Mongoose",
+          description: "MongoDB ODM, schema modeling, validation, data relationships, query building",
+        },
+        {
           name: "Tailwind CSS",
           description: "Utility-first styling, custom configurations, responsive design, dark mode",
         },
