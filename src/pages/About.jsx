@@ -68,6 +68,10 @@ const About = () => {
           description: "Version control, branching strategies, pull requests, collaborative workflows",
         },
         {
+          name: "Vercel",
+          description: "Deployment platform, serverless functions, preview deployments, CI/CD integration",
+        },
+        {
           name: "Angular",
           description: "Enterprise application development with RxJS and Angular Material",
         },
