@@ -1,12 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Code2, Calendar, Layers, Github, ExternalLink } from 'lucide-react'
+import { animate, inView, stagger } from 'motion'
 
 const Projects = () => {
   const [isVisible, setIsVisible] = useState(false)
+  const projectsRef = useRef([])
 
   useEffect(() => {
     setIsVisible(true)
     window.scrollTo(0, 0)
+
+    // Motion scroll animations
+    projectsRef.current.forEach((project, index) => {
+      if (project) {
+        inView(project, () => {
+          animate(
+            project,
+            { opacity: [0, 1], y: [50, 0] },
+            { duration: 0.6, delay: index * 0.15, easing: [0.25, 0.46, 0.45, 0.94] }
+          )
+        })
+      }
+    })
   }, [])
 
   const projects = [
@@ -108,10 +123,8 @@ const Projects = () => {
           {projects.map((project, index) => (
             <div
               key={index}
-              className={`modern-card !p-0 hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 overflow-hidden group ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              ref={(el) => (projectsRef.current[index] = el)}
+              className="modern-card !p-0 hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 overflow-hidden group opacity-0"
             >
               <div className="hidden sm:block absolute top-4 left-4 font-mono text-xs text-text-muted opacity-0 group-hover:opacity-100 transition-opacity">
                 {`// index: ${index}`}
