@@ -28,6 +28,10 @@ const About = () => {
           description: "Hooks (useState, useEffect, useContext, useReducer, useMemo, useCallback), custom hooks, component composition, Context API",
         },
         {
+          name: "React Router",
+          description: "Client-side routing, nested routes, dynamic route parameters, data loaders, protected routes",
+        },
+        {
           name: "TanStack Router",
           description: "Multi-page routing, lazy loading, route parameters, protected routes",
         },
@@ -38,6 +42,10 @@ const About = () => {
         {
           name: "Next.js",
           description: "App Router, Server Components, API routes, SSR/SSG, image optimization",
+        },
+        {
+          name: "Remix",
+          description: "Full-stack React framework, server-side rendering, nested routing, data mutations with actions and loaders",
         },
         {
           name: "TypeScript",

@@ -217,7 +217,7 @@ const Home = ({ setCurrentPage }) => {
                 >
                   role: <span className="text-primary-light">"Frontend Developer"</span>,
                   <br />
-                  stack: <span className="text-primary-light">["React", "Next.js"]</span>
+                  stack: <span className="text-primary-light">["React", "Next.js", "Remix"]</span>
                 </motion.h2>
                 <motion.p
                   variants={itemVariants}
