@@ -217,7 +217,7 @@ const Home = ({ setCurrentPage }) => {
                 >
                   role: <span className="text-primary-light">"Frontend Developer"</span>,
                   <br />
-                  stack: <span className="text-primary-light">["React", "Next.js"]</span>
+                  stack: <span className="text-primary-light">["React", "Next.js", "Remix"]</span>
                 </motion.h2>
                 <motion.p
                   variants={itemVariants}
@@ -406,7 +406,7 @@ const Home = ({ setCurrentPage }) => {
             ].map((skill, index) => (
               <motion.div
                 key={index}
-                className="group modern-card hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 cursor-pointer relative overflow-hidden"
+                className="group modern-card hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 cursor-pointer relative overflow-hidden flex flex-col items-center text-center"
                 initial={{ opacity: 0, y: 50, rotateX: 10 }}
                 whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                 viewport={{ once: true, margin: '-50px' }}

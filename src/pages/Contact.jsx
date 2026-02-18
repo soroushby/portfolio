@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Mail, Github, Linkedin, Youtube, MapPin, MessageSquare } from 'lucide-react'
+import { animate, stagger } from 'motion'
 
 const Contact = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -8,10 +9,21 @@ const Contact = () => {
     email: '',
     message: ''
   })
+  const cardsRef = useRef(null)
 
   useEffect(() => {
     setIsVisible(true)
     window.scrollTo(0, 0)
+
+    // Motion stagger animation for contact cards
+    if (cardsRef.current) {
+      const cards = cardsRef.current.querySelectorAll('.contact-card')
+      animate(
+        cards,
+        { opacity: [0, 1], y: [30, 0] },
+        { duration: 0.5, delay: stagger(0.1), easing: [0.25, 0.46, 0.45, 0.94] }
+      )
+    }
   }, [])
 
   const handleSubmit = (e) => {
@@ -48,10 +60,10 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-6 sm:gap-12">
+        <div ref={cardsRef} className="grid lg:grid-cols-2 gap-6 sm:gap-12">
           {/* Contact Information */}
-          <div className={`space-y-6 sm:space-y-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`} style={{ transitionDelay: '100ms' }}>
-            <div className="modern-card !p-4 sm:!p-6">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="modern-card contact-card !p-4 sm:!p-6 opacity-0">
               <p className="code-comment text-sm mb-3">Contact Details</p>
               <h2 className="text-xl sm:text-2xl font-bold font-mono text-text-primary mb-4 sm:mb-6">
                 <span className="text-primary">info</span><span className="text-text-muted">: {'{'}</span>
@@ -89,7 +101,7 @@ const Contact = () => {
             </div>
 
             {/* Social Links */}
-            <div className="modern-card !p-4 sm:!p-6">
+            <div className="modern-card contact-card !p-4 sm:!p-6 opacity-0">
               <p className="code-comment text-sm mb-3">Social Networks</p>
               <h2 className="text-lg sm:text-xl font-bold font-mono text-text-primary mb-4 sm:mb-6">
                 <span className="text-primary">socials</span><span className="text-text-muted">: [</span>
@@ -191,8 +203,8 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} style={{ transitionDelay: '200ms' }}>
-            <div className="modern-card !p-4 sm:!p-6">
+          <div>
+            <div className="modern-card contact-card !p-4 sm:!p-6 opacity-0">
               <p className="code-comment text-sm mb-3">Message Form</p>
               <h2 className="text-xl sm:text-2xl font-bold font-mono text-text-primary mb-4 sm:mb-6">
                 <span className="text-primary">sendMessage</span><span className="text-text-muted">()</span>

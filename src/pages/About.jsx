@@ -7,6 +7,7 @@ import {
   Code,
   Award,
   BookOpen,
+  Download,
 } from "lucide-react";
 import profileImage from "../assets/profile.jpg";
 
@@ -27,6 +28,10 @@ const About = () => {
           description: "Hooks (useState, useEffect, useContext, useReducer, useMemo, useCallback), custom hooks, component composition, Context API",
         },
         {
+          name: "React Router",
+          description: "Client-side routing, nested routes, dynamic route parameters, data loaders, protected routes",
+        },
+        {
           name: "TanStack Router",
           description: "Multi-page routing, lazy loading, route parameters, protected routes",
         },
@@ -39,12 +44,24 @@ const About = () => {
           description: "App Router, Server Components, API routes, SSR/SSG, image optimization",
         },
         {
+          name: "Remix",
+          description: "Full-stack React framework, server-side rendering, nested routing, data mutations with actions and loaders",
+        },
+        {
           name: "TypeScript",
           description: "Type safety, interfaces, generics, utility types, type inference",
         },
         {
           name: "Express",
           description: "RESTful API development, middleware, routing, error handling",
+        },
+        {
+          name: "MongoDB",
+          description: "NoSQL database, document-based data storage, aggregation pipelines, indexing",
+        },
+        {
+          name: "Mongoose",
+          description: "MongoDB ODM, schema modeling, validation, data relationships, query building",
         },
         {
           name: "Tailwind CSS",
@@ -57,6 +74,10 @@ const About = () => {
         {
           name: "Git/GitHub",
           description: "Version control, branching strategies, pull requests, collaborative workflows",
+        },
+        {
+          name: "Vercel",
+          description: "Deployment platform, serverless functions, preview deployments, CI/CD integration",
         },
         {
           name: "Angular",
@@ -175,10 +196,20 @@ const About = () => {
               "Frontend Developer & Content Creator"
             </span>
           </p>
-          <div className="flex items-center justify-center space-x-2 text-text-secondary">
+          <div className="flex items-center justify-center space-x-2 text-text-secondary mb-6">
             <MapPin className="w-5 h-5 text-primary" />
             <span>Vancouver, BC, Canada</span>
           </div>
+
+          {/* Download Resume Button */}
+          <a
+            href="/portfolio/Soroush_Bayanati_Resume.pdf"
+            download="Soroush_Bayanati_Resume.pdf"
+            className="inline-flex items-center space-x-2 modern-btn group"
+          >
+            <Download className="w-5 h-5" />
+            <span>Download Resume</span>
+          </a>
         </div>
 
         {/* My Journey Story */}

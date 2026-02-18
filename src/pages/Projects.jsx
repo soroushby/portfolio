@@ -1,12 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Code2, Calendar, Layers, Github, ExternalLink } from 'lucide-react'
+import { animate, inView, stagger } from 'motion'
 
 const Projects = () => {
   const [isVisible, setIsVisible] = useState(false)
+  const projectsRef = useRef([])
 
   useEffect(() => {
     setIsVisible(true)
     window.scrollTo(0, 0)
+
+    // Motion scroll animations
+    projectsRef.current.forEach((project, index) => {
+      if (project) {
+        inView(project, () => {
+          animate(
+            project,
+            { opacity: [0, 1], y: [50, 0] },
+            { duration: 0.6, delay: index * 0.15, easing: [0.25, 0.46, 0.45, 0.94] }
+          )
+        })
+      }
+    })
   }, [])
 
   const projects = [
@@ -17,12 +32,13 @@ const Projects = () => {
       type: 'Portfolio Website',
       github: 'https://github.com/soroushby/portfolio',
       live: 'https://soroushby.github.io/portfolio/',
-      description: 'Modern, responsive portfolio website built with React and best practices for showcasing technical skills and projects. Features clean component architecture, smooth animations, and optimized performance. Designed with accessibility and user experience in mind, following current web development standards and trends.',
-      technologies: ['React 18', 'Tailwind CSS', 'Vite', 'JavaScript ES6+', 'Responsive Design'],
+      description: 'Modern, responsive portfolio website built with React and best practices for showcasing technical skills and projects. Features clean component architecture, smooth animations powered by Motion library, and optimized performance. Designed with accessibility and user experience in mind, following current web development standards and trends.',
+      technologies: ['React 18', 'Motion', 'Framer Motion', 'Tailwind CSS', 'Vite', 'JavaScript ES6+'],
       features: [
         'Clean, component-based React architecture',
+        'Advanced animations using Motion and Framer Motion libraries',
+        'Scroll-triggered reveal effects and staggered entrance animations',
         'Responsive design with Tailwind CSS utility classes',
-        'Smooth animations and micro-interactions',
         'SEO optimized for better discoverability',
         'Fast build times with Vite bundler',
         'Accessible navigation and content structure',
@@ -82,23 +98,6 @@ const Projects = () => {
         'Comprehensive error handling and validation',
         'Close collaboration with QA for bug identification and resolution'
       ]
-    },
-    {
-      title: 'Task Management Dashboard',
-      company: 'Personal Project',
-      duration: '2024',
-      type: 'Productivity Tool',
-      description: 'Full-featured task management application built with React and Firebase. Implements drag-and-drop functionality, real-time collaboration, and advanced filtering. Users can create projects, assign tasks, set deadlines, and track progress with visual dashboards.',
-      technologies: ['React', 'Firebase', 'Firestore', 'Tailwind CSS', 'React DnD', 'Chart.js'],
-      features: [
-        'Drag-and-drop task organization',
-        'Real-time collaboration with multiple users',
-        'Advanced filtering and sorting options',
-        'Visual progress tracking with charts',
-        'Due date reminders and notifications',
-        'Project and task templates',
-        'Export functionality for reports'
-      ]
     }
   ]
 
@@ -125,10 +124,8 @@ const Projects = () => {
           {projects.map((project, index) => (
             <div
               key={index}
-              className={`modern-card !p-0 hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 overflow-hidden group ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              ref={(el) => (projectsRef.current[index] = el)}
+              className="modern-card !p-0 hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 overflow-hidden group opacity-0"
             >
               <div className="hidden sm:block absolute top-4 left-4 font-mono text-xs text-text-muted opacity-0 group-hover:opacity-100 transition-opacity">
                 {`// index: ${index}`}
