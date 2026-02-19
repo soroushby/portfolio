@@ -8,6 +8,7 @@ import {
   Award,
   BookOpen,
   Download,
+  Layers,
 } from "lucide-react";
 import profileImage from "../assets/profile.jpg";
 
@@ -19,30 +20,39 @@ const About = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const featuredCourses = [
+    {
+      title: "React 18/19",
+      badge: "React 18/19",
+      topics: [
+        "React 18/19: hooks (useState, useEffect, useRef, useContext, useReducer, useMemo, useCallback), custom hooks, component composition, Context API",
+        "React Router v7 — client-side routing, nested routes, dynamic route parameters, data loaders, protected routes, SSR",
+        "TanStack Router — multi-page routing, lazy loading, route parameters, protected routes",
+        "TanStack Query — data fetching, caching strategies, mutations, optimistic updates, infinite queries",
+        "Next.js — App Router, Server Components, API routes, SSR/SSG, image optimization",
+        "Built projects: portfolio website, notes app, shopping cart UI, idea sharing app",
+        "Portfolio website with Strapi Headless CMS integration",
+        "Full-stack MERN app with refresh tokens for authentication",
+      ],
+    },
+    {
+      title: "Claude & AI Coding",
+      badge: "AI Coding",
+      topics: [
+        "Agentic coding workflows, custom automations, and slash commands",
+        "Integrated Clerk for authentication, Neon Postgres, and Drizzle ORM",
+        "Database seeding with MCP tools and enforcing coding standards with custom docs",
+        "Guiding Claude Code output to match your own style and conventions",
+        "Best practices for using Claude Code as a pair-programmer",
+        "Advanced techniques: custom conventions and scaling agentic coding to larger projects",
+      ],
+    },
+  ];
+
   const skillCategories = [
     {
       category: "Frontend & Backend Development",
       skills: [
-        {
-          name: "React 18/19",
-          description: "Hooks (useState, useEffect, useContext, useReducer, useMemo, useCallback), custom hooks, component composition, Context API",
-        },
-        {
-          name: "React Router",
-          description: "Client-side routing, nested routes, dynamic route parameters, data loaders, protected routes",
-        },
-        {
-          name: "TanStack Router",
-          description: "Multi-page routing, lazy loading, route parameters, protected routes",
-        },
-        {
-          name: "TanStack Query",
-          description: "Data fetching, caching strategies, mutations, optimistic updates, infinite queries",
-        },
-        {
-          name: "Next.js",
-          description: "App Router, Server Components, API routes, SSR/SSG, image optimization",
-        },
         {
           name: "Remix",
           description: "Full-stack React framework, server-side rendering, nested routing, data mutations with actions and loaders",
@@ -64,8 +74,8 @@ const About = () => {
           description: "MongoDB ODM, schema modeling, validation, data relationships, query building",
         },
         {
-          name: "Tailwind CSS",
-          description: "Utility-first styling, custom configurations, responsive design, dark mode",
+          name: "Tailwind CSS / shadcn/ui",
+          description: "Utility-first styling, custom configurations, responsive design, dark mode, and pre-built accessible components",
         },
         {
           name: "Vite",
@@ -109,8 +119,7 @@ const About = () => {
           name: "YouTube Studio",
           description: "Channel management and analytics",
         },
-        { name: "VidIQ", description: "YouTube SEO and optimization" },
-        { name: "TubeBuddy", description: "Content optimization tools" },
+        { name: "VidIQ / TubeBuddy", description: "YouTube SEO, optimization, and content growth tools" },
         {
           name: "SEO & Analytics",
           description: "Content optimization and performance tracking",
@@ -329,6 +338,31 @@ const About = () => {
             skills<span className="text-text-muted">.</span>map
             <span className="text-text-muted">()</span>
           </h2>
+          <div className="grid md:grid-cols-2 gap-6 mb-6 sm:mb-8">
+            {featuredCourses.map((course, index) => (
+              <div key={index} className="modern-card !p-4 sm:!p-6 md:!p-8 col-span-1">
+                <div className="flex items-center justify-between mb-4 sm:mb-6">
+                  <div>
+                    <span className="inline-block px-2 py-1 glass border border-primary/30 text-primary text-xs font-mono font-semibold rounded-lg mb-2">
+                      <span className="text-text-muted">{"<"}</span>{course.badge}<span className="text-text-muted">{" />"}</span>
+                    </span>
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold font-mono text-text-primary">
+                      {course.title}
+                    </h3>
+                  </div>
+                  <Layers className="w-8 h-8 text-primary/40 flex-shrink-0 ml-4" />
+                </div>
+                <ul className="space-y-2 sm:space-y-3">
+                  {course.topics.map((topic, i) => (
+                    <li key={i} className="flex items-start space-x-2 sm:space-x-3 group/item">
+                      <span className="text-primary mt-0.5 flex-shrink-0 font-mono group-hover/item:scale-125 transition-transform text-xs sm:text-base">{">"}</span>
+                      <span className="text-xs sm:text-sm text-text-secondary leading-relaxed">{topic}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
           <div className="space-y-6 sm:space-y-8">
             {skillCategories.map((category, index) => (
               <div key={index} className="modern-card !p-4 sm:!p-6 md:!p-8">
