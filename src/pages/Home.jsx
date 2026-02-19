@@ -4,7 +4,7 @@ import { Code2, Rocket, Users, Briefcase, ArrowRight, Github, Linkedin, Mail, Yo
 import reactLogo from '../assets/React-icon.svg.png'
 import nextjsLogo from '../assets/nextjs.svg'
 import typescriptLogo from '../assets/typescript.svg'
-import expressLogo from '../assets/express-js-logo-png_seeklogo-339850.png'
+import claudeLogo from '../assets/Claude_AI_symbol.svg'
 
 // Animated counter component
 const AnimatedCounter = ({ value, duration = 2 }) => {
@@ -402,7 +402,7 @@ const Home = ({ setCurrentPage }) => {
               { name: 'React', logo: reactLogo, description: 'Component-based UI' },
               { name: 'Next.js', logo: nextjsLogo, description: 'Full-stack framework' },
               { name: 'TypeScript', logo: typescriptLogo, description: 'Type-safe development' },
-              { name: 'Express', logo: expressLogo, description: 'Web framework' },
+              { name: 'Claude', logo: claudeLogo, description: 'AI-powered development' },
             ].map((skill, index) => (
               <motion.div
                 key={index}
@@ -425,7 +425,7 @@ const Home = ({ setCurrentPage }) => {
                     src={skill.logo}
                     alt={`${skill.name} logo`}
                     className={`w-full h-full object-contain ${
-                      skill.name === 'Next.js' || skill.name === 'Express' ? 'brightness-0 invert' : ''
+                      skill.name === 'Next.js' ? 'brightness-0 invert' : ''
                     }`}
                   />
                 </motion.div>
