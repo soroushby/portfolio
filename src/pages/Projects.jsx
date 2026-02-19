@@ -46,6 +46,27 @@ const Projects = () => {
       ]
     },
     {
+      title: 'WorkOut - Lifting Diary App',
+      company: 'Personal Project',
+      duration: 'February 2026',
+      type: 'Full-Stack Application',
+      github: 'https://github.com/soroushby/WorkOut-app',
+      live: 'https://work-out-7kj567x9t-soroush-bayanatis-projects.vercel.app/',
+      description: 'Full-stack workout tracking and lifting diary application built with Next.js App Router, TypeScript, and a serverless PostgreSQL backend. Features a complete authentication system via Clerk, type-safe database access with Drizzle ORM connected to Neon serverless Postgres, and a polished UI built with shadcn/ui and Radix UI primitives. Designed for athletes to log workouts, track progress over time, and manage exercise history with a modern, accessible interface.',
+      technologies: ['Next.js', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'shadcn/ui', 'Radix UI', 'Drizzle ORM', 'Neon (PostgreSQL)', 'Clerk', 'Zod'],
+      features: [
+        'Next.js App Router with server components and file-based routing',
+        'Full authentication and user management powered by Clerk',
+        'Type-safe serverless PostgreSQL via Neon + Drizzle ORM',
+        'Schema validation and type inference with Zod',
+        'Accessible, composable UI components from shadcn/ui and Radix UI',
+        'Date handling and workout scheduling with react-day-picker and date-fns',
+        'Utility-first styling with Tailwind CSS v4 and class-variance-authority',
+        'Workout logging, exercise history, and progress tracking features',
+        'Deployed on Vercel with serverless edge-compatible database'
+      ]
+    },
+    {
       title: 'WeatherNow - Weather Dashboard',
       company: 'Personal Project',
       duration: 'February 2026',
