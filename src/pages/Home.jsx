@@ -359,13 +359,6 @@ const Home = ({ setCurrentPage }) => {
                 >
                   <p className="text-sm text-text-secondary mb-3 font-semibold">Current Location</p>
                   <div className="flex items-center space-x-2">
-                    <motion.div
-                      className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                    >
-                      <span className="text-lg">📍</span>
-                    </motion.div>
                     <div>
                       <p className="font-semibold text-primary">Vancouver, BC</p>
                       <p className="text-xs text-text-muted">Canada</p>
