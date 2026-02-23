@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { Code2, Calendar, Layers, Github, ExternalLink } from 'lucide-react'
 import { animate, inView, stagger } from 'motion'
+import weatherNowScreenshot from '../assets/Weather-now.png'
+import liftingDiaryScreenshot from '../assets/lifting-diary.png'
 
 const Projects = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -47,6 +49,7 @@ const Projects = () => {
     },
     {
       title: 'WorkOut - Lifting Diary App',
+      screenshot: liftingDiaryScreenshot,
       company: 'Personal Project',
       duration: 'February 2026',
       type: 'Full-Stack Application',
@@ -68,6 +71,7 @@ const Projects = () => {
     },
     {
       title: 'WeatherNow - Weather Dashboard',
+      screenshot: weatherNowScreenshot,
       company: 'Personal Project',
       duration: 'February 2026',
       type: 'Web Application',
@@ -226,20 +230,34 @@ const Projects = () => {
                   <p className="text-xs sm:text-sm font-mono text-text-primary mt-2">]</p>
                 </div>
 
-                {/* Key Features */}
-                <div>
-                  <h3 className="text-xs sm:text-sm font-mono font-semibold text-text-primary mb-2 sm:mb-3">
-                    <span className="text-primary">features</span>: [
-                  </h3>
-                  <ul className="space-y-1.5 sm:space-y-2 pl-2 sm:pl-4">
-                    {project.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-start space-x-2 sm:space-x-3 text-text-secondary group/item">
-                        <span className="text-primary mt-0.5 sm:mt-1 flex-shrink-0 font-mono group-hover/item:scale-125 transition-transform text-xs sm:text-base">{'>'}</span>
-                        <span className="text-xs sm:text-sm leading-relaxed">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-xs sm:text-sm font-mono text-text-primary mt-2">]</p>
+                {/* Key Features + Screenshot side by side */}
+                <div className={`flex flex-col ${project.screenshot ? 'lg:flex-row lg:gap-8 lg:items-end' : ''}`}>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xs sm:text-sm font-mono font-semibold text-text-primary mb-2 sm:mb-3">
+                      <span className="text-primary">features</span>: [
+                    </h3>
+                    <ul className="space-y-1.5 sm:space-y-2 pl-2 sm:pl-4">
+                      {project.features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-start space-x-2 sm:space-x-3 text-text-secondary group/item">
+                          <span className="text-primary mt-0.5 sm:mt-1 flex-shrink-0 font-mono group-hover/item:scale-125 transition-transform text-xs sm:text-base">{'>'}</span>
+                          <span className="text-xs sm:text-sm leading-relaxed">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-xs sm:text-sm font-mono text-text-primary mt-2">]</p>
+                  </div>
+
+                  {project.screenshot && (
+                    <div className="mt-4 lg:mt-0 lg:w-[31rem] xl:w-[34rem] flex-shrink-0">
+                      <div className="w-full aspect-video rounded-lg overflow-hidden border border-primary/20">
+                        <img
+                          src={project.screenshot}
+                          alt={`${project.title} screenshot`}
+                          className="w-full h-full object-cover object-top"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
