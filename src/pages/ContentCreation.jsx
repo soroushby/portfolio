@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Youtube, TrendingUp, Users, Eye, Clock, Target, Zap } from 'lucide-react'
+import soccerPodcastLogo from '../assets/soccer-podcast-logo.jpg'
+import persianRedArmyLogo from '../assets/persian-red-army-logo.jpg'
+import footCourtLogo from '../assets/footcurt logo remake.jpg'
 
 const ContentCreation = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -12,6 +15,7 @@ const ContentCreation = () => {
   const channels = [
     {
       name: 'Soccer Podcast',
+      logo: soccerPodcastLogo,
       handle: '@soccerpodcast',
       url: 'https://www.youtube.com/@soccerpodcast',
       youtube: '29K subscribers',
@@ -26,6 +30,7 @@ const ContentCreation = () => {
     },
     {
       name: 'Catalan Iran',
+      logo: null,
       handle: '@catalaniran',
       url: 'https://www.youtube.com/@catalaniran',
       youtube: '6K subscribers',
@@ -40,6 +45,7 @@ const ContentCreation = () => {
     },
     {
       name: 'Persian Red Army',
+      logo: persianRedArmyLogo,
       handle: '@persianredarmy',
       url: 'https://www.youtube.com/@persianredarmy',
       youtube: '3.5K subscribers',
@@ -54,6 +60,7 @@ const ContentCreation = () => {
     },
     {
       name: 'FootCourt XI',
+      logo: footCourtLogo,
       handle: '@footcourtxi',
       url: 'https://www.youtube.com/@footcourtxi',
       youtube: '1.5K subscribers',
@@ -162,8 +169,16 @@ const ContentCreation = () => {
                 {/* Channel Header */}
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
                   <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-2 sm:mb-3">
-                      <Youtube className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
+                    <div className="flex items-center space-x-3 sm:space-x-4 mb-2 sm:mb-3">
+                      {channel.logo ? (
+                        <img
+                          src={channel.logo}
+                          alt={`${channel.name} logo`}
+                          className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-primary/40 flex-shrink-0"
+                        />
+                      ) : (
+                        <Youtube className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
+                      )}
                       <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-text-primary">
                         {channel.name}
                       </h2>
