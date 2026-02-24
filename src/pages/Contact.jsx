@@ -4,6 +4,7 @@ import { animate, stagger } from 'motion'
 import soccerPodcastLogo from '../assets/soccer-podcast-logo.jpg'
 import persianRedArmyLogo from '../assets/persian-red-army-logo.jpg'
 import footCourtLogo from '../assets/footcurt logo remake.jpg'
+import catalanIranLogo from '../assets/catalan iran logo.png'
 
 const Contact = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -192,8 +193,8 @@ const Contact = () => {
                   rel="noopener noreferrer"
                   className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-red-400/50 hover:shadow-glow-md transition-all duration-200 group"
                 >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 bg-background-tertiary border-2 border-primary/30 rounded-lg flex items-center justify-center group-hover:border-red-400/50 transition-colors flex-shrink-0">
-                    <Youtube className="w-4 h-4 sm:w-5 sm:h-5 text-text-secondary group-hover:text-red-400 transition-colors" />
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden border-2 border-primary/30 group-hover:border-red-400/50 transition-colors flex-shrink-0">
+                    <img src={catalanIranLogo} alt="Catalan Iran" className="w-full h-full object-cover" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-semibold font-mono text-text-primary text-sm sm:text-base">Catalaniran</p>

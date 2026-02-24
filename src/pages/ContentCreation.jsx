@@ -3,6 +3,7 @@ import { Youtube, TrendingUp, Users, Eye, Clock, Target, Zap } from 'lucide-reac
 import soccerPodcastLogo from '../assets/soccer-podcast-logo.jpg'
 import persianRedArmyLogo from '../assets/persian-red-army-logo.jpg'
 import footCourtLogo from '../assets/footcurt logo remake.jpg'
+import catalanIranLogo from '../assets/catalan iran logo.png'
 
 const ContentCreation = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -30,7 +31,7 @@ const ContentCreation = () => {
     },
     {
       name: 'Catalan Iran',
-      logo: null,
+      logo: catalanIranLogo,
       handle: '@catalaniran',
       url: 'https://www.youtube.com/@catalaniran',
       youtube: '6K subscribers',
