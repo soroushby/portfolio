@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useMotionValue, useTransform, useInView, animate } from 'framer-motion'
-import { Code2, Rocket, Users, Briefcase, ArrowRight, Github, Linkedin, Mail, Youtube, MapPin } from 'lucide-react'
+import { Code2, Rocket, Users, Briefcase, ArrowRight, Github, Linkedin, Mail, Youtube, MapPin, Trophy } from 'lucide-react'
 import reactLogo from '../assets/React-icon.svg.png'
 import nextjsLogo from '../assets/nextjs.svg'
 import typescriptLogo from '../assets/typescript.svg'
@@ -254,7 +254,7 @@ const Home = ({ setCurrentPage }) => {
                   variants={itemVariants}
                   className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-text-primary pl-4 font-mono"
                 >
-                  role: <TypeWriter words={['Frontend Developer', 'React Engineer', 'UI Craftsman', 'Content Creator']} />,
+                  role: <TypeWriter words={['Frontend Developer', 'React Engineer', 'Content Creator']} />,
                   <br />
                   stack: <span className="text-primary-light">["React", "Next.js", "Remix"]</span>
                 </motion.h2>
@@ -560,6 +560,30 @@ const Home = ({ setCurrentPage }) => {
               <p className="font-bold font-mono text-text-primary text-xs sm:text-sm">BCIT</p>
               <p className="text-xs text-text-secondary">New Media Design & Web Dev</p>
               <p className="text-xs font-mono text-primary mt-2">2026</p>
+            </motion.div>
+
+            {/* Coding Skills */}
+            <motion.div
+              className="col-span-2 md:col-span-3 modern-card !p-4 sm:!p-5 hover:border-primary/50 hover:shadow-glow-md transition-all duration-300"
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.35 }}
+              whileHover={{ y: -4 }}
+            >
+              <p className="text-xs font-mono text-text-muted mb-3">coding_skills</p>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  'React 18/19', 'React Router v7', 'TanStack Router', 'TanStack Query',
+                  'Next.js', 'Remix', 'TypeScript', 'JavaScript',
+                  'Express', 'MongoDB', 'Mongoose', 'Drizzle ORM',
+                  'Neon (PostgreSQL)', 'Clerk', 'Tailwind CSS', 'shadcn/ui',
+                  'Vite', 'Git/GitHub', 'Vercel', 'Angular',
+                  'Strapi CMS', 'MERN Stack', 'Claude AI',
+                ].map((skill) => (
+                  <span key={skill} className="px-3 py-1 glass border border-primary/20 text-text-secondary hover:border-primary/50 hover:text-primary transition-all duration-200 text-sm font-mono rounded-lg cursor-default">
+                    {skill}
+                  </span>
+                ))}
+              </div>
             </motion.div>
           </div>
         </div>

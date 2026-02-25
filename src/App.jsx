@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Lenis from 'lenis'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navigation from './components/Navigation'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
@@ -9,6 +11,8 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import ScrollToTop from './components/ScrollToTop'
 import CursorGlow from './components/CursorGlow'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const pageVariants = {
   initial: { opacity: 0, y: 24, filter: 'blur(4px)' },
@@ -31,27 +35,30 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false)
   const lenisRef = useRef(null)
 
-  // Lenis smooth scroll
+  // Lenis smooth scroll — wired to GSAP ticker so ScrollTrigger stays in sync
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true,
     })
     lenisRef.current = lenis
 
-    const raf = (time) => {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-    requestAnimationFrame(raf)
+    lenis.on('scroll', ScrollTrigger.update)
 
-    return () => lenis.destroy()
+    const tickerFn = (time) => lenis.raf(time * 1000)
+    gsap.ticker.add(tickerFn)
+    gsap.ticker.lagSmoothing(0)
+
+    return () => {
+      lenis.destroy()
+      gsap.ticker.remove(tickerFn)
+    }
   }, [])
 
-  // Scroll to top on page change
+  // Scroll to top + refresh ScrollTrigger on page change
   useEffect(() => {
     lenisRef.current?.scrollTo(0, { immediate: true })
+    setTimeout(() => ScrollTrigger.refresh(), 100)
   }, [currentPage])
 
   useEffect(() => {

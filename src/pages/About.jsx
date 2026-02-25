@@ -16,48 +16,6 @@ import {
 } from "lucide-react";
 import profileImage from "../assets/profile.jpg";
 
-// Animated skill bar
-const SkillBar = ({ name, level }) => {
-  const ref = useRef(null)
-  const [width, setWidth] = useState(0)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setWidth(level) },
-      { threshold: 0.3 }
-    )
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [level])
-
-  return (
-    <div ref={ref} className="mb-3">
-      <div className="mb-1">
-        <span className="text-xs sm:text-sm font-mono font-semibold text-text-primary">{name}</span>
-      </div>
-      <div className="h-1.5 bg-background-tertiary rounded-full overflow-hidden border border-primary/10">
-        <div
-          className="h-full rounded-full"
-          style={{
-            width: `${width}%`,
-            background: 'linear-gradient(90deg, #7c3aed, #a78bfa)',
-            boxShadow: '0 0 8px rgba(139,92,246,0.6)',
-            transition: 'width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-          }}
-        />
-      </div>
-    </div>
-  )
-}
-
-const coreSkills = [
-  { name: 'React / Next.js', level: 88 },
-  { name: 'TypeScript', level: 80 },
-  { name: 'Tailwind CSS / shadcn', level: 92 },
-  { name: 'Node / Express', level: 70 },
-  { name: 'Git & CI/CD', level: 85 },
-  { name: 'Angular', level: 72 },
-]
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -67,7 +25,7 @@ const About = () => {
 
   useEffect(() => {
     setIsVisible(true);
-    window.scrollTo(0, 0);
+
   }, []);
 
   useEffect(() => {
@@ -436,17 +394,6 @@ const About = () => {
             skills<span className="text-text-muted">.</span>map
             <span className="text-text-muted">()</span>
           </h2>
-          {/* Core proficiency bars */}
-          <div className="modern-card !p-4 sm:!p-6 md:!p-8 mb-6 sm:mb-8">
-            <h3 className="text-base sm:text-lg font-bold font-mono text-primary mb-5">
-              proficiency<span className="text-text-muted">()</span>
-            </h3>
-            <div className="grid sm:grid-cols-2 gap-x-10 gap-y-1">
-              {coreSkills.map((s) => (
-                <SkillBar key={s.name} name={s.name} level={s.level} />
-              ))}
-            </div>
-          </div>
 
           <div className="grid md:grid-cols-2 gap-6 mb-6 sm:mb-8">
             {featuredCourses.map((course, index) => (
