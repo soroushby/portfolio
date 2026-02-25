@@ -4,6 +4,40 @@ import { animate, inView, stagger } from 'motion'
 import weatherNowScreenshot from '../assets/Weather-now.png'
 import liftingDiaryScreenshot from '../assets/lifting-diary.png'
 
+// 3D tilt wrapper component
+const TiltCard = ({ children, className, innerRef, ...props }) => {
+  const ref = useRef(null)
+
+  const onMouseMove = (e) => {
+    const card = ref.current
+    if (!card) return
+    const rect = card.getBoundingClientRect()
+    const rotateX = ((e.clientY - rect.top - rect.height / 2) / rect.height) * -8
+    const rotateY = ((e.clientX - rect.left - rect.width / 2) / rect.width) * 8
+    card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(8px)`
+    card.style.transition = 'transform 0.1s ease'
+  }
+
+  const onMouseLeave = () => {
+    const card = ref.current
+    if (!card) return
+    card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(0px)'
+    card.style.transition = 'transform 0.5s ease'
+  }
+
+  return (
+    <div
+      ref={(el) => { ref.current = el; if (innerRef) innerRef(el) }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      className={className}
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
+
 const Projects = () => {
   const [isVisible, setIsVisible] = useState(false)
   const projectsRef = useRef([])
@@ -147,10 +181,10 @@ const Projects = () => {
         {/* Projects Grid */}
         <div className="space-y-6 sm:space-y-8">
           {projects.map((project, index) => (
-            <div
+            <TiltCard
               key={index}
-              ref={(el) => (projectsRef.current[index] = el)}
-              className="modern-card !p-0 hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 overflow-hidden group opacity-0"
+              innerRef={(el) => (projectsRef.current[index] = el)}
+              className="modern-card !p-0 hover:border-primary/50 hover:shadow-glow-lg overflow-hidden group opacity-0"
             >
               <div className="hidden sm:block absolute top-4 left-4 font-mono text-xs text-text-muted opacity-0 group-hover:opacity-100 transition-opacity">
                 {`// index: ${index}`}
@@ -260,7 +294,7 @@ const Projects = () => {
                   )}
                 </div>
               </div>
-            </div>
+            </TiltCard>
           ))}
         </div>
       </div>

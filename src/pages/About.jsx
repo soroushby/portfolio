@@ -1,4 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 import {
   MapPin,
   Heart,
@@ -12,12 +16,106 @@ import {
 } from "lucide-react";
 import profileImage from "../assets/profile.jpg";
 
+// Animated skill bar
+const SkillBar = ({ name, level }) => {
+  const ref = useRef(null)
+  const [width, setWidth] = useState(0)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setWidth(level) },
+      { threshold: 0.3 }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [level])
+
+  return (
+    <div ref={ref} className="mb-3">
+      <div className="mb-1">
+        <span className="text-xs sm:text-sm font-mono font-semibold text-text-primary">{name}</span>
+      </div>
+      <div className="h-1.5 bg-background-tertiary rounded-full overflow-hidden border border-primary/10">
+        <div
+          className="h-full rounded-full"
+          style={{
+            width: `${width}%`,
+            background: 'linear-gradient(90deg, #7c3aed, #a78bfa)',
+            boxShadow: '0 0 8px rgba(139,92,246,0.6)',
+            transition: 'width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          }}
+        />
+      </div>
+    </div>
+  )
+}
+
+const coreSkills = [
+  { name: 'React / Next.js', level: 88 },
+  { name: 'TypeScript', level: 80 },
+  { name: 'Tailwind CSS / shadcn', level: 92 },
+  { name: 'Node / Express', level: 70 },
+  { name: 'Git & CI/CD', level: 85 },
+  { name: 'Angular', level: 72 },
+]
+
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
+
+  const timelineRef = useRef(null);
+  const skillCardsRef = useRef(null);
 
   useEffect(() => {
     setIsVisible(true);
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    // Timeline items stagger in from alternating sides
+    if (timelineRef.current) {
+      const items = timelineRef.current.querySelectorAll(".gsap-timeline-item");
+      items.forEach((item, i) => {
+        const fromLeft = i % 2 === 0;
+        gsap.fromTo(
+          item,
+          { opacity: 0, x: fromLeft ? -60 : 60 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+    }
+
+    // Skill category cards fade + slide up with stagger
+    if (skillCardsRef.current) {
+      const cards = skillCardsRef.current.querySelectorAll(".gsap-skill-card");
+      gsap.fromTo(
+        cards,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out",
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: skillCardsRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }
+
+    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, []);
 
   const featuredCourses = [
@@ -299,11 +397,11 @@ const About = () => {
             <div className="md:hidden absolute left-4 top-0 w-0.5 h-full bg-primary/30"></div>
 
             {/* Timeline Items */}
-            <div className="space-y-6 sm:space-y-8">
+            <div ref={timelineRef} className="space-y-6 sm:space-y-8">
               {timeline.map((item, index) => (
                 <div
                   key={index}
-                  className={`flex items-start md:items-center ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
+                  className={`gsap-timeline-item flex items-start md:items-center ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
                 >
                   {/* Mobile dot */}
                   <div className="md:hidden w-3 h-3 bg-primary rounded-full border-2 border-background-secondary shadow-glow-sm z-10 flex-shrink-0 mt-5 mr-4"></div>
@@ -338,6 +436,18 @@ const About = () => {
             skills<span className="text-text-muted">.</span>map
             <span className="text-text-muted">()</span>
           </h2>
+          {/* Core proficiency bars */}
+          <div className="modern-card !p-4 sm:!p-6 md:!p-8 mb-6 sm:mb-8">
+            <h3 className="text-base sm:text-lg font-bold font-mono text-primary mb-5">
+              proficiency<span className="text-text-muted">()</span>
+            </h3>
+            <div className="grid sm:grid-cols-2 gap-x-10 gap-y-1">
+              {coreSkills.map((s) => (
+                <SkillBar key={s.name} name={s.name} level={s.level} />
+              ))}
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-6 mb-6 sm:mb-8">
             {featuredCourses.map((course, index) => (
               <div key={index} className="modern-card !p-4 sm:!p-6 md:!p-8 col-span-1">
@@ -363,9 +473,9 @@ const About = () => {
               </div>
             ))}
           </div>
-          <div className="space-y-6 sm:space-y-8">
+          <div ref={skillCardsRef} className="space-y-6 sm:space-y-8">
             {skillCategories.map((category, index) => (
-              <div key={index} className="modern-card !p-4 sm:!p-6 md:!p-8">
+              <div key={index} className="gsap-skill-card modern-card !p-4 sm:!p-6 md:!p-8">
                 <h3 className="text-base sm:text-lg md:text-xl font-bold font-mono text-text-primary mb-4 sm:mb-6 flex items-center flex-wrap">
                   <Code className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-primary" />
                   <span className="text-primary break-all">

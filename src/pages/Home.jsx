@@ -1,10 +1,44 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useMotionValue, useTransform, useInView, animate } from 'framer-motion'
-import { Code2, Rocket, Users, Briefcase, ArrowRight, Github, Linkedin, Mail, Youtube } from 'lucide-react'
+import { Code2, Rocket, Users, Briefcase, ArrowRight, Github, Linkedin, Mail, Youtube, MapPin } from 'lucide-react'
 import reactLogo from '../assets/React-icon.svg.png'
 import nextjsLogo from '../assets/nextjs.svg'
 import typescriptLogo from '../assets/typescript.svg'
 import claudeLogo from '../assets/Claude_AI_symbol.svg'
+import ParticleCanvas from '../components/ParticleCanvas'
+
+// Typewriter component
+const TypeWriter = ({ words }) => {
+  const [wordIndex, setWordIndex] = useState(0)
+  const [text, setText] = useState('')
+  const [deleting, setDeleting] = useState(false)
+
+  useEffect(() => {
+    const word = words[wordIndex]
+    const speed = deleting ? 45 : 95
+
+    const timer = setTimeout(() => {
+      if (!deleting) {
+        setText(word.slice(0, text.length + 1))
+        if (text.length + 1 === word.length) {
+          setTimeout(() => setDeleting(true), 1600)
+        }
+      } else {
+        setText(word.slice(0, text.length - 1))
+        if (text.length - 1 === 0) {
+          setDeleting(false)
+          setWordIndex((i) => (i + 1) % words.length)
+        }
+      }
+    }, speed)
+
+    return () => clearTimeout(timer)
+  }, [text, deleting, wordIndex, words])
+
+  return (
+    <span className="text-primary-light typing-cursor">&quot;{text}&quot;</span>
+  )
+}
 
 // Animated counter component
 const AnimatedCounter = ({ value, duration = 2 }) => {
@@ -162,6 +196,11 @@ const Home = ({ setCurrentPage }) => {
           />
         </div>
 
+        {/* Interactive particle canvas */}
+        <div className="absolute inset-0 overflow-hidden">
+          <ParticleCanvas />
+        </div>
+
         {/* Floating code particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {codeSnippets.map((snippet, i) => (
@@ -215,7 +254,7 @@ const Home = ({ setCurrentPage }) => {
                   variants={itemVariants}
                   className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-text-primary pl-4 font-mono"
                 >
-                  role: <span className="text-primary-light">"Frontend Developer"</span>,
+                  role: <TypeWriter words={['Frontend Developer', 'React Engineer', 'UI Craftsman', 'Content Creator']} />,
                   <br />
                   stack: <span className="text-primary-light">["React", "Next.js", "Remix"]</span>
                 </motion.h2>
@@ -437,72 +476,93 @@ const Home = ({ setCurrentPage }) => {
         </div>
       </section>
 
-      {/* Quick About Section */}
+      {/* Bento Grid Section */}
       <section className="py-12 sm:py-20 px-4 sm:px-6 bg-background-primary relative overflow-hidden">
-        {/* Subtle background orb */}
         <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none"
-          style={{
-            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.08), transparent 70%)',
-          }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.07), transparent 70%)' }}
           animate={{ scale: [1, 1.3, 1] }}
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         />
 
-        <motion.div
-          className="max-w-4xl mx-auto text-center relative z-10"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7 }}
-        >
-          <motion.h2
-            className="text-2xl sm:text-3xl md:text-4xl font-bold text-text-primary mb-6"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+        <div className="max-w-6xl mx-auto relative z-10">
+          <motion.div
+            className="text-center mb-8 sm:mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6 }}
           >
-            Beyond the Code
-          </motion.h2>
-          <motion.p
-            className="text-base sm:text-lg text-text-secondary leading-relaxed mb-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Beyond web development, I've built and scaled a multi-channel YouTube network to{' '}
-            <motion.span
-              className="font-semibold text-primary neon-glow inline-block"
-              whileInView={{ scale: [1, 1.1, 1] }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.6 }}
+            <p className="code-comment text-sm mb-3">Quick Snapshot</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-mono text-primary">
+              profile<span className="text-text-muted">.overview()</span>
+            </h2>
+          </motion.div>
+
+          {/* Bento grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-auto gap-3 sm:gap-4 auto-rows-fr">
+
+            {/* YouTube Network - wide */}
+            <motion.div
+              className="col-span-2 row-span-1 modern-card !p-5 sm:!p-6 hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 cursor-pointer group"
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.5, delay: 0 }}
+              whileHover={{ y: -4 }}
+              onClick={() => setCurrentPage('content-creation')}
             >
-              40,000+ subscribers
-            </motion.span>{' '}
-            and{' '}
-            <motion.span
-              className="font-semibold text-primary neon-glow inline-block"
-              whileInView={{ scale: [1, 1.1, 1] }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.8 }}
+              <div className="flex items-start justify-between mb-3">
+                <Youtube className="w-7 h-7 text-red-400" />
+                <span className="text-xs font-mono text-text-muted glass px-2 py-1 rounded-lg border border-primary/20">content</span>
+              </div>
+              <p className="text-2xl sm:text-3xl font-bold font-mono text-primary neon-glow mb-1">40K+</p>
+              <p className="text-sm text-text-secondary mb-2">YouTube Subscribers across 4 channels</p>
+              <p className="text-xs text-text-muted font-mono">+ 190K Instagram followers</p>
+              <div className="mt-3 flex items-center text-primary text-xs font-mono group-hover:gap-2 gap-1 transition-all">
+                <span>View channels</span>
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </motion.div>
+
+            {/* Location */}
+            <motion.div
+              className="col-span-1 modern-card !p-4 sm:!p-5 hover:border-primary/50 hover:shadow-glow-md transition-all duration-300"
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ y: -4 }}
             >
-              190,000+ Instagram followers
-            </motion.span>.
-            This unique combination of technical skills and digital product experience allows me to
-            build applications that don't just work—they grow and engage users.
-          </motion.p>
-          <motion.button
-            onClick={() => setCurrentPage('about')}
-            className="inline-flex items-center space-x-2 text-primary hover:text-primary-light font-semibold group"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span>Learn more about me</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </motion.button>
-        </motion.div>
+              <MapPin className="w-6 h-6 text-primary mb-3" />
+              <p className="font-bold font-mono text-text-primary text-sm sm:text-base">Vancouver</p>
+              <p className="text-xs text-text-secondary">BC, Canada</p>
+              <p className="text-xs font-mono text-primary mt-2">Open to work</p>
+            </motion.div>
+
+            {/* Experience */}
+            <motion.div
+              className="col-span-1 modern-card !p-4 sm:!p-5 hover:border-primary/50 hover:shadow-glow-md transition-all duration-300"
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.15 }}
+              whileHover={{ y: -4 }}
+            >
+              <Trophy className="w-6 h-6 text-primary mb-3" />
+              <p className="font-bold font-mono text-text-primary text-sm sm:text-base">3+ Years</p>
+              <p className="text-xs text-text-secondary">Professional dev experience</p>
+              <p className="text-xs font-mono text-primary mt-2">2 companies</p>
+            </motion.div>
+
+            {/* BCIT */}
+            <motion.div
+              className="col-span-1 modern-card !p-4 sm:!p-5 hover:border-primary/50 hover:shadow-glow-md transition-all duration-300"
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }}
+              whileHover={{ y: -4 }}
+            >
+              <span className="text-2xl mb-3 block">🎓</span>
+              <p className="font-bold font-mono text-text-primary text-xs sm:text-sm">BCIT</p>
+              <p className="text-xs text-text-secondary">New Media Design & Web Dev</p>
+              <p className="text-xs font-mono text-primary mt-2">2026</p>
+            </motion.div>
+          </div>
+        </div>
       </section>
     </div>
   )

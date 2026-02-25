@@ -156,74 +156,85 @@ const ContentCreation = () => {
           </p>
         </div>
 
-        {/* Channels Breakdown */}
-        <div className="space-y-6 sm:space-y-8 mb-10 sm:mb-16">
-          {channels.map((channel, index) => (
-            <div
-              key={index}
-              className={`modern-card !p-0 hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 overflow-hidden ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
-              style={{ transitionDelay: `${200 + index * 100}ms` }}
-            >
-              <div className="p-4 sm:p-6 md:p-8 lg:p-10">
-                {/* Channel Header */}
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-3 sm:space-x-4 mb-2 sm:mb-3">
-                      {channel.logo ? (
-                        <img
-                          src={channel.logo}
-                          alt={`${channel.name} logo`}
-                          className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-primary/40 flex-shrink-0"
-                        />
-                      ) : (
-                        <Youtube className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
-                      )}
-                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-text-primary">
+        {/* Channels Breakdown - horizontal scroll */}
+        <div className="mb-10 sm:mb-16">
+          <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin"
+            style={{ scrollbarColor: 'rgba(139,92,246,0.4) transparent' }}
+          >
+            {channels.map((channel, index) => (
+              <div
+                key={index}
+                className={`modern-card !p-0 hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 overflow-hidden flex-shrink-0 snap-start ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+                style={{
+                  width: 'min(80vw, 420px)',
+                  transitionDelay: `${200 + index * 100}ms`,
+                }}
+              >
+                <div className="p-5 sm:p-7 h-full flex flex-col">
+                  {/* Channel Header */}
+                  <div className="flex items-center space-x-3 mb-3">
+                    {channel.logo ? (
+                      <img
+                        src={channel.logo}
+                        alt={`${channel.name} logo`}
+                        className="w-14 h-14 rounded-full object-cover border-2 border-primary/40 flex-shrink-0"
+                      />
+                    ) : (
+                      <div className="w-14 h-14 rounded-full bg-primary/20 border-2 border-primary/40 flex items-center justify-center flex-shrink-0">
+                        <Youtube className="w-6 h-6 text-primary" />
+                      </div>
+                    )}
+                    <div>
+                      <h2 className="text-lg sm:text-xl font-bold font-mono text-text-primary leading-tight">
                         {channel.name}
                       </h2>
-                    </div>
-                    <a
-                      href={channel.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary hover:text-primary-light transition-colors font-medium mb-2 sm:mb-3 inline-block text-sm sm:text-base"
-                    >
-                      {channel.handle}
-                    </a>
-                    <div className="flex flex-wrap gap-2 sm:gap-3 mt-2 sm:mt-3">
-                      <span className="inline-flex items-center px-2 sm:px-3 py-1 glass border border-primary/30 text-primary text-xs sm:text-sm font-semibold rounded-full">
-                        <Youtube className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                        {channel.youtube}
-                      </span>
-                      <span className="inline-flex items-center px-2 sm:px-3 py-1 glass border border-primary/30 text-primary text-xs sm:text-sm font-semibold rounded-full">
-                        📸 {channel.instagram}
-                      </span>
+                      <a
+                        href={channel.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:text-primary-light transition-colors font-medium text-sm"
+                      >
+                        {channel.handle}
+                      </a>
                     </div>
                   </div>
-                </div>
 
-                {/* Description */}
-                <p className="text-sm sm:text-base text-text-secondary leading-relaxed mb-4 sm:mb-6">
-                  {channel.description}
-                </p>
+                  {/* Stats badges */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="inline-flex items-center px-2 py-1 glass border border-primary/30 text-primary text-xs font-semibold rounded-full">
+                      <Youtube className="w-3 h-3 mr-1" />
+                      {channel.youtube}
+                    </span>
+                    <span className="inline-flex items-center px-2 py-1 glass border border-primary/30 text-primary text-xs font-semibold rounded-full">
+                      📸 {channel.instagram}
+                    </span>
+                  </div>
 
-                {/* Highlights */}
-                <div>
-                  <h3 className="text-xs sm:text-sm font-semibold font-mono text-text-primary mb-2 sm:mb-3">Key Highlights</h3>
-                  <ul className="space-y-1.5 sm:space-y-2">
-                    {channel.highlights.map((highlight, idx) => (
-                      <li key={idx} className="flex items-start space-x-2 sm:space-x-3 text-text-secondary">
-                        <span className="text-primary mt-0.5 sm:mt-1 flex-shrink-0 font-mono text-xs sm:text-base">{'>'}</span>
-                        <span className="text-xs sm:text-sm leading-relaxed">{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-4 flex-1">
+                    {channel.description}
+                  </p>
+
+                  {/* Highlights */}
+                  <div>
+                    <h3 className="text-xs font-semibold font-mono text-text-primary mb-2">Key Highlights</h3>
+                    <ul className="space-y-1.5">
+                      {channel.highlights.map((highlight, idx) => (
+                        <li key={idx} className="flex items-start space-x-2 text-text-secondary">
+                          <span className="text-primary mt-0.5 flex-shrink-0 font-mono text-xs">{'>'}</span>
+                          <span className="text-xs leading-relaxed">{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          {/* Scroll hint */}
+          <p className="text-xs text-center text-text-muted font-mono mt-2">← scroll to explore →</p>
         </div>
 
         {/* Skills Demonstrated Section */}
