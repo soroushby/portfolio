@@ -500,11 +500,11 @@ const Home = ({ setCurrentPage }) => {
           </motion.div>
 
           {/* Bento grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-auto gap-3 sm:gap-4 auto-rows-fr">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
 
             {/* YouTube Network - wide */}
             <motion.div
-              className="col-span-2 row-span-1 modern-card !p-5 sm:!p-6 hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 cursor-pointer group"
+              className="col-span-1 sm:col-span-2 modern-card !p-5 sm:!p-6 hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 cursor-pointer group"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.5, delay: 0 }}
               whileHover={{ y: -4 }}
@@ -564,7 +564,7 @@ const Home = ({ setCurrentPage }) => {
 
             {/* Coding Skills */}
             <motion.div
-              className="col-span-2 md:col-span-3 modern-card !p-4 sm:!p-5 hover:border-primary/50 hover:shadow-glow-md transition-all duration-300"
+              className="col-span-1 sm:col-span-2 md:col-span-3 modern-card !p-4 sm:!p-5 hover:border-primary/50 hover:shadow-glow-md transition-all duration-300"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.35 }}
               whileHover={{ y: -4 }}

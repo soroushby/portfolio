@@ -1,12 +1,17 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const CursorGlow = () => {
   const glowRef = useRef(null)
   const dotRef = useRef(null)
   const posRef = useRef({ x: -300, y: -300 })
   const rafRef = useRef(null)
+  const [isMouse, setIsMouse] = useState(false)
 
   useEffect(() => {
+    // Only show on devices with a precise pointer (mouse), not touch
+    if (!window.matchMedia('(pointer: fine)').matches) return
+    setIsMouse(true)
+
     const handleMouseMove = (e) => {
       posRef.current = { x: e.clientX, y: e.clientY }
     }
@@ -31,9 +36,10 @@ const CursorGlow = () => {
     }
   }, [])
 
+  if (!isMouse) return null
+
   return (
     <>
-      {/* Soft outer glow */}
       <div
         ref={glowRef}
         className="pointer-events-none fixed top-0 left-0 z-[9998] will-change-transform"
@@ -44,7 +50,6 @@ const CursorGlow = () => {
           background: 'radial-gradient(circle, rgba(139, 92, 246, 0.07) 0%, transparent 70%)',
         }}
       />
-      {/* Center dot */}
       <div
         ref={dotRef}
         className="pointer-events-none fixed top-0 left-0 z-[9999] will-change-transform"
