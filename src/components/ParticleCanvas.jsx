@@ -70,7 +70,7 @@ const ParticleCanvas = () => {
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
             ctx.strokeStyle = `rgba(139,92,246,${0.12 * (1 - d / CONNECT_DIST)})`
-            ctx.lineWidth = 0.6
+            ctx.lineWidth = 1.2
             ctx.stroke()
           }
         }
@@ -84,7 +84,7 @@ const ParticleCanvas = () => {
           ctx.moveTo(p.x, p.y)
           ctx.lineTo(mx, my)
           ctx.strokeStyle = `rgba(167,139,250,${0.45 * (1 - md / MOUSE_DIST)})`
-          ctx.lineWidth = 1
+          ctx.lineWidth = 1.8
           ctx.stroke()
         }
       }
