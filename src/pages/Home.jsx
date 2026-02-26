@@ -579,7 +579,7 @@ const Home = ({ setCurrentPage }) => {
                   'Vite', 'Git/GitHub', 'Vercel', 'Angular',
                   'Strapi CMS', 'MERN Stack', 'Claude AI',
                 ].map((skill) => (
-                  <span key={skill} className="px-3 py-1 glass border border-primary/20 text-text-secondary hover:border-primary/50 hover:text-primary transition-all duration-200 text-sm font-mono rounded-lg cursor-default">
+                  <span key={skill} className="px-3 py-1 glass border border-primary/20 text-text-secondary hover:border-primary/50 hover:text-primary transition-all duration-200 text-[0.919rem] font-mono rounded-lg cursor-default">
                     {skill}
                   </span>
                 ))}
