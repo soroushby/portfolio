@@ -55,7 +55,7 @@ const ParticleCanvas = () => {
 
         // Draw dot
         ctx.beginPath()
-        ctx.arc(p.x, p.y, 1.8, 0, Math.PI * 2)
+        ctx.arc(p.x, p.y, 1.98, 0, Math.PI * 2)
         ctx.fillStyle = 'rgba(139,92,246,0.55)'
         ctx.fill()
 
