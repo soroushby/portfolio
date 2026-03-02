@@ -243,7 +243,7 @@ const About = () => {
               <img
                 src={profileImage}
                 alt="Soroush Bayanati"
-                className="w-full h-full object-cover object-center scale-150 hover:scale-[1.6] transition-transform duration-300"
+                className="w-full h-full object-cover object-center scale-[1.6] hover:scale-[1.7] transition-transform duration-300"
                 style={{ objectPosition: "0% 80%" }}
               />
             </div>
