@@ -62,6 +62,29 @@ const Projects = () => {
 
   const projects = [
     {
+      title: 'QuoteCraft — AI Quote Generator',
+      company: 'Personal Project',
+      duration: 'March 2026',
+      type: 'Full-Stack SaaS Application',
+      github: 'https://github.com/soroushby/Qoutecraft',
+      live: 'https://qoutecraft.vercel.app/',
+      description: 'An AI-powered quoting tool built for Canadian contractors. Users describe a job in plain text (or via voice input), and Claude AI generates a fully itemized professional estimate with Vancouver market rates, GST calculation, and a grand total — all in seconds.',
+      technologies: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'Clerk', 'Anthropic Claude API', '@anthropic-ai/sdk', 'Supabase', '@supabase/supabase-js', 'Resend', 'Vercel'],
+      features: [
+        'AI-generated line-item quotes using Anthropic Claude API',
+        'Voice input via browser SpeechRecognition API',
+        'Inline editable line items with auto-recalculated totals',
+        'Company branding with logo upload (base64)',
+        'One-click email delivery to clients via Resend',
+        'Saved quotes dashboard with status tracking (Draft / Sent / Accepted / Rejected)',
+        'Usage-based free tier (5 quotes/month) with pricing page',
+        'Authentication with Clerk (sign in / sign up modal flows)',
+        'Data persistence in Supabase (quotes + usage tables)',
+        'Printable quote view',
+        'Deployed on Vercel'
+      ]
+    },
+    {
       title: 'Modern Developer Portfolio',
       company: 'Personal Project',
       duration: '2025',
