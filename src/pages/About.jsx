@@ -146,6 +146,14 @@ const About = () => {
           description: "Deployment platform, serverless functions, preview deployments, CI/CD integration",
         },
         {
+          name: "Supabase",
+          description: "Serverless PostgreSQL backend, real-time subscriptions, row-level security, and usage tracking via @supabase/supabase-js",
+        },
+        {
+          name: "Resend",
+          description: "Transactional email delivery API for sending professional client-facing emails from Next.js server actions",
+        },
+        {
           name: "Angular",
           description: "Enterprise application development with RxJS and Angular Material",
         },
@@ -197,7 +205,7 @@ const About = () => {
           name: "ChatGPT",
           description: "AI-assisted development and content creation",
         },
-        { name: "Claude", description: "Advanced AI workflows" },
+        { name: "Anthropic Claude API", description: "AI-powered feature development using @anthropic-ai/sdk — prompt engineering, structured outputs, and agentic workflows" },
         { name: "GitHub Copilot", description: "AI pair programming" },
         { name: "Midjourney", description: "AI image generation" },
       ],
@@ -268,8 +276,8 @@ const About = () => {
 
           {/* Download Resume Button */}
           <a
-            href="/portfolio/Soroush_Bayanati_Resume.pdf"
-            download="Soroush_Bayanati_Resume.pdf"
+            href="/Soroush_B_Resume.pdf"
+            download="Soroush_B_Resume.pdf"
             className="inline-flex items-center space-x-2 modern-btn group"
           >
             <Download className="w-5 h-5" />
