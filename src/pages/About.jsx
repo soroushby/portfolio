@@ -276,7 +276,7 @@ const About = () => {
 
           {/* Download Resume Button */}
           <a
-            href="/Soroush_B_Resume.pdf"
+            href={`${import.meta.env.BASE_URL}Soroush_B_Resume.pdf`}
             download="Soroush_B_Resume.pdf"
             className="inline-flex items-center space-x-2 modern-btn group"
           >
