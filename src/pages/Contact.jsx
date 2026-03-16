@@ -13,6 +13,8 @@ const Contact = () => {
     email: '',
     message: ''
   })
+  const [errors, setErrors] = useState({})
+  const [submitted, setSubmitted] = useState(false)
   const cardsRef = useRef(null)
 
   useEffect(() => {
@@ -30,12 +32,31 @@ const Contact = () => {
     }
   }, [])
 
+  const validate = () => {
+    const newErrors = {}
+    if (!formData.name.trim()) newErrors.name = 'Name is required.'
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required.'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address.'
+    }
+    if (!formData.message.trim()) newErrors.message = 'Message is required.'
+    return newErrors
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Create mailto link with form data
+    const validationErrors = validate()
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      return
+    }
+    setErrors({})
     const subject = encodeURIComponent(`Portfolio Contact from ${formData.name}`)
     const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)
     window.location.href = `mailto:sorosh.bayanati@gmail.com?subject=${subject}&body=${body}`
+    setSubmitted(true)
+    setFormData({ name: '', email: '', message: '' })
   }
 
   const handleChange = (e) => {
@@ -149,7 +170,7 @@ const Contact = () => {
                   className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-red-400/50 hover:shadow-glow-md transition-all duration-200 group"
                 >
                   <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden border-2 border-primary/30 group-hover:border-red-400/50 transition-colors flex-shrink-0">
-                    <img src={soccerPodcastLogo} alt="Soccer Podcast" className="w-full h-full object-cover" />
+                    <img src={soccerPodcastLogo} alt="Soccer Podcast" className="w-full h-full object-cover" loading="lazy" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-semibold font-mono text-text-primary text-sm sm:text-base">SoccerPodcast</p>
@@ -164,7 +185,7 @@ const Contact = () => {
                   className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-red-400/50 hover:shadow-glow-md transition-all duration-200 group"
                 >
                   <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden border-2 border-primary/30 group-hover:border-red-400/50 transition-colors flex-shrink-0">
-                    <img src={footCourtLogo} alt="FootCourt XI" className="w-full h-full object-cover" />
+                    <img src={footCourtLogo} alt="FootCourt XI" className="w-full h-full object-cover" loading="lazy" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-semibold font-mono text-text-primary text-sm sm:text-base">FootcourtXI</p>
@@ -179,7 +200,7 @@ const Contact = () => {
                   className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-red-400/50 hover:shadow-glow-md transition-all duration-200 group"
                 >
                   <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden border-2 border-primary/30 group-hover:border-red-400/50 transition-colors flex-shrink-0">
-                    <img src={persianRedArmyLogo} alt="Persian Red Army" className="w-full h-full object-cover" />
+                    <img src={persianRedArmyLogo} alt="Persian Red Army" className="w-full h-full object-cover" loading="lazy" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-semibold font-mono text-text-primary text-sm sm:text-base">PersianRedArmy</p>
@@ -194,7 +215,7 @@ const Contact = () => {
                   className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-red-400/50 hover:shadow-glow-md transition-all duration-200 group"
                 >
                   <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden border-2 border-primary/30 group-hover:border-red-400/50 transition-colors flex-shrink-0">
-                    <img src={catalanIranLogo} alt="Catalan Iran" className="w-full h-full object-cover" />
+                    <img src={catalanIranLogo} alt="Catalan Iran" className="w-full h-full object-cover" loading="lazy" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-semibold font-mono text-text-primary text-sm sm:text-base">Catalaniran</p>
@@ -214,7 +235,22 @@ const Contact = () => {
                 <span className="text-primary">sendMessage</span><span className="text-text-muted">()</span>
               </h2>
 
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+              {submitted ? (
+                <div className="flex flex-col items-center justify-center py-10 space-y-4">
+                  <div className="w-14 h-14 rounded-full bg-primary/20 border-2 border-primary/40 flex items-center justify-center">
+                    <Mail className="w-7 h-7 text-primary" />
+                  </div>
+                  <p className="text-text-primary font-semibold text-lg font-mono">Message sent!</p>
+                  <p className="text-text-secondary text-sm text-center">Your email client should have opened. I'll get back to you soon.</p>
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    className="text-primary text-sm hover:underline font-mono"
+                  >
+                    Send another message
+                  </button>
+                </div>
+              ) : (
+              <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-text-secondary mb-2">
                     Your Name
@@ -225,10 +261,10 @@ const Contact = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    required
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-background-tertiary border border-primary/30 rounded-lg text-text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none text-sm sm:text-base"
+                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-background-tertiary border rounded-lg text-text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none text-sm sm:text-base ${errors.name ? 'border-red-500' : 'border-primary/30'}`}
                     placeholder="Your name"
                   />
+                  {errors.name && <p className="mt-1 text-xs text-red-400">{errors.name}</p>}
                 </div>
 
                 <div>
@@ -241,10 +277,10 @@ const Contact = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-background-tertiary border border-primary/30 rounded-lg text-text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none text-sm sm:text-base"
+                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-background-tertiary border rounded-lg text-text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none text-sm sm:text-base ${errors.email ? 'border-red-500' : 'border-primary/30'}`}
                     placeholder="your@email.com"
                   />
+                  {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email}</p>}
                 </div>
 
                 <div>
@@ -256,11 +292,11 @@ const Contact = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    required
                     rows="5"
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-background-tertiary border border-primary/30 rounded-lg text-text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none resize-none text-sm sm:text-base"
+                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-background-tertiary border rounded-lg text-text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none resize-none text-sm sm:text-base ${errors.message ? 'border-red-500' : 'border-primary/30'}`}
                     placeholder="Tell me about your project or just say hi!"
                   />
+                  {errors.message && <p className="mt-1 text-xs text-red-400">{errors.message}</p>}
                 </div>
 
                 <button
@@ -275,6 +311,7 @@ const Contact = () => {
                   This form will open your default email client
                 </p>
               </form>
+              )}
             </div>
 
             {/* Quick Email Link */}

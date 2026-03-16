@@ -17,6 +17,7 @@
   /* Modern card styling with glassmorphism */
   .modern-card {
     background: rgba(19, 19, 24, 0.7);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(139, 92, 246, 0.2);
     border-radius: 0.75rem;
@@ -197,6 +198,7 @@
   /* Glassmorphism effect */
   .glass {
     background: rgba(19, 19, 24, 0.5);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(139, 92, 246, 0.2);
     box-shadow:
@@ -349,7 +351,13 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar - dark purple theme */
+/* Firefox scrollbar */
+* {
+  scrollbar-color: #8b5cf6 #131318;
+  scrollbar-width: thin;
+}
+
+/* Custom scrollbar - dark purple theme (Chromium/Safari) */
 ::-webkit-scrollbar {
   width: 10px;
 }

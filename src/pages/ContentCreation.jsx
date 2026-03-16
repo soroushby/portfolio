@@ -18,7 +18,7 @@ const ContentCreation = () => {
       name: 'Soccer Podcast',
       logo: soccerPodcastLogo,
       handle: '@soccerpodcast',
-      url: 'https://www.youtube.com/@soccerpodcast',
+      url: 'https://youtube.com/@soccerpodcast',
       youtube: '29K subscribers',
       instagram: '95K followers',
       description: 'The flagship channel of the football network, delivering in-depth tactical analysis, match breakdowns, and football commentary. This channel has grown into a trusted source for football enthusiasts seeking quality analysis and engaging discussions about the beautiful game.',
@@ -33,7 +33,7 @@ const ContentCreation = () => {
       name: 'Catalan Iran',
       logo: catalanIranLogo,
       handle: '@catalaniran',
-      url: 'https://www.youtube.com/@catalaniran',
+      url: 'https://youtube.com/@catalaniran',
       youtube: '6K subscribers',
       instagram: '70K followers',
       description: 'Bringing FC Barcelona news, analysis, and tactical breakdowns to Persian-speaking audiences worldwide. This channel combines football expertise with cultural connection, creating content that resonates with fans of both Barcelona and Iranian football communities.',
@@ -48,7 +48,7 @@ const ContentCreation = () => {
       name: 'Persian Red Army',
       logo: persianRedArmyLogo,
       handle: '@persianredarmy',
-      url: 'https://www.youtube.com/@persianredarmy',
+      url: 'https://youtube.com/@persianredarmy',
       youtube: '3.5K subscribers',
       instagram: '20K followers',
       description: 'Dedicated to Manchester United content with a Persian perspective. This channel covers match analysis, player performances, transfer news, and club history, serving the growing community of Manchester United fans in Persian-speaking regions.',
@@ -63,7 +63,7 @@ const ContentCreation = () => {
       name: 'FootCourt XI',
       logo: footCourtLogo,
       handle: '@footcourtxi',
-      url: 'https://www.youtube.com/@footcourtxi',
+      url: 'https://youtube.com/@footcourtxi',
       youtube: '1.5K subscribers',
       instagram: '5K followers',
       description: 'A channel focused on providing comprehensive football analysis, player insights, and tactical strategies. Aimed at educating and engaging football fans with detailed content, making it a valuable resource for both casual and serious football enthusiasts.',
@@ -180,6 +180,7 @@ const ContentCreation = () => {
                         src={channel.logo}
                         alt={`${channel.name} logo`}
                         className="w-14 h-14 rounded-full object-cover border-2 border-primary/40 flex-shrink-0"
+                        loading="lazy"
                       />
                     ) : (
                       <div className="w-14 h-14 rounded-full bg-primary/20 border-2 border-primary/40 flex items-center justify-center flex-shrink-0">

@@ -311,6 +311,7 @@ const Projects = () => {
                           src={project.screenshot}
                           alt={`${project.title} screenshot`}
                           className="w-full h-full object-cover object-top"
+                          loading="lazy"
                         />
                       </div>
                     </div>
