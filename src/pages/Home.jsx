@@ -578,7 +578,7 @@ const Home = ({ setCurrentPage }) => {
                   'Neon (PostgreSQL)', 'Clerk', 'Tailwind CSS', 'shadcn/ui',
                   'Vite', 'Git/GitHub', 'Vercel', 'Angular',
                   'Strapi CMS', 'MERN Stack', 'Claude AI',
-                  'Supabase', 'Resend',
+                  'Supabase', 'Resend', 'Prisma', 'OpenAI',
                 ].map((skill) => (
                   <span key={skill} className="px-3 py-1 glass border border-primary/20 text-text-secondary hover:border-primary/50 hover:text-primary transition-all duration-200 text-[0.919rem] font-mono rounded-lg cursor-default">
                     {skill}
