@@ -231,7 +231,7 @@ const About = () => {
   }, [])
 
   return (
-    <div className="pt-20 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 bg-background-secondary min-h-screen tech-grid">
+    <div className="pt-20 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 bg-background-secondary min-h-screen">
       <div className="max-w-5xl mx-auto">
 
         {/* Hero / Profile */}

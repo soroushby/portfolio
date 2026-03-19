@@ -6,6 +6,34 @@ import clsx from 'clsx'
 import weatherNowScreenshot from '../assets/Weather-now.png'
 import liftingDiaryScreenshot from '../assets/lifting-diary.png'
 
+// ---- Browser chrome frame for screenshots ----
+const BrowserFrame = ({ src, alt, liveUrl }) => (
+  <div className="rounded-xl overflow-hidden border border-primary/15 shadow-card bg-background-tertiary">
+    <div className="flex items-center gap-2 px-3 py-2.5 border-b border-white/5 bg-background-tertiary">
+      <div className="flex gap-1.5 flex-shrink-0">
+        <div className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
+        <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
+        <div className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
+      </div>
+      <div className="flex-1 mx-2 h-5 bg-background-primary/60 rounded border border-white/5 flex items-center justify-center overflow-hidden">
+        {liveUrl && (
+          <span className="text-[9px] text-text-muted font-mono truncate px-2">
+            {liveUrl.replace('https://', '')}
+          </span>
+        )}
+      </div>
+    </div>
+    <div className="aspect-video overflow-hidden">
+      <img
+        src={src}
+        alt={alt}
+        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+        loading="lazy"
+      />
+    </div>
+  </div>
+)
+
 // ---- 3D Tilt Card ----
 const TiltCard = ({ children, className }) => {
   const ref = useRef(null)
@@ -427,14 +455,11 @@ const Projects = () => {
 
                         {project.screenshot && (
                           <div className="lg:w-[26rem] xl:w-[30rem] flex-shrink-0">
-                            <div className="aspect-video rounded-xl overflow-hidden border border-primary/15 shadow-card">
-                              <img
-                                src={project.screenshot}
-                                alt={`${project.title} screenshot`}
-                                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                                loading="lazy"
-                              />
-                            </div>
+                            <BrowserFrame
+                              src={project.screenshot}
+                              alt={`${project.title} screenshot`}
+                              liveUrl={project.live}
+                            />
                           </div>
                         )}
                       </div>

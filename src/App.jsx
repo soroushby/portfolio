@@ -47,7 +47,7 @@ function App() {
 
   // Loading screen timer
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1800)
+    const timer = setTimeout(() => setIsLoading(false), 1500)
     return () => clearTimeout(timer)
   }, [])
 

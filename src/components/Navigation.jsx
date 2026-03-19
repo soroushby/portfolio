@@ -54,17 +54,19 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <button
+          <motion.button
             onClick={() => handleNavClick('home')}
             className="group flex items-center flex-shrink-0"
             aria-label="Go to home"
+            whileHover={{ filter: 'drop-shadow(0 0 10px rgba(139, 92, 246, 0.8))' }}
+            transition={{ duration: 0.2 }}
           >
             <span className="text-xl font-bold font-mono tracking-tight">
               <span className="text-primary-light group-hover:text-accent transition-colors duration-300">&lt;</span>
               <span className="text-text-primary">SB</span>
               <span className="text-primary-light group-hover:text-accent transition-colors duration-300">/&gt;</span>
             </span>
-          </button>
+          </motion.button>
 
           {/* Desktop Nav pills */}
           <div className="hidden md:flex items-center">

@@ -375,7 +375,7 @@ const Home = ({ setCurrentPage }) => {
 
                 {/* Floating badge: Experience */}
                 <motion.div
-                  className="absolute -top-3 -right-4 sm:-right-10 glass border border-primary/30 rounded-xl px-3 py-2 text-xs font-mono whitespace-nowrap backdrop-blur-xl"
+                  className="hidden sm:block absolute -top-3 -right-4 sm:-right-10 glass border border-primary/30 rounded-xl px-3 py-2 text-xs font-mono whitespace-nowrap backdrop-blur-xl"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.1 }}
@@ -387,7 +387,7 @@ const Home = ({ setCurrentPage }) => {
 
                 {/* Floating badge: Subscribers */}
                 <motion.div
-                  className="absolute -bottom-3 -left-4 sm:-left-10 glass border border-cyan-400/25 rounded-xl px-3 py-2 text-xs font-mono whitespace-nowrap backdrop-blur-xl"
+                  className="hidden sm:block absolute -bottom-3 -left-4 sm:-left-10 glass border border-cyan-400/25 rounded-xl px-3 py-2 text-xs font-mono whitespace-nowrap backdrop-blur-xl"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.3 }}
@@ -398,7 +398,7 @@ const Home = ({ setCurrentPage }) => {
 
                 {/* Floating badge: Location */}
                 <motion.div
-                  className="absolute bottom-10 -right-4 sm:-right-14 flex items-center gap-1.5 glass border border-fuchsia/25 rounded-full px-3 py-1.5 text-xs whitespace-nowrap backdrop-blur-xl"
+                  className="hidden sm:flex absolute bottom-10 -right-4 sm:-right-14 items-center gap-1.5 glass border border-fuchsia/25 rounded-full px-3 py-1.5 text-xs whitespace-nowrap backdrop-blur-xl"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 1.5 }}

@@ -130,7 +130,7 @@ const itemVariants = {
 
 const ContentCreation = () => {
   return (
-    <div className="pt-20 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 bg-background-secondary min-h-screen tech-grid">
+    <div className="pt-20 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 bg-background-secondary min-h-screen dot-grid">
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
@@ -203,7 +203,7 @@ const ContentCreation = () => {
         </motion.div>
 
         {/* Channels — horizontal scroll on mobile, grid on desktop */}
-        <div className="mb-12 sm:mb-16">
+        <div className="mb-12 sm:mb-16 relative">
           <motion.div
             className="flex gap-4 sm:gap-5 overflow-x-auto pb-4 snap-x snap-mandatory"
             style={{ scrollbarColor: 'rgba(139,92,246,0.3) transparent' }}
@@ -278,6 +278,8 @@ const ContentCreation = () => {
               </motion.div>
             ))}
           </motion.div>
+          {/* Right fade edge scroll hint */}
+          <div className="absolute top-0 right-0 bottom-4 w-20 bg-gradient-to-l from-background-secondary to-transparent pointer-events-none rounded-r-xl" />
           <p className="text-xs text-center text-text-muted font-mono mt-2 opacity-60">← scroll to explore →</p>
         </div>
 

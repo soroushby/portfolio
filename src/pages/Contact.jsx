@@ -99,9 +99,9 @@ const Contact = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2.5 glass border border-primary/25 px-5 py-2.5 rounded-full mb-5">
-            <MessageSquare className="w-4 h-4 text-primary" />
-            <span className="font-mono text-sm text-primary">contact.init()</span>
+          <div className="inline-flex items-center gap-2.5 glass border border-accent/25 px-5 py-2.5 rounded-full mb-5">
+            <MessageSquare className="w-4 h-4 text-accent" />
+            <span className="font-mono text-sm text-accent">contact.init()</span>
           </div>
           <p className="section-label mb-3">Get In Touch</p>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-mono text-text-primary mb-4">
