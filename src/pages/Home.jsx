@@ -6,7 +6,7 @@ import reactLogo from '../assets/React-icon.svg.png'
 import nextjsLogo from '../assets/nextjs.svg'
 import typescriptLogo from '../assets/typescript.svg'
 import claudeLogo from '../assets/Claude_AI_symbol.svg'
-import profileImage from '../assets/profile.jpg'
+import profileImage from '../assets/Home-page-profile.jpg'
 import ParticleCanvas from '../components/ParticleCanvas'
 
 // ---- Typewriter ----
@@ -369,7 +369,7 @@ const Home = ({ setCurrentPage }) => {
                     src={profileImage}
                     alt="Soroush Bayanati"
                     className="w-full h-full object-cover"
-                    style={{ objectPosition: '0% 80%', transform: 'scale(1.6)' }}
+                    style={{ objectPosition: 'center 8%', transform: 'scale(1.5)', filter: 'grayscale(1)' }}
                   />
                 </div>
 
