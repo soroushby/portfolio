@@ -16,7 +16,7 @@ import {
   CodeIcon as Code,
 } from '@phosphor-icons/react'
 import clsx from 'clsx'
-import profileImage from '../assets/Home-page-profile.jpg'
+import profileImage from '../assets/about-page-profile.jpg'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -259,7 +259,7 @@ const About = () => {
                   src={profileImage}
                   alt="Soroush Bayanati"
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                  style={{ objectPosition: 'center 8%', transform: 'scale(1.5)', filter: 'grayscale(1)' }}
+                  style={{ objectPosition: 'center 15%', transform: 'scale(1.35)' }}
                 />
               </div>
             </div>
