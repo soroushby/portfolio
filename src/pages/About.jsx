@@ -540,17 +540,6 @@ const About = () => {
                         <div className="min-w-0 flex-1">
                           <p className="font-semibold font-mono text-text-primary text-xs sm:text-sm">{skill.name}</p>
                           <p className="text-xs text-text-muted mt-0.5 leading-relaxed">{skill.desc}</p>
-                          <div className="flex gap-1 mt-2">
-                            {[1, 2, 3, 4, 5].map((dot) => (
-                              <div
-                                key={dot}
-                                className={clsx(
-                                  'w-1.5 h-1.5 rounded-full transition-opacity',
-                                  dot <= skill.level ? category.dotColor : 'bg-text-muted/25'
-                                )}
-                              />
-                            ))}
-                          </div>
                         </div>
                       </div>
                     ))}
