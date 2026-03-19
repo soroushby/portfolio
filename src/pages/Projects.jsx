@@ -1,326 +1,471 @@
-import { useState, useEffect, useRef } from 'react'
-import { Code2, Calendar, Layers, Github, ExternalLink } from 'lucide-react'
-import { animate, inView, stagger } from 'motion'
+import { useState, useRef, useMemo } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Code2, Calendar, Layers, ExternalLink, ChevronDown, ChevronUp, Sparkles } from 'lucide-react'
+import { GithubLogoIcon as GithubLogo } from '@phosphor-icons/react'
+import clsx from 'clsx'
 import weatherNowScreenshot from '../assets/Weather-now.png'
 import liftingDiaryScreenshot from '../assets/lifting-diary.png'
 
-// 3D tilt wrapper component
-const TiltCard = ({ children, className, innerRef, ...props }) => {
+// ---- 3D Tilt Card ----
+const TiltCard = ({ children, className }) => {
   const ref = useRef(null)
 
   const onMouseMove = (e) => {
     const card = ref.current
     if (!card) return
     const rect = card.getBoundingClientRect()
-    const rotateX = ((e.clientY - rect.top - rect.height / 2) / rect.height) * -8
-    const rotateY = ((e.clientX - rect.left - rect.width / 2) / rect.width) * 8
-    card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(8px)`
-    card.style.transition = 'transform 0.1s ease'
+    const rotateX = ((e.clientY - rect.top - rect.height / 2) / rect.height) * -5
+    const rotateY = ((e.clientX - rect.left - rect.width / 2) / rect.width) * 5
+    card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(6px)`
+    card.style.transition = 'transform 0.08s ease'
   }
 
   const onMouseLeave = () => {
     const card = ref.current
     if (!card) return
-    card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(0px)'
+    card.style.transform = 'perspective(1200px) rotateX(0) rotateY(0) translateZ(0)'
     card.style.transition = 'transform 0.5s ease'
   }
 
   return (
-    <div
-      ref={(el) => { ref.current = el; if (innerRef) innerRef(el) }}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-      className={className}
-      {...props}
-    >
+    <div ref={ref} onMouseMove={onMouseMove} onMouseLeave={onMouseLeave} className={className}>
       {children}
     </div>
   )
 }
 
-const Projects = () => {
-  const [isVisible, setIsVisible] = useState(false)
-  const projectsRef = useRef([])
-
-  useEffect(() => {
-    setIsVisible(true)
-    window.scrollTo(0, 0)
-
-    // Motion scroll animations
-    projectsRef.current.forEach((project, index) => {
-      if (project) {
-        inView(project, () => {
-          animate(
-            project,
-            { opacity: [0, 1], y: [50, 0] },
-            { duration: 0.6, delay: index * 0.15, easing: [0.25, 0.46, 0.45, 0.94] }
-          )
-        })
-      }
-    })
-  }, [])
-
-  const projects = [
-    {
-      title: 'QuoteCraft — AI Quote Generator',
-      company: 'Personal Project',
-      duration: 'March 2026',
-      type: 'Full-Stack SaaS Application',
-      github: 'https://github.com/soroushby/Qoutecraft',
-      live: 'https://qoutecraft.vercel.app/',
-      description: 'An AI-powered quoting tool built for Canadian contractors. Users describe a job in plain text (or via voice input), and Claude AI generates a fully itemized professional estimate with Vancouver market rates, GST calculation, and a grand total — all in seconds.',
-      technologies: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'Clerk', 'Anthropic Claude API', '@anthropic-ai/sdk', 'Supabase', '@supabase/supabase-js', 'Resend', 'Vercel'],
-      features: [
-        'AI-generated line-item quotes using Anthropic Claude API',
-        'Voice input via browser SpeechRecognition API',
-        'Inline editable line items with auto-recalculated totals',
-        'Company branding with logo upload (base64)',
-        'One-click email delivery to clients via Resend',
-        'Saved quotes dashboard with status tracking (Draft / Sent / Accepted / Rejected)',
-        'Usage-based free tier (5 quotes/month) with pricing page',
-        'Authentication with Clerk (sign in / sign up modal flows)',
-        'Data persistence in Supabase (quotes + usage tables)',
-        'Printable quote view',
-        'Deployed on Vercel'
-      ]
-    },
-    {
-      title: 'Modern Developer Portfolio',
-      company: 'Personal Project',
-      duration: '2025',
-      type: 'Portfolio Website',
-      github: 'https://github.com/soroushby/portfolio',
-      live: 'https://soroushby.github.io/portfolio/',
-      description: 'Modern, responsive portfolio website built with React and best practices for showcasing technical skills and projects. Features clean component architecture, smooth animations powered by Motion library, and optimized performance. Designed with accessibility and user experience in mind, following current web development standards and trends.',
-      technologies: ['React 18', 'Motion', 'Framer Motion', 'Tailwind CSS', 'Vite', 'JavaScript ES6+'],
-      features: [
-        'Clean, component-based React architecture',
-        'Advanced animations using Motion and Framer Motion libraries',
-        'Scroll-triggered reveal effects and staggered entrance animations',
-        'Responsive design with Tailwind CSS utility classes',
-        'SEO optimized for better discoverability',
-        'Fast build times with Vite bundler',
-        'Accessible navigation and content structure',
-        'Mobile-first design approach'
-      ]
-    },
-    {
-      title: 'WorkOut - Lifting Diary App',
-      screenshot: liftingDiaryScreenshot,
-      company: 'Personal Project',
-      duration: 'February 2026',
-      type: 'Full-Stack Application',
-      github: 'https://github.com/soroushby/WorkOut-app',
-      live: 'https://work-out-7kj567x9t-soroush-bayanatis-projects.vercel.app/',
-      description: 'Full-stack workout tracking and lifting diary application built with Next.js App Router, TypeScript, and a serverless PostgreSQL backend. Features a complete authentication system via Clerk, type-safe database access with Drizzle ORM connected to Neon serverless Postgres, and a polished UI built with shadcn/ui and Radix UI primitives. Designed for athletes to log workouts, track progress over time, and manage exercise history with a modern, accessible interface.',
-      technologies: ['Next.js', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'shadcn/ui', 'Radix UI', 'Drizzle ORM', 'Neon (PostgreSQL)', 'Clerk', 'Zod'],
-      features: [
-        'Next.js App Router with server components and file-based routing',
-        'Full authentication and user management powered by Clerk',
-        'Type-safe serverless PostgreSQL via Neon + Drizzle ORM',
-        'Schema validation and type inference with Zod',
-        'Accessible, composable UI components from shadcn/ui and Radix UI',
-        'Date handling and workout scheduling with react-day-picker and date-fns',
-        'Utility-first styling with Tailwind CSS v4 and class-variance-authority',
-        'Workout logging, exercise history, and progress tracking features',
-        'Deployed on Vercel with serverless edge-compatible database'
-      ]
-    },
-    {
-      title: 'WeatherNow - Weather Dashboard',
-      screenshot: weatherNowScreenshot,
-      company: 'Personal Project',
-      duration: 'February 2026',
-      type: 'Web Application',
-      github: 'https://github.com/soroushby/WeatherApp',
-      live: 'https://soroushby.github.io/WeatherApp/',
-      description: 'Modern weather application built with React, TanStack Router, and TanStack Query, demonstrating advanced frontend patterns and API integration. Features multi-page routing, real-time weather data from OpenWeather API, and sophisticated data caching. Implements geolocation for automatic weather detection, favorites management with localStorage, and search history. Dark purple theme with dynamic weather-specific accent colors that adapt based on conditions.',
-      technologies: ['React 18', 'TanStack Router', 'TanStack Query', 'Tailwind CSS', 'OpenWeather API', 'Vite'],
-      features: [
-        'Multi-page routing with TanStack Router and lazy-loaded components',
-        'Advanced data fetching and caching with TanStack Query',
-        'Real-time weather data: current conditions, 24-hour forecast, 5-day forecast',
-        'Geolocation API integration for automatic city detection',
-        'Custom useWeather hook following React best practices',
-        'Temperature unit toggle (Celsius/Fahrenheit) with persistent preference',
-        'Favorites system and search history stored in localStorage',
-        'Weather alerts banner and air quality index display',
-        'Dynamic accent colors based on weather conditions',
-        'Fully responsive design for desktop and mobile devices'
-      ]
-    },
-    {
-      title: 'Ultimate System Web Application',
-      company: 'Ultimate System',
-      duration: 'August 2022 - Present',
-      type: 'Web Application',
-      description: 'Web application built with Angular, TypeScript, and RxJS for a Vancouver-based tech company. This comprehensive system features complex UI components using Angular Material and Kendo UI. Implemented modular architecture for scalability and maintainability, ensuring the application can grow with business needs.',
-      technologies: ['Angular', 'TypeScript', 'RxJS', 'Angular Material', 'Kendo UI', 'ag-Grid'],
-      features: [
-        'Modular component architecture for code reusability and maintainability',
-        'Responsive design with Angular Material ensuring mobile compatibility',
-        'Complex data grids with ag-Grid for efficient data visualization',
-        'RESTful API integration for backend communication',
-        'Comprehensive unit and integration testing'
-      ]
-    },
-    {
-      title: 'MD Swiss Pharma Patient Management System',
-      company: 'MD Swiss Pharma GmbH',
-      duration: 'June 2021 - July 2022',
-      type: 'Healthcare Application',
-      description: 'Pharmaceutical industry web application for comprehensive patient management. Developed custom UI components with React and TypeScript, implementing full REST API integration for seamless data management. Optimized UI performance to handle large datasets efficiently while maintaining smooth user experience. Collaborated closely with QA team to ensure application stability and quality across all releases.',
-      technologies: ['React', 'TypeScript', 'REST API', 'CSS3', 'JavaScript ES6+', 'Git'],
-      features: [
-        'Patient data management dashboard with real-time updates',
-        'Custom React components for complex form handling',
-        'Full REST API integration for backend data operations',
-        'Responsive UI design for desktop and tablet devices',
-        'Performance optimization for handling large patient datasets',
-        'Comprehensive error handling and validation',
-        'Close collaboration with QA for bug identification and resolution'
-      ]
-    }
-  ]
+// ---- Expandable features list ----
+const FeaturesList = ({ features }) => {
+  const [expanded, setExpanded] = useState(false)
+  const visible = expanded ? features : features.slice(0, 4)
 
   return (
-    <div className="pt-20 sm:pt-24 pb-12 sm:pb-20 px-4 sm:px-6 bg-background-secondary min-h-screen tech-grid">
-      <div className="max-w-7xl mx-auto">
+    <div>
+      <ul className="space-y-2">
+        {visible.map((feature, i) => (
+          <motion.li
+            key={i}
+            initial={{ opacity: 0, x: -8 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.04 }}
+            className="flex items-start gap-2.5 text-text-secondary group/item"
+          >
+            <span className="text-primary mt-1 flex-shrink-0 font-mono text-sm group-hover/item:scale-125 transition-transform">›</span>
+            <span className="text-xs sm:text-sm leading-relaxed">{feature}</span>
+          </motion.li>
+        ))}
+      </ul>
+      {features.length > 4 && (
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="mt-3 flex items-center gap-1.5 text-xs font-mono text-primary hover:text-primary-light transition-colors"
+        >
+          {expanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+          {expanded ? 'Show less' : `+${features.length - 4} more features`}
+        </button>
+      )}
+    </div>
+  )
+}
+
+const projects = [
+  {
+    title: 'QuoteCraft — AI Quote Generator',
+    company: 'Personal Project',
+    duration: 'March 2026',
+    type: 'Full-Stack SaaS',
+    category: 'SaaS & AI',
+    featured: true,
+    github: 'https://github.com/soroushby/Qoutecraft',
+    live: 'https://qoutecraft.vercel.app/',
+    color: 'from-violet-600/20 to-purple-600/10',
+    accent: 'text-violet-400',
+    accentBg: 'bg-violet-500/10 border-violet-500/20',
+    accentLine: 'from-violet-500 via-purple-500 to-primary',
+    description: 'An AI-powered quoting tool built for Canadian contractors. Users describe a job in plain text (or via voice input), and Claude AI generates a fully itemized professional estimate with Vancouver market rates, GST calculation, and a grand total — all in seconds.',
+    technologies: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind v4', 'Clerk', 'Claude API', 'Supabase', 'Resend', 'Vercel'],
+    features: [
+      'AI-generated line-item quotes using Anthropic Claude API',
+      'Voice input via browser SpeechRecognition API',
+      'Inline editable line items with auto-recalculated totals',
+      'Company branding with logo upload (base64)',
+      'One-click email delivery to clients via Resend',
+      'Saved quotes dashboard with status tracking (Draft / Sent / Accepted)',
+      'Usage-based free tier (5 quotes/month) with pricing page',
+      'Authentication with Clerk, persistence in Supabase',
+    ],
+  },
+  {
+    title: 'Modern Developer Portfolio',
+    company: 'Personal Project',
+    duration: '2025 – 2026',
+    type: 'Portfolio Website',
+    category: 'Frontend',
+    featured: false,
+    github: 'https://github.com/soroushby/portfolio',
+    live: 'https://soroushby.github.io/portfolio/',
+    color: 'from-cyan-600/20 to-blue-600/10',
+    accent: 'text-cyan-400',
+    accentBg: 'bg-cyan-500/10 border-cyan-500/20',
+    accentLine: 'from-cyan-500 via-blue-500 to-primary',
+    description: 'Modern, responsive portfolio built with React 19 and the latest frontend best practices. Features smooth animations powered by Framer Motion, GSAP scroll triggers, Lenis smooth scroll, and a polished dark design system with glassmorphism cards.',
+    technologies: ['React 19', 'Framer Motion', 'GSAP', 'Lenis', 'Tailwind CSS', 'Vite', 'JavaScript ES6+'],
+    features: [
+      'React 19 with clean component-based architecture',
+      'Advanced animations — Framer Motion + GSAP ScrollTrigger',
+      'Lenis smooth scroll synced to GSAP ticker',
+      'Animated loading screen and page transitions',
+      'Interactive particle canvas with physics simulation',
+      'Profile photo hero with rotating gradient ring',
+      'SEO-optimized with OG tags and sitemap',
+    ],
+  },
+  {
+    title: 'WorkOut — Lifting Diary App',
+    screenshot: liftingDiaryScreenshot,
+    company: 'Personal Project',
+    duration: 'February 2026',
+    type: 'Full-Stack Application',
+    category: 'Full-Stack',
+    featured: true,
+    github: 'https://github.com/soroushby/WorkOut-app',
+    live: 'https://work-out-7kj567x9t-soroush-bayanatis-projects.vercel.app/',
+    color: 'from-emerald-600/20 to-green-600/10',
+    accent: 'text-emerald-400',
+    accentBg: 'bg-emerald-500/10 border-emerald-500/20',
+    accentLine: 'from-emerald-500 via-green-500 to-teal-500',
+    description: 'Full-stack workout tracking app built with Next.js App Router, TypeScript, and serverless PostgreSQL. Features Clerk auth, type-safe DB access with Drizzle ORM on Neon, and a polished UI with shadcn/ui and Radix UI.',
+    technologies: ['Next.js', 'React 19', 'TypeScript', 'Tailwind v4', 'shadcn/ui', 'Drizzle ORM', 'Neon', 'Clerk', 'Zod'],
+    features: [
+      'Next.js App Router with server components and file-based routing',
+      'Full auth and user management powered by Clerk',
+      'Type-safe serverless PostgreSQL via Neon + Drizzle ORM',
+      'Schema validation and type inference with Zod',
+      'Accessible, composable UI from shadcn/ui and Radix UI',
+      'Workout logging, exercise history, and progress tracking',
+      'Deployed on Vercel with edge-compatible database',
+    ],
+  },
+  {
+    title: 'WeatherNow — Weather Dashboard',
+    screenshot: weatherNowScreenshot,
+    company: 'Personal Project',
+    duration: 'February 2026',
+    type: 'Web Application',
+    category: 'Frontend',
+    featured: false,
+    github: 'https://github.com/soroushby/WeatherApp',
+    live: 'https://soroushby.github.io/WeatherApp/',
+    color: 'from-sky-600/20 to-indigo-600/10',
+    accent: 'text-sky-400',
+    accentBg: 'bg-sky-500/10 border-sky-500/20',
+    accentLine: 'from-sky-500 via-indigo-500 to-blue-500',
+    description: 'Modern weather dashboard with React, TanStack Router, and TanStack Query. Features multi-page routing, real-time OpenWeather API data, geolocation, favorites management, and dynamic accent colors based on weather conditions.',
+    technologies: ['React 18', 'TanStack Router', 'TanStack Query', 'Tailwind CSS', 'OpenWeather API', 'Vite'],
+    features: [
+      'Multi-page routing with TanStack Router and lazy-loaded components',
+      'Advanced data fetching and caching with TanStack Query',
+      'Real-time weather: current conditions, 24h forecast, 5-day forecast',
+      'Geolocation API for automatic city detection',
+      'Favorites and search history stored in localStorage',
+      'Dynamic accent colors based on weather conditions',
+      'Fully responsive for desktop and mobile',
+    ],
+  },
+  {
+    title: 'Ultimate System Web Application',
+    company: 'Ultimate System',
+    duration: 'Aug 2022 – Present',
+    type: 'Enterprise Application',
+    category: 'Enterprise',
+    featured: false,
+    color: 'from-orange-600/20 to-amber-600/10',
+    accent: 'text-orange-400',
+    accentBg: 'bg-orange-500/10 border-orange-500/20',
+    accentLine: 'from-orange-500 via-amber-500 to-yellow-500',
+    description: 'Enterprise web application built with Angular, TypeScript, and RxJS for a Vancouver-based tech company. Features complex UI components using Angular Material and Kendo UI, modular architecture, and ag-Grid for data visualization.',
+    technologies: ['Angular', 'TypeScript', 'RxJS', 'Angular Material', 'Kendo UI', 'ag-Grid'],
+    features: [
+      'Modular component architecture for scalability',
+      'Responsive Angular Material design',
+      'Complex data grids with ag-Grid',
+      'RESTful API integration',
+      'Comprehensive unit and integration testing',
+    ],
+  },
+  {
+    title: 'MD Swiss Pharma Patient System',
+    company: 'MD Swiss Pharma GmbH',
+    duration: 'Jun 2021 – Jul 2022',
+    type: 'Healthcare Application',
+    category: 'Enterprise',
+    featured: false,
+    color: 'from-rose-600/20 to-pink-600/10',
+    accent: 'text-rose-400',
+    accentBg: 'bg-rose-500/10 border-rose-500/20',
+    accentLine: 'from-rose-500 via-pink-500 to-fuchsia-500',
+    description: 'Pharmaceutical patient management system built with React and TypeScript. Custom UI components, full REST API integration, and performance optimization for large datasets.',
+    technologies: ['React', 'TypeScript', 'REST API', 'CSS3', 'JavaScript ES6+', 'Git'],
+    features: [
+      'Patient data dashboard with real-time updates',
+      'Custom React components for complex form handling',
+      'Full REST API integration',
+      'Performance optimization for large patient datasets',
+      'Comprehensive error handling and QA collaboration',
+    ],
+  },
+]
+
+const FILTERS = [
+  { id: 'All', label: 'All Projects' },
+  { id: 'SaaS & AI', label: 'SaaS & AI' },
+  { id: 'Full-Stack', label: 'Full-Stack' },
+  { id: 'Frontend', label: 'Frontend' },
+  { id: 'Enterprise', label: 'Enterprise' },
+]
+
+const Projects = () => {
+  const [activeFilter, setActiveFilter] = useState('All')
+
+  const filtered = useMemo(
+    () => activeFilter === 'All' ? projects : projects.filter((p) => p.category === activeFilter),
+    [activeFilter]
+  )
+
+  const counts = useMemo(() => {
+    const map = {}
+    projects.forEach((p) => { map[p.category] = (map[p.category] || 0) + 1 })
+    return map
+  }, [])
+
+  return (
+    <div className="pt-20 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 bg-background-secondary min-h-screen tech-grid">
+      <div className="max-w-5xl mx-auto">
+
         {/* Header */}
-        <div className={`text-center mb-10 sm:mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center space-x-2 sm:space-x-3 glass border border-primary/30 px-4 sm:px-6 py-2 sm:py-3 rounded-full mb-4 sm:mb-6">
-            <Code2 className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-            <span className="font-semibold font-mono text-primary text-sm sm:text-base">portfolio.projects</span>
+        <motion.div
+          className="text-center mb-10 sm:mb-14"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="inline-flex items-center gap-2.5 glass border border-primary/25 px-5 py-2.5 rounded-full mb-5">
+            <Code2 className="w-4 h-4 text-primary" />
+            <span className="font-mono text-sm text-primary">portfolio.projects</span>
           </div>
-          <p className="code-comment text-sm mb-3">My Work</p>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-mono text-text-primary mb-4">
-            <span className="text-primary">const</span> projects<span className="text-text-muted"> = [</span>
+          <p className="section-label mb-3">My Work</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-mono text-text-primary mb-4">
+            <span className="text-primary">const</span>{' '}
+            <span className="gradient-text-purple">projects</span>
+            <span className="text-text-muted"> = [</span>
           </h1>
-          <p className="text-sm sm:text-base text-text-secondary max-w-2xl mx-auto font-mono">
-            <span className="text-primary">// </span>Collection of web applications showcasing technical skills
+          <p className="text-text-secondary font-mono text-sm">
+            <span className="text-primary/60">// </span>
+            Full-stack web apps — SaaS, AI integrations, and enterprise systems
           </p>
-        </div>
+        </motion.div>
 
-        {/* Projects Grid */}
-        <div className="space-y-6 sm:space-y-8">
-          {projects.map((project, index) => (
-            <TiltCard
-              key={index}
-              innerRef={(el) => (projectsRef.current[index] = el)}
-              className="modern-card !p-0 hover:border-primary/50 hover:shadow-glow-lg overflow-hidden group opacity-0"
-            >
-              <div className="hidden sm:block absolute top-4 left-4 font-mono text-xs text-text-muted opacity-0 group-hover:opacity-100 transition-opacity">
-                {`// index: ${index}`}
-              </div>
-              {(project.github || project.live) && (
-                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 flex items-center gap-2 z-10">
-                  {project.live && (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 sm:p-2.5 glass border border-primary/30 rounded-lg hover:border-primary/50 hover:shadow-glow-md transition-all duration-200 group/live"
-                      aria-label="View Live Demo"
-                    >
-                      <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 text-text-secondary group-hover/live:text-primary transition-colors" />
-                    </a>
-                  )}
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 sm:p-2.5 glass border border-primary/30 rounded-lg hover:border-primary/50 hover:shadow-glow-md transition-all duration-200 group/github"
-                      aria-label="View on GitHub"
-                    >
-                      <Github className="w-4 h-4 sm:w-5 sm:h-5 text-text-secondary group-hover/github:text-primary transition-colors" />
-                    </a>
-                  )}
-                </div>
-              )}
-              <div className="p-4 sm:p-6 md:p-8 lg:p-10 relative">
-                {/* Project Header */}
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 sm:space-x-3 mb-2 sm:mb-3">
-                      <span className="inline-block px-2 sm:px-3 py-1 glass border border-primary/30 text-primary text-[10px] sm:text-xs font-mono font-semibold rounded-lg">
-                        <span className="text-text-muted">{'<'}</span>{project.type.toUpperCase()}<span className="text-text-muted">{' />'}</span>
-                      </span>
-                    </div>
-                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-text-primary mb-2 group-hover:text-primary group-hover:neon-glow transition-colors">
-                      {project.title}
-                    </h2>
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-xs sm:text-sm text-text-secondary">
-                      <div className="flex items-center space-x-2">
-                        <Layers className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
-                        <span className="font-medium">{project.company}</span>
+        {/* Filter Tabs */}
+        <motion.div
+          className="flex flex-wrap gap-2 justify-center mb-10"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
+        >
+          {FILTERS.map((filter) => {
+            const count = filter.id === 'All' ? projects.length : (counts[filter.id] || 0)
+            const isActive = activeFilter === filter.id
+            return (
+              <button
+                key={filter.id}
+                onClick={() => setActiveFilter(filter.id)}
+                className={clsx(
+                  'relative px-4 py-2 text-sm font-mono rounded-xl border transition-all duration-200 flex items-center gap-2',
+                  isActive
+                    ? 'text-primary border-primary/40 bg-primary/10 shadow-glow-sm'
+                    : 'text-text-muted border-primary/15 hover:border-primary/30 hover:text-text-secondary hover:bg-primary/5'
+                )}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="filter-active"
+                    className="absolute inset-0 bg-primary/8 rounded-xl"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative">{filter.label}</span>
+                <span className={clsx(
+                  'relative text-xs px-1.5 py-0.5 rounded-md font-semibold',
+                  isActive ? 'bg-primary/20 text-primary' : 'bg-primary/8 text-text-muted'
+                )}>
+                  {count}
+                </span>
+              </button>
+            )
+          })}
+        </motion.div>
+
+        {/* Projects List */}
+        <AnimatePresence mode="popLayout">
+          <div className="space-y-6 sm:space-y-8">
+            {filtered.map((project, index) => (
+              <motion.div
+                key={project.title}
+                layout
+                initial={{ opacity: 0, y: 30, scale: 0.97 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.18 } }}
+                transition={{ duration: 0.4, delay: index * 0.04 }}
+              >
+                <TiltCard>
+                  <div className={clsx(
+                    'modern-card !p-0 overflow-hidden group',
+                    project.featured && 'ring-1 ring-yellow-500/25 shadow-[0_0_40px_-8px_rgba(234,179,8,0.18)]'
+                  )}>
+                    {/* Gradient top line — thicker for featured */}
+                    <div className={clsx('w-full bg-gradient-to-r', project.accentLine, project.featured ? 'h-[3px]' : 'h-0.5')} />
+
+                    <div className="p-5 sm:p-7 md:p-8">
+                      {/* Header row */}
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-5">
+                        <div className="flex-1">
+                          <div className="flex flex-wrap items-center gap-2 mb-3">
+                            <span className={clsx('inline-block px-2.5 py-1 text-[10px] sm:text-xs font-mono font-semibold rounded-lg border', project.accentBg, project.accent)}>
+                              {project.type}
+                            </span>
+                            {project.featured && (
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-mono font-semibold rounded-lg border border-yellow-500/40 bg-yellow-500/15 text-yellow-300 shadow-[0_0_14px_rgba(234,179,8,0.25)]">
+                                <Sparkles className="w-3.5 h-3.5" />
+                                Featured
+                              </span>
+                            )}
+                          </div>
+                          <h2 className="text-xl sm:text-2xl font-bold font-mono text-text-primary group-hover:text-primary transition-colors duration-300">
+                            {project.title}
+                          </h2>
+                          <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-text-muted">
+                            <span className="flex items-center gap-1.5">
+                              <Layers className="w-3.5 h-3.5 text-primary/60" />
+                              {project.company}
+                            </span>
+                            <span className="flex items-center gap-1.5">
+                              <Calendar className="w-3.5 h-3.5 text-primary/60" />
+                              {project.duration}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Links */}
+                        {(project.github || project.live) && (
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            {project.live && (
+                              <a
+                                href={project.live}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Live demo"
+                                className="flex items-center gap-1.5 px-3 py-1.5 glass border border-primary/25 rounded-lg hover:border-primary/50 hover:shadow-glow-sm transition-all duration-200 text-xs font-mono text-text-secondary hover:text-primary"
+                              >
+                                <ExternalLink className="w-3.5 h-3.5" />
+                                Live
+                              </a>
+                            )}
+                            {project.github && (
+                              <a
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="GitHub"
+                                className="flex items-center gap-1.5 px-3 py-1.5 glass border border-primary/25 rounded-lg hover:border-primary/50 hover:shadow-glow-sm transition-all duration-200 text-xs font-mono text-text-secondary hover:text-primary"
+                              >
+                                <GithubLogo size={14} />
+                                Code
+                              </a>
+                            )}
+                          </div>
+                        )}
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
-                        <span>{project.duration}</span>
+
+                      {/* Description */}
+                      <p className="text-sm sm:text-base text-text-secondary leading-relaxed mb-5">
+                        {project.description}
+                      </p>
+
+                      {/* Technologies */}
+                      <div className="mb-5">
+                        <p className="text-xs font-mono text-text-muted mb-2">
+                          <span className="text-primary">tech</span>: [
+                        </p>
+                        <div className="flex flex-wrap gap-1.5 pl-4">
+                          {project.technologies.map((tech, i) => (
+                            <span
+                              key={i}
+                              className={clsx(
+                                'px-2.5 py-1 border text-xs font-mono rounded-lg transition-all duration-200 backdrop-blur-sm',
+                                project.accentBg,
+                                project.accent
+                              )}
+                            >
+                              "{tech}"
+                            </span>
+                          ))}
+                        </div>
+                        <p className="text-xs font-mono text-text-muted mt-1.5">]</p>
+                      </div>
+
+                      {/* Features + screenshot */}
+                      <div className={clsx('flex flex-col gap-6', project.screenshot && 'lg:flex-row lg:items-start')}>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-mono text-text-muted mb-2">
+                            <span className="text-primary">features</span>: [
+                          </p>
+                          <div className="pl-4">
+                            <FeaturesList features={project.features} />
+                          </div>
+                          <p className="text-xs font-mono text-text-muted mt-2">]</p>
+                        </div>
+
+                        {project.screenshot && (
+                          <div className="lg:w-[26rem] xl:w-[30rem] flex-shrink-0">
+                            <div className="aspect-video rounded-xl overflow-hidden border border-primary/15 shadow-card">
+                              <img
+                                src={project.screenshot}
+                                alt={`${project.title} screenshot`}
+                                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy"
+                              />
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
-                </div>
+                </TiltCard>
+              </motion.div>
+            ))}
+          </div>
+        </AnimatePresence>
 
-                {/* Description */}
-                <p className="text-sm sm:text-base text-text-secondary leading-relaxed mb-4 sm:mb-6">
-                  {project.description}
-                </p>
+        {/* Empty state */}
+        {filtered.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-16 text-text-muted font-mono text-sm"
+          >
+            <p>// no projects match this filter</p>
+          </motion.div>
+        )}
 
-                {/* Technologies */}
-                <div className="mb-4 sm:mb-6">
-                  <h3 className="text-xs sm:text-sm font-mono font-semibold text-text-primary mb-2 sm:mb-3">
-                    <span className="text-primary">tech</span>: [
-                  </h3>
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2 pl-2 sm:pl-4">
-                    {project.technologies.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-2 sm:px-3 py-0.5 sm:py-1 glass border border-primary/20 text-xs sm:text-sm font-mono text-text-secondary rounded-lg hover:border-primary/50 hover:text-primary-light hover:shadow-glow-sm transition-all duration-200 cursor-pointer"
-                      >
-                        "{tech}"
-                        {techIndex < project.technologies.length - 1 && <span className="text-text-muted">,</span>}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-xs sm:text-sm font-mono text-text-primary mt-2">]</p>
-                </div>
-
-                {/* Key Features + Screenshot side by side */}
-                <div className={`flex flex-col ${project.screenshot ? 'lg:flex-row lg:gap-8 lg:items-end' : ''}`}>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-xs sm:text-sm font-mono font-semibold text-text-primary mb-2 sm:mb-3">
-                      <span className="text-primary">features</span>: [
-                    </h3>
-                    <ul className="space-y-1.5 sm:space-y-2 pl-2 sm:pl-4">
-                      {project.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-start space-x-2 sm:space-x-3 text-text-secondary group/item">
-                          <span className="text-primary mt-0.5 sm:mt-1 flex-shrink-0 font-mono group-hover/item:scale-125 transition-transform text-xs sm:text-base">{'>'}</span>
-                          <span className="text-xs sm:text-sm leading-relaxed">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <p className="text-xs sm:text-sm font-mono text-text-primary mt-2">]</p>
-                  </div>
-
-                  {project.screenshot && (
-                    <div className="mt-4 lg:mt-0 lg:w-[31rem] xl:w-[34rem] flex-shrink-0">
-                      <div className="w-full aspect-video rounded-lg overflow-hidden border border-primary/20">
-                        <img
-                          src={project.screenshot}
-                          alt={`${project.title} screenshot`}
-                          className="w-full h-full object-cover object-top"
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </TiltCard>
-          ))}
-        </div>
+        {/* Closing bracket */}
+        <motion.p
+          className="text-center mt-8 text-2xl font-mono text-text-muted"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          ]
+        </motion.p>
       </div>
     </div>
   )

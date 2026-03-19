@@ -3,12 +3,12 @@ import { useEffect, useRef, useState } from 'react'
 const CursorGlow = () => {
   const glowRef = useRef(null)
   const dotRef = useRef(null)
-  const posRef = useRef({ x: -300, y: -300 })
+  const posRef = useRef({ x: -500, y: -500 })
   const rafRef = useRef(null)
   const [isMouse, setIsMouse] = useState(false)
 
   useEffect(() => {
-    // Only show on devices with a precise pointer (mouse), not touch
+    // Only show on precise pointer (mouse) devices
     if (!window.matchMedia('(pointer: fine)').matches) return
     setIsMouse(true)
 
@@ -19,15 +19,15 @@ const CursorGlow = () => {
     const tick = () => {
       const { x, y } = posRef.current
       if (glowRef.current) {
-        glowRef.current.style.transform = `translate(${x - 175}px, ${y - 175}px)`
+        glowRef.current.style.transform = `translate(${x - 200}px, ${y - 200}px)`
       }
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${x - 4}px, ${y - 4}px)`
+        dotRef.current.style.transform = `translate(${x - 3}px, ${y - 3}px)`
       }
       rafRef.current = requestAnimationFrame(tick)
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
     rafRef.current = requestAnimationFrame(tick)
 
     return () => {
@@ -40,25 +40,27 @@ const CursorGlow = () => {
 
   return (
     <>
+      {/* Outer glow */}
       <div
         ref={glowRef}
         className="pointer-events-none fixed top-0 left-0 z-[9998] will-change-transform"
         style={{
-          width: '350px',
-          height: '350px',
+          width: '400px',
+          height: '400px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.07) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.06) 0%, rgba(6, 182, 212, 0.02) 40%, transparent 70%)',
         }}
       />
+      {/* Dot */}
       <div
         ref={dotRef}
         className="pointer-events-none fixed top-0 left-0 z-[9999] will-change-transform"
         style={{
-          width: '8px',
-          height: '8px',
+          width: '6px',
+          height: '6px',
           borderRadius: '50%',
-          background: 'rgba(139, 92, 246, 0.9)',
-          boxShadow: '0 0 10px rgba(139,92,246,0.9), 0 0 20px rgba(139,92,246,0.5)',
+          background: 'rgba(139, 92, 246, 0.95)',
+          boxShadow: '0 0 8px rgba(139,92,246,0.9), 0 0 16px rgba(139,92,246,0.4)',
         }}
       />
     </>

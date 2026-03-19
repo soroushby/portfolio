@@ -1,47 +1,66 @@
-import { useState, useEffect, useRef } from 'react'
-import { Mail, Github, Linkedin, Youtube, MapPin, MessageSquare } from 'lucide-react'
-import { animate, stagger } from 'motion'
+import { useState, useRef } from 'react'
+import { motion } from 'framer-motion'
+import { Mail, Github, Linkedin, Youtube, MapPin, MessageSquare, Send, CheckCircle } from 'lucide-react'
+import clsx from 'clsx'
 import soccerPodcastLogo from '../assets/soccer-podcast-logo.jpg'
 import persianRedArmyLogo from '../assets/persian-red-army-logo.jpg'
 import footCourtLogo from '../assets/footcurt logo remake.jpg'
 import catalanIranLogo from '../assets/catalan iran logo.png'
 
+const socials = [
+  {
+    href: 'https://github.com/soroushby',
+    icon: Github,
+    label: 'GitHub',
+    sub: 'github.com/soroushby',
+    hover: 'hover:border-primary/30 hover:text-text-primary',
+    iconColor: 'text-text-primary',
+  },
+  {
+    href: 'https://www.linkedin.com/in/soroush-bayanati-3546723a5/',
+    icon: Linkedin,
+    label: 'LinkedIn',
+    sub: 'soroush-bayanati',
+    hover: 'hover:border-blue-400/40 hover:text-blue-400',
+    iconColor: 'text-blue-400',
+  },
+]
+
+const youtubeChannels = [
+  { href: 'https://youtube.com/@soccerpodcast', logo: soccerPodcastLogo, name: 'SoccerPodcast', sub: '@soccerpodcast' },
+  { href: 'https://youtube.com/@footcourtxi', logo: footCourtLogo, name: 'FootcourtXI', sub: '@footcourtxi' },
+  { href: 'https://youtube.com/@persianredarmy', logo: persianRedArmyLogo, name: 'PersianRedArmy', sub: '@persianredarmy' },
+  { href: 'https://youtube.com/@catalaniran', logo: catalanIranLogo, name: 'Catalaniran', sub: '@catalaniran' },
+]
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12, delayChildren: 0.15 },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+}
+
 const Contact = () => {
-  const [isVisible, setIsVisible] = useState(false)
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  })
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
-  const cardsRef = useRef(null)
-
-  useEffect(() => {
-    setIsVisible(true)
-    window.scrollTo(0, 0)
-
-    // Motion stagger animation for contact cards
-    if (cardsRef.current) {
-      const cards = cardsRef.current.querySelectorAll('.contact-card')
-      animate(
-        cards,
-        { opacity: [0, 1], y: [30, 0] },
-        { duration: 0.5, delay: stagger(0.1), easing: [0.25, 0.46, 0.45, 0.94] }
-      )
-    }
-  }, [])
 
   const validate = () => {
-    const newErrors = {}
-    if (!formData.name.trim()) newErrors.name = 'Name is required.'
+    const errs = {}
+    if (!formData.name.trim()) errs.name = 'Name is required.'
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required.'
+      errs.email = 'Email is required.'
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address.'
+      errs.email = 'Please enter a valid email.'
     }
-    if (!formData.message.trim()) newErrors.message = 'Message is required.'
-    return newErrors
+    if (!formData.message.trim()) errs.message = 'Message is required.'
+    return errs
   }
 
   const handleSubmit = (e) => {
@@ -60,199 +79,178 @@ const Contact = () => {
   }
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    if (errors[e.target.name]) setErrors((prev) => ({ ...prev, [e.target.name]: undefined }))
   }
 
-  return (
-    <div className="pt-20 sm:pt-24 pb-12 sm:pb-20 px-4 sm:px-6 min-h-screen bg-background-secondary tech-grid">
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className={`text-center mb-10 sm:mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center space-x-2 sm:space-x-3 glass border-2 border-primary/30 rounded-lg px-4 sm:px-6 py-2 sm:py-3 mb-4 sm:mb-6">
-            <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-            <span className="font-semibold font-mono text-primary text-sm sm:text-base">contact.init()</span>
-          </div>
-          <p className="code-comment text-sm mb-3">Get In Touch</p>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-mono text-text-primary mb-4">
-            <span className="text-primary">collaborate</span><span className="text-text-muted">.</span>together<span className="text-text-muted">()</span>
-          </h1>
-          <p className="text-sm sm:text-base text-text-secondary max-w-2xl mx-auto font-mono">
-            <span className="text-primary">// </span>Currently available for full-time positions and interesting projects.<br/>
-            <span className="text-primary">// </span>Feel free to reach out!
-          </p>
-        </div>
+  const inputCls = (hasError) => clsx(
+    'w-full px-4 py-3 bg-background-tertiary border rounded-xl text-text-primary placeholder-text-muted/50 focus:ring-2 focus:ring-primary/40 focus:border-primary/60 transition-all outline-none text-sm font-sans',
+    hasError ? 'border-red-500/60' : 'border-primary/20 hover:border-primary/40'
+  )
 
-        <div ref={cardsRef} className="grid lg:grid-cols-2 gap-6 sm:gap-12">
-          {/* Contact Information */}
-          <div className="space-y-6 sm:space-y-8">
-            <div className="modern-card contact-card !p-4 sm:!p-6 opacity-0">
-              <p className="code-comment text-sm mb-3">Contact Details</p>
-              <h2 className="text-xl sm:text-2xl font-bold font-mono text-text-primary mb-4 sm:mb-6">
-                <span className="text-primary">info</span><span className="text-text-muted">: {'{'}</span>
+  return (
+    <div className="pt-20 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 min-h-screen bg-background-secondary tech-grid">
+      <div className="max-w-5xl mx-auto">
+
+        {/* Header */}
+        <motion.div
+          className="text-center mb-12 sm:mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="inline-flex items-center gap-2.5 glass border border-primary/25 px-5 py-2.5 rounded-full mb-5">
+            <MessageSquare className="w-4 h-4 text-primary" />
+            <span className="font-mono text-sm text-primary">contact.init()</span>
+          </div>
+          <p className="section-label mb-3">Get In Touch</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-mono text-text-primary mb-4">
+            <span className="gradient-text">collaborate</span>
+            <span className="text-text-muted">.together()</span>
+          </h1>
+          <p className="text-text-secondary font-mono text-sm max-w-lg mx-auto">
+            <span className="text-primary/60">// </span>
+            Currently available for full-time positions and interesting projects.
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="grid lg:grid-cols-2 gap-6 sm:gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* ---- Left: Info + Socials ---- */}
+          <div className="space-y-5">
+            {/* Contact info */}
+            <motion.div variants={itemVariants} className="modern-card">
+              <p className="section-label mb-3">Contact Details</p>
+              <h2 className="text-xl font-bold font-mono text-text-primary mb-5">
+                <span className="text-primary">info</span>
+                <span className="text-text-muted">: &#123;</span>
               </h2>
 
-              <div className="space-y-4 sm:space-y-6">
-                {/* Email */}
-                <div className="flex items-start space-x-3 sm:space-x-4">
-                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 border-2 border-primary/30 rounded-lg flex items-center justify-center">
-                    <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-5 h-5 text-primary" />
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-semibold text-text-primary mb-1 text-sm sm:text-base">Email</h3>
-                    <a
-                      href="mailto:sorosh.bayanati@gmail.com"
-                      className="text-primary hover:text-primary-light transition-colors text-sm sm:text-base break-all"
-                    >
+                  <div>
+                    <p className="text-xs text-text-muted mb-0.5">Email</p>
+                    <a href="mailto:sorosh.bayanati@gmail.com" className="text-primary hover:text-primary-light transition-colors text-sm font-medium break-all">
                       sorosh.bayanati@gmail.com
                     </a>
                   </div>
                 </div>
 
-                {/* Location */}
-                <div className="flex items-start space-x-3 sm:space-x-4">
-                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-accent/20 border-2 border-accent/30 rounded-lg flex items-center justify-center">
-                    <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-text-primary mb-1 text-sm sm:text-base">Location</h3>
-                    <p className="text-text-secondary text-sm sm:text-base">Vancouver, BC, Canada</p>
+                    <p className="text-xs text-text-muted mb-0.5">Location</p>
+                    <p className="text-sm text-text-secondary">Vancouver, BC, Canada</p>
                   </div>
                 </div>
               </div>
-              <p className="text-lg sm:text-xl font-mono text-text-muted mt-4">{'}'}</p>
-            </div>
 
-            {/* Social Links */}
-            <div className="modern-card contact-card !p-4 sm:!p-6 opacity-0">
-              <p className="code-comment text-sm mb-3">Social Networks</p>
-              <h2 className="text-lg sm:text-xl font-bold font-mono text-text-primary mb-4 sm:mb-6">
-                <span className="text-primary">socials</span><span className="text-text-muted">: [</span>
+              <p className="font-mono text-text-muted mt-5">&#125;</p>
+            </motion.div>
+
+            {/* Social links */}
+            <motion.div variants={itemVariants} className="modern-card">
+              <p className="section-label mb-3">Social Networks</p>
+              <h2 className="text-lg font-bold font-mono text-text-primary mb-4">
+                <span className="text-primary">socials</span>
+                <span className="text-text-muted">: [</span>
               </h2>
 
-              <div className="space-y-3 sm:space-y-4 pl-2 sm:pl-4">
-                <a
-                  href="https://github.com/soroushby"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-primary/50 hover:shadow-glow-md transition-all duration-200 group"
-                >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 bg-background-tertiary border-2 border-primary/30 rounded-lg flex items-center justify-center group-hover:border-primary/50 transition-colors flex-shrink-0">
-                    <Github className="w-4 h-4 sm:w-5 sm:h-5 text-text-secondary group-hover:text-primary transition-colors" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-text-primary text-sm sm:text-base">GitHub</p>
-                    <p className="text-xs sm:text-sm text-text-secondary truncate">github.com/soroushby</p>
-                  </div>
-                </a>
+              <div className="space-y-2.5 pl-2">
+                {socials.map((social) => {
+                  const Icon = social.icon
+                  return (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={clsx(
+                        'flex items-center gap-3 p-3.5 glass border border-primary/15 rounded-xl transition-all duration-200 group',
+                        social.hover
+                      )}
+                    >
+                      <div className="w-9 h-9 bg-background-tertiary border border-primary/15 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:border-primary/30 transition-colors">
+                        <Icon className={clsx('w-4 h-4', social.iconColor)} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-semibold text-text-primary text-sm">{social.label}</p>
+                        <p className="text-xs text-text-muted truncate">{social.sub}</p>
+                      </div>
+                    </a>
+                  )
+                })}
 
-                <a
-                  href="https://www.linkedin.com/in/soroush-bayanati-3546723a5/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-primary/50 hover:shadow-glow-md transition-all duration-200 group"
-                >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 bg-background-tertiary border-2 border-primary/30 rounded-lg flex items-center justify-center group-hover:border-primary/50 transition-colors flex-shrink-0">
-                    <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-text-secondary group-hover:text-primary transition-colors" />
+                {/* YouTube channels */}
+                <div className="pt-1">
+                  <p className="text-xs font-mono text-text-muted mb-2 pl-1">// YouTube channels</p>
+                  <div className="space-y-2">
+                    {youtubeChannels.map((channel) => (
+                      <a
+                        key={channel.sub}
+                        href={channel.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 p-3 glass border border-primary/10 rounded-xl hover:border-red-400/30 hover:text-red-400 transition-all duration-200 group"
+                      >
+                        <div className="w-10 h-10 rounded-xl overflow-hidden border border-primary/20 flex-shrink-0">
+                          <img src={channel.logo} alt={channel.name} className="w-full h-full object-cover" loading="lazy" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-semibold font-mono text-text-primary text-xs">{channel.name}</p>
+                          <p className="text-[10px] text-text-muted">{channel.sub}</p>
+                        </div>
+                        <Youtube className="w-3.5 h-3.5 text-red-400/60 group-hover:text-red-400 transition-colors flex-shrink-0" />
+                      </a>
+                    ))}
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-text-primary text-sm sm:text-base">LinkedIn</p>
-                    <p className="text-xs sm:text-sm text-text-secondary truncate">linkedin.com/in/soroush-bayanati</p>
-                  </div>
-                </a>
-
-                <a
-                  href="https://youtube.com/@soccerpodcast"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-red-400/50 hover:shadow-glow-md transition-all duration-200 group"
-                >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden border-2 border-primary/30 group-hover:border-red-400/50 transition-colors flex-shrink-0">
-                    <img src={soccerPodcastLogo} alt="Soccer Podcast" className="w-full h-full object-cover" loading="lazy" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-semibold font-mono text-text-primary text-sm sm:text-base">SoccerPodcast</p>
-                    <p className="text-xs sm:text-sm text-text-secondary">@soccerpodcast</p>
-                  </div>
-                </a>
-
-                <a
-                  href="https://youtube.com/@footcourtxi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-red-400/50 hover:shadow-glow-md transition-all duration-200 group"
-                >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden border-2 border-primary/30 group-hover:border-red-400/50 transition-colors flex-shrink-0">
-                    <img src={footCourtLogo} alt="FootCourt XI" className="w-full h-full object-cover" loading="lazy" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-semibold font-mono text-text-primary text-sm sm:text-base">FootcourtXI</p>
-                    <p className="text-xs sm:text-sm text-text-secondary">@footcourtxi</p>
-                  </div>
-                </a>
-
-                <a
-                  href="https://youtube.com/@persianredarmy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-red-400/50 hover:shadow-glow-md transition-all duration-200 group"
-                >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden border-2 border-primary/30 group-hover:border-red-400/50 transition-colors flex-shrink-0">
-                    <img src={persianRedArmyLogo} alt="Persian Red Army" className="w-full h-full object-cover" loading="lazy" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-semibold font-mono text-text-primary text-sm sm:text-base">PersianRedArmy</p>
-                    <p className="text-xs sm:text-sm text-text-secondary">@persianredarmy</p>
-                  </div>
-                </a>
-
-                <a
-                  href="https://youtube.com/@catalaniran"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-red-400/50 hover:shadow-glow-md transition-all duration-200 group"
-                >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden border-2 border-primary/30 group-hover:border-red-400/50 transition-colors flex-shrink-0">
-                    <img src={catalanIranLogo} alt="Catalan Iran" className="w-full h-full object-cover" loading="lazy" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-semibold font-mono text-text-primary text-sm sm:text-base">Catalaniran</p>
-                    <p className="text-xs sm:text-sm text-text-secondary">@catalaniran</p>
-                  </div>
-                </a>
+                </div>
               </div>
-              <p className="text-lg sm:text-xl font-mono text-text-muted mt-4">]</p>
-            </div>
+              <p className="font-mono text-text-muted mt-4">]</p>
+            </motion.div>
           </div>
 
-          {/* Contact Form */}
-          <div>
-            <div className="modern-card contact-card !p-4 sm:!p-6 opacity-0">
-              <p className="code-comment text-sm mb-3">Message Form</p>
-              <h2 className="text-xl sm:text-2xl font-bold font-mono text-text-primary mb-4 sm:mb-6">
-                <span className="text-primary">sendMessage</span><span className="text-text-muted">()</span>
-              </h2>
+          {/* ---- Right: Contact form ---- */}
+          <motion.div variants={itemVariants} className="modern-card h-fit">
+            <p className="section-label mb-3">Message Form</p>
+            <h2 className="text-xl font-bold font-mono text-text-primary mb-6">
+              <span className="text-primary">sendMessage</span>
+              <span className="text-text-muted">()</span>
+            </h2>
 
-              {submitted ? (
-                <div className="flex flex-col items-center justify-center py-10 space-y-4">
-                  <div className="w-14 h-14 rounded-full bg-primary/20 border-2 border-primary/40 flex items-center justify-center">
-                    <Mail className="w-7 h-7 text-primary" />
-                  </div>
-                  <p className="text-text-primary font-semibold text-lg font-mono">Message sent!</p>
-                  <p className="text-text-secondary text-sm text-center">Your email client should have opened. I'll get back to you soon.</p>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className="text-primary text-sm hover:underline font-mono"
-                  >
-                    Send another message
-                  </button>
+            {submitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex flex-col items-center justify-center py-12 gap-4 text-center"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-green-500/10 border border-green-500/30 flex items-center justify-center">
+                  <CheckCircle className="w-8 h-8 text-green-400" />
                 </div>
-              ) : (
-              <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-6">
+                <h3 className="text-text-primary font-bold text-lg font-mono">Message sent!</h3>
+                <p className="text-text-secondary text-sm max-w-xs">
+                  Your email client should have opened. I'll get back to you soon.
+                </p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="text-primary text-sm hover:text-primary-light transition-colors font-mono underline underline-offset-4"
+                >
+                  Send another →
+                </button>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} noValidate className="space-y-5">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-text-secondary mb-2">
+                  <label htmlFor="name" className="block text-xs font-mono text-text-muted mb-2 uppercase tracking-wider">
                     Your Name
                   </label>
                   <input
@@ -261,14 +259,14 @@ const Contact = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-background-tertiary border rounded-lg text-text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none text-sm sm:text-base ${errors.name ? 'border-red-500' : 'border-primary/30'}`}
-                    placeholder="Your name"
+                    placeholder="John Smith"
+                    className={inputCls(!!errors.name)}
                   />
-                  {errors.name && <p className="mt-1 text-xs text-red-400">{errors.name}</p>}
+                  {errors.name && <p className="mt-1.5 text-xs text-red-400 font-mono">{errors.name}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-2">
+                  <label htmlFor="email" className="block text-xs font-mono text-text-muted mb-2 uppercase tracking-wider">
                     Your Email
                   </label>
                   <input
@@ -277,14 +275,14 @@ const Contact = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-background-tertiary border rounded-lg text-text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none text-sm sm:text-base ${errors.email ? 'border-red-500' : 'border-primary/30'}`}
-                    placeholder="your@email.com"
+                    placeholder="john@example.com"
+                    className={inputCls(!!errors.email)}
                   />
-                  {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email}</p>}
+                  {errors.email && <p className="mt-1.5 text-xs text-red-400 font-mono">{errors.email}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-text-secondary mb-2">
+                  <label htmlFor="message" className="block text-xs font-mono text-text-muted mb-2 uppercase tracking-wider">
                     Your Message
                   </label>
                   <textarea
@@ -292,41 +290,47 @@ const Contact = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    rows="5"
-                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-background-tertiary border rounded-lg text-text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none resize-none text-sm sm:text-base ${errors.message ? 'border-red-500' : 'border-primary/30'}`}
+                    rows={5}
                     placeholder="Tell me about your project or just say hi!"
+                    className={clsx(inputCls(!!errors.message), 'resize-none')}
                   />
-                  {errors.message && <p className="mt-1 text-xs text-red-400">{errors.message}</p>}
+                  {errors.message && <p className="mt-1.5 text-xs text-red-400 font-mono">{errors.message}</p>}
                 </div>
 
-                <button
+                <motion.button
                   type="submit"
-                  className="w-full bg-primary hover:bg-primary-light text-white font-semibold px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all shadow-glow-md hover:shadow-glow-lg flex items-center justify-center space-x-2 text-sm sm:text-base"
+                  className="w-full modern-btn justify-center text-base py-3.5"
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
-                  <span>Send Message</span>
-                </button>
+                  <Send className="w-4 h-4" />
+                  Send Message
+                </motion.button>
 
-                <p className="text-xs sm:text-sm text-text-muted text-center">
-                  This form will open your default email client
+                <p className="text-xs text-text-muted text-center font-mono">
+                  Opens your default email client
                 </p>
               </form>
-              )}
-            </div>
+            )}
+          </motion.div>
+        </motion.div>
 
-            {/* Quick Email Link */}
-            <div className="mt-4 sm:mt-6 text-center">
-              <p className="text-text-secondary mb-3 sm:mb-4 text-sm sm:text-base">Or email me directly at:</p>
-              <a
-                href="mailto:sorosh.bayanati@gmail.com"
-                className="inline-flex items-center space-x-2 bg-accent hover:bg-accent-light text-white font-semibold px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all shadow-glow-md hover:shadow-glow-lg text-sm sm:text-base"
-              >
-                <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="truncate">sorosh.bayanati@gmail.com</span>
-              </a>
-            </div>
-          </div>
-        </div>
+        {/* Direct email CTA */}
+        <motion.div
+          className="mt-8 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          <p className="text-text-muted text-sm mb-3">Or reach me directly</p>
+          <a
+            href="mailto:sorosh.bayanati@gmail.com"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-accent/10 border border-accent/30 hover:bg-accent/20 hover:border-accent/50 text-accent font-semibold rounded-xl transition-all duration-200 hover:shadow-glow-cyan text-sm"
+          >
+            <Mail className="w-4 h-4" />
+            sorosh.bayanati@gmail.com
+          </a>
+        </motion.div>
       </div>
     </div>
   )

@@ -1,214 +1,261 @@
-import { useState, useEffect } from 'react'
-import { Youtube, TrendingUp, Users, Eye, Clock, Target, Zap } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { TrendingUp, Users, Eye, Clock, Target, Zap, ExternalLink } from 'lucide-react'
+import { YoutubeLogoIcon as YoutubeLogo } from '@phosphor-icons/react'
+import clsx from 'clsx'
 import soccerPodcastLogo from '../assets/soccer-podcast-logo.jpg'
 import persianRedArmyLogo from '../assets/persian-red-army-logo.jpg'
 import footCourtLogo from '../assets/footcurt logo remake.jpg'
 import catalanIranLogo from '../assets/catalan iran logo.png'
 
+const channels = [
+  {
+    name: 'Soccer Podcast',
+    logo: soccerPodcastLogo,
+    handle: '@soccerpodcast',
+    url: 'https://youtube.com/@soccerpodcast',
+    youtube: '29K subs',
+    instagram: '95K',
+    color: 'from-red-600/20 to-orange-600/10',
+    accent: 'bg-red-500/10 border-red-500/20 text-red-400',
+    description: 'Flagship channel of the football network. In-depth tactical analysis, match breakdowns, and commentary that has grown into a trusted source for football enthusiasts.',
+    highlights: [
+      'Largest channel with consistent growth trajectory',
+      'Weekly podcast episodes and live match analysis',
+      'Professional production with OBS and StreamYard',
+      'Strong community engagement and loyal audience',
+    ],
+  },
+  {
+    name: 'Catalan Iran',
+    logo: catalanIranLogo,
+    handle: '@catalaniran',
+    url: 'https://youtube.com/@catalaniran',
+    youtube: '6K subs',
+    instagram: '70K',
+    color: 'from-blue-600/20 to-indigo-600/10',
+    accent: 'bg-blue-500/10 border-blue-500/20 text-blue-400',
+    description: 'FC Barcelona news and tactical breakdowns for Persian-speaking audiences. Bridging football culture between Western and Iranian communities.',
+    highlights: [
+      'Specialized Barcelona FC content',
+      '70K strong Instagram following',
+      'Cultural bridge for football fans worldwide',
+      'Timely transfer news and match analysis',
+    ],
+  },
+  {
+    name: 'Persian Red Army',
+    logo: persianRedArmyLogo,
+    handle: '@persianredarmy',
+    url: 'https://youtube.com/@persianredarmy',
+    youtube: '3.5K subs',
+    instagram: '20K',
+    color: 'from-red-700/20 to-rose-600/10',
+    accent: 'bg-rose-500/10 border-rose-500/20 text-rose-400',
+    description: 'Manchester United content with a Persian perspective. Match analysis, player performances, and club history for fans across Persian-speaking regions.',
+    highlights: [
+      'Focused Man United analysis',
+      'Growing subscriber base with high engagement',
+      'Live reactions and post-game breakdowns',
+      'Historical club content',
+    ],
+  },
+  {
+    name: 'FootCourt XI',
+    logo: footCourtLogo,
+    handle: '@footcourtxi',
+    url: 'https://youtube.com/@footcourtxi',
+    youtube: '1.5K subs',
+    instagram: '5K',
+    color: 'from-emerald-600/20 to-green-600/10',
+    accent: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
+    description: 'Comprehensive football analysis focused on tactics, player insights, and strategy. Educational content for both casual and serious football enthusiasts.',
+    highlights: [
+      'Educational tactics and strategy content',
+      'Detailed player performance reviews',
+      'High-quality video production and editing',
+      'Dedicated niche audience',
+    ],
+  },
+]
+
+const networkStats = [
+  { icon: Users, value: '40K+', label: 'YouTube Subscribers', color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/20' },
+  { icon: Eye, value: '190K+', label: 'Instagram Followers', color: 'text-fuchsia', bg: 'bg-fuchsia/10 border-fuchsia/20' },
+  { icon: TrendingUp, value: '4', label: 'Active Channels', color: 'text-primary', bg: 'bg-primary/10 border-primary/20' },
+  { icon: Clock, value: '1000+', label: 'Videos Published', color: 'text-accent', bg: 'bg-accent/10 border-accent/20' },
+]
+
+const skillsDemonstrated = [
+  {
+    icon: Target,
+    title: 'Product Management',
+    description: 'Managing 4 brands simultaneously, coordinating publishing schedules, and maintaining consistent quality across all channels.',
+    color: 'text-primary', bg: 'bg-primary/10 border-primary/20',
+  },
+  {
+    icon: TrendingUp,
+    title: 'Data Analytics',
+    description: 'Using YouTube Studio Analytics and Instagram Insights to optimize content, understand audience behavior, and drive growth.',
+    color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20',
+  },
+  {
+    icon: Zap,
+    title: 'SEO & Growth Strategy',
+    description: 'Implementing SEO for video discovery, optimizing titles and thumbnails, and leveraging platform algorithms for reach.',
+    color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20',
+  },
+  {
+    icon: Users,
+    title: 'Community Management',
+    description: 'Engaging 230K+ combined followers, fostering discussions, responding to comments, and building loyal communities.',
+    color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20',
+  },
+]
+
+const tools = {
+  'Video Production': ['Adobe Premiere Pro', 'CapCut', 'OBS Studio', 'StreamYard'],
+  'Design & Graphics': ['Adobe Photoshop', 'Adobe Illustrator', 'Thumbnail Design', 'Brand Identity'],
+  'Analytics & Strategy': ['YouTube Analytics', 'Instagram Insights', 'VidIQ / TubeBuddy', 'SEO Optimization'],
+}
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+}
+
 const ContentCreation = () => {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    setIsVisible(true)
-    window.scrollTo(0, 0)
-  }, [])
-
-  const channels = [
-    {
-      name: 'Soccer Podcast',
-      logo: soccerPodcastLogo,
-      handle: '@soccerpodcast',
-      url: 'https://youtube.com/@soccerpodcast',
-      youtube: '29K subscribers',
-      instagram: '95K followers',
-      description: 'The flagship channel of the football network, delivering in-depth tactical analysis, match breakdowns, and football commentary. This channel has grown into a trusted source for football enthusiasts seeking quality analysis and engaging discussions about the beautiful game.',
-      highlights: [
-        'Largest channel in the network with consistent growth',
-        'Weekly podcast episodes and live match analysis',
-        'Strong community engagement and loyal audience',
-        'Professional production quality with OBS and StreamYard'
-      ]
-    },
-    {
-      name: 'Catalan Iran',
-      logo: catalanIranLogo,
-      handle: '@catalaniran',
-      url: 'https://youtube.com/@catalaniran',
-      youtube: '6K subscribers',
-      instagram: '70K followers',
-      description: 'Bringing FC Barcelona news, analysis, and tactical breakdowns to Persian-speaking audiences worldwide. This channel combines football expertise with cultural connection, creating content that resonates with fans of both Barcelona and Iranian football communities.',
-      highlights: [
-        'Specialized content for Barcelona FC fans',
-        'Strong Instagram presence with 70K followers',
-        'Cultural bridge between Western and Middle Eastern football fans',
-        'Timely coverage of matches and transfer news'
-      ]
-    },
-    {
-      name: 'Persian Red Army',
-      logo: persianRedArmyLogo,
-      handle: '@persianredarmy',
-      url: 'https://youtube.com/@persianredarmy',
-      youtube: '3.5K subscribers',
-      instagram: '20K followers',
-      description: 'Dedicated to Manchester United content with a Persian perspective. This channel covers match analysis, player performances, transfer news, and club history, serving the growing community of Manchester United fans in Persian-speaking regions.',
-      highlights: [
-        'Focused Manchester United analysis and coverage',
-        'Growing subscriber base with high engagement',
-        'Live match reactions and post-game analysis',
-        'Historical content about the club\'s legacy'
-      ]
-    },
-    {
-      name: 'FootCourt XI',
-      logo: footCourtLogo,
-      handle: '@footcourtxi',
-      url: 'https://youtube.com/@footcourtxi',
-      youtube: '1.5K subscribers',
-      instagram: '5K followers',
-      description: 'A channel focused on providing comprehensive football analysis, player insights, and tactical strategies. Aimed at educating and engaging football fans with detailed content, making it a valuable resource for both casual and serious football enthusiasts.',
-      highlights: [
-        'Educational content focused on tactics and strategy',
-        'Detailed player analysis and performance reviews',
-        'Growing channel with dedicated niche audience',
-        'High-quality video production and editing'
-      ]
-    }
-  ]
-
-  const skillsDemonstrated = [
-    {
-      icon: Target,
-      title: 'Product Management',
-      description: 'Managing 4 brands simultaneously, coordinating publishing schedules, and maintaining consistent content quality across all channels.'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Data Analytics',
-      description: 'Using YouTube Studio Analytics and Instagram Insights to optimize content performance, understand audience behavior, and drive growth.'
-    },
-    {
-      icon: Zap,
-      title: 'SEO & Growth Strategy',
-      description: 'Implementing SEO strategies for video discovery, optimizing titles and thumbnails, and leveraging algorithms for maximum reach.'
-    },
-    {
-      icon: Users,
-      title: 'Community Management',
-      description: 'Engaging with 230K+ combined followers, responding to comments, fostering discussions, and building loyal communities.'
-    }
-  ]
-
   return (
-    <div className="pt-20 sm:pt-24 pb-12 sm:pb-20 px-4 sm:px-6 bg-background-secondary min-h-screen tech-grid">
-      <div className="max-w-7xl mx-auto">
+    <div className="pt-20 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 bg-background-secondary min-h-screen tech-grid">
+      <div className="max-w-6xl mx-auto">
+
         {/* Header */}
-        <div className={`text-center mb-10 sm:mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center space-x-2 sm:space-x-3 glass border border-primary/30 px-4 sm:px-6 py-2 sm:py-3 rounded-full mb-4 sm:mb-6">
-            <Youtube className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-            <span className="font-semibold font-mono text-primary text-sm sm:text-base">Digital Products</span>
+        <motion.div
+          className="text-center mb-12 sm:mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="inline-flex items-center gap-2.5 glass border border-red-500/20 px-5 py-2.5 rounded-full mb-5">
+            <YoutubeLogo size={16} className="text-red-400" />
+            <span className="font-mono text-sm text-red-400">Digital Products</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-mono text-text-primary mb-4">
-            YouTube Football Network
+          <p className="section-label mb-3">Beyond Code</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary mb-4">
+            YouTube Football{' '}
+            <span className="gradient-text">Network</span>
           </h1>
-          <p className="text-sm sm:text-base md:text-lg text-text-secondary max-w-3xl mx-auto">
-            Building and scaling a multi-channel media network from scratch.
-            <span className="hidden sm:inline"><br/></span>
-            <span className="sm:hidden"> </span>
-            A case study in product management, analytics, and growth strategy.
+          <p className="text-text-secondary max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+            Building and scaling a multi-channel media network from scratch —
+            a case study in product management, analytics, and growth strategy.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Network Overview Stats */}
-        <div className={`grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-12 sm:mb-20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '100ms' }}>
-          <div className="glass border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-            <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3" />
-            <p className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-1 neon-glow">40K+</p>
-            <p className="text-xs sm:text-sm text-text-secondary">YouTube Subscribers</p>
-          </div>
-          <div className="glass border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-            <Eye className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3" />
-            <p className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-1 neon-glow">190K+</p>
-            <p className="text-xs sm:text-sm text-text-secondary">Instagram Followers</p>
-          </div>
-          <div className="glass border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-            <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3" />
-            <p className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-1 neon-glow">4</p>
-            <p className="text-xs sm:text-sm text-text-secondary">Active Channels</p>
-          </div>
-          <div className="glass border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-            <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3" />
-            <p className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-1 neon-glow">1000+</p>
-            <p className="text-xs sm:text-sm text-text-secondary">Videos Published</p>
-          </div>
-        </div>
+        {/* Network stats */}
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-12 sm:mb-16"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {networkStats.map((stat, i) => {
+            const Icon = stat.icon
+            return (
+              <motion.div
+                key={i}
+                variants={itemVariants}
+                className="modern-card !p-4 sm:!p-5 hover:shadow-card-hover"
+                whileHover={{ y: -4 }}
+              >
+                <div className={clsx('w-9 h-9 rounded-xl border flex items-center justify-center mb-3', stat.bg)}>
+                  <Icon className={clsx('w-4 h-4', stat.color)} />
+                </div>
+                <p className={clsx('text-2xl sm:text-3xl font-bold font-mono mb-1 neon-glow', stat.color)}>
+                  {stat.value}
+                </p>
+                <p className="text-xs text-text-muted">{stat.label}</p>
+              </motion.div>
+            )
+          })}
+        </motion.div>
 
-        {/* Introduction */}
-        <div className="modern-card !p-4 sm:!p-6 md:!p-8 mb-10 sm:mb-16">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-primary mb-3 sm:mb-4">
-            Beyond Code
-          </h2>
-          <p className="text-sm sm:text-base md:text-lg text-text-secondary leading-relaxed">
-            Beyond web development, I've built and scaled a multi-channel football media network from scratch,
-            demonstrating my ability to not just write code, but to understand users, analyze data, and grow digital products.
-            This project showcases product management, data analytics, SEO optimization, visual design, and audience
-            development—all transferable skills valuable in tech product roles.
+        {/* Introduction card */}
+        <motion.div
+          className="modern-card mb-12"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-xl sm:text-2xl font-bold font-mono text-primary mb-3">Beyond Code</h2>
+          <p className="text-text-secondary leading-relaxed text-sm sm:text-base">
+            Beyond web development, I've built and scaled a multi-channel football media network from scratch —
+            demonstrating the ability to understand users, analyze data, and grow digital products.
+            This project showcases <span className="text-text-primary font-medium">product management</span>,{' '}
+            <span className="text-text-primary font-medium">data analytics</span>,{' '}
+            <span className="text-text-primary font-medium">SEO optimization</span>, and{' '}
+            <span className="text-text-primary font-medium">audience development</span> — all transferable to tech product roles.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Channels Breakdown - horizontal scroll */}
-        <div className="mb-10 sm:mb-16">
-          <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin"
-            style={{ scrollbarColor: 'rgba(139,92,246,0.4) transparent' }}
+        {/* Channels — horizontal scroll on mobile, grid on desktop */}
+        <div className="mb-12 sm:mb-16">
+          <motion.div
+            className="flex gap-4 sm:gap-5 overflow-x-auto pb-4 snap-x snap-mandatory"
+            style={{ scrollbarColor: 'rgba(139,92,246,0.3) transparent' }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
             {channels.map((channel, index) => (
-              <div
+              <motion.div
                 key={index}
-                className={`modern-card !p-0 hover:border-primary/50 hover:shadow-glow-lg transition-all duration-300 overflow-hidden flex-shrink-0 snap-start ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-                style={{
-                  width: 'min(80vw, 420px)',
-                  transitionDelay: `${200 + index * 100}ms`,
-                }}
+                className="modern-card !p-0 overflow-hidden flex-shrink-0 snap-start hover:shadow-card-hover"
+                style={{ width: 'min(80vw, 380px)' }}
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+                whileHover={{ y: -4 }}
               >
-                <div className="p-5 sm:p-7 h-full flex flex-col">
-                  {/* Channel Header */}
-                  <div className="flex items-center space-x-3 mb-3">
-                    {channel.logo ? (
-                      <img
-                        src={channel.logo}
-                        alt={`${channel.name} logo`}
-                        className="w-14 h-14 rounded-full object-cover border-2 border-primary/40 flex-shrink-0"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="w-14 h-14 rounded-full bg-primary/20 border-2 border-primary/40 flex items-center justify-center flex-shrink-0">
-                        <Youtube className="w-6 h-6 text-primary" />
-                      </div>
-                    )}
+                {/* Gradient top bar */}
+                <div className={clsx('h-0.5 bg-gradient-to-r', channel.color)} />
+
+                <div className="p-5 sm:p-6 flex flex-col h-full">
+                  {/* Header */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <img
+                      src={channel.logo}
+                      alt={channel.name}
+                      className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 flex-shrink-0"
+                      loading="lazy"
+                    />
                     <div>
-                      <h2 className="text-lg sm:text-xl font-bold font-mono text-text-primary leading-tight">
-                        {channel.name}
-                      </h2>
+                      <h2 className="text-base sm:text-lg font-bold font-mono text-text-primary">{channel.name}</h2>
                       <a
                         href={channel.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary hover:text-primary-light transition-colors font-medium text-sm"
+                        className="text-xs text-primary hover:text-primary-light transition-colors flex items-center gap-1"
                       >
                         {channel.handle}
+                        <ExternalLink className="w-2.5 h-2.5" />
                       </a>
                     </div>
                   </div>
 
-                  {/* Stats badges */}
+                  {/* Stats */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="inline-flex items-center px-2 py-1 glass border border-primary/30 text-primary text-xs font-semibold rounded-full">
-                      <Youtube className="w-3 h-3 mr-1" />
+                    <span className={clsx('inline-flex items-center gap-1 px-2.5 py-1 border text-xs font-mono font-semibold rounded-full', channel.accent)}>
+                      <YoutubeLogo size={12} />
                       {channel.youtube}
                     </span>
-                    <span className="inline-flex items-center px-2 py-1 glass border border-primary/30 text-primary text-xs font-semibold rounded-full">
+                    <span className={clsx('inline-flex items-center gap-1 px-2.5 py-1 border text-xs font-mono font-semibold rounded-full', channel.accent)}>
                       📸 {channel.instagram}
                     </span>
                   </div>
@@ -219,91 +266,90 @@ const ContentCreation = () => {
                   </p>
 
                   {/* Highlights */}
-                  <div>
-                    <h3 className="text-xs font-semibold font-mono text-text-primary mb-2">Key Highlights</h3>
-                    <ul className="space-y-1.5">
-                      {channel.highlights.map((highlight, idx) => (
-                        <li key={idx} className="flex items-start space-x-2 text-text-secondary">
-                          <span className="text-primary mt-0.5 flex-shrink-0 font-mono text-xs">{'>'}</span>
-                          <span className="text-xs leading-relaxed">{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <ul className="space-y-1.5">
+                    {channel.highlights.map((h, i) => (
+                      <li key={i} className="flex items-start gap-2 text-text-muted text-xs">
+                        <span className="text-primary mt-0.5 flex-shrink-0 font-mono">›</span>
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
-          {/* Scroll hint */}
-          <p className="text-xs text-center text-text-muted font-mono mt-2">← scroll to explore →</p>
+          </motion.div>
+          <p className="text-xs text-center text-text-muted font-mono mt-2 opacity-60">← scroll to explore →</p>
         </div>
 
-        {/* Skills Demonstrated Section */}
-        <div className="modern-card !p-4 sm:!p-6 md:!p-8 mb-10 sm:mb-16">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-primary mb-4 sm:mb-6 text-center">
-            Transferable Skills
-          </h2>
-          <p className="text-sm sm:text-base text-text-secondary mb-6 sm:mb-12 text-center max-w-3xl mx-auto">
-            This project demonstrates skills beyond coding that are essential for product-minded engineers
-          </p>
-          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-            {skillsDemonstrated.map((skill, index) => {
+        {/* Transferable skills */}
+        <motion.div
+          className="modern-card mb-12"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="text-center mb-8">
+            <p className="section-label mb-2">What This Demonstrates</p>
+            <h2 className="text-2xl sm:text-3xl font-bold font-mono">
+              <span className="gradient-text-purple">Transferable</span>
+              <span className="text-text-muted"> Skills</span>
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-4">
+            {skillsDemonstrated.map((skill, i) => {
               const Icon = skill.icon
               return (
-                <div
-                  key={index}
-                  className="glass border border-primary/20 rounded-lg p-4 sm:p-6 hover:border-primary/50 hover:shadow-glow-md transition-all"
+                <motion.div
+                  key={i}
+                  className="flex items-start gap-4 p-4 glass border border-primary/15 rounded-xl hover:border-primary/30 hover:shadow-glow-sm transition-all duration-200"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08, duration: 0.4 }}
                 >
-                  <div className="flex items-start space-x-3 sm:space-x-4">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 border border-primary/30 rounded-lg flex items-center justify-center">
-                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-                      </div>
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-bold font-mono text-text-primary mb-1 sm:mb-2 text-sm sm:text-base">{skill.title}</h3>
-                      <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">{skill.description}</p>
-                    </div>
+                  <div className={clsx('w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0', skill.bg)}>
+                    <Icon className={clsx('w-5 h-5', skill.color)} />
                   </div>
-                </div>
+                  <div>
+                    <h3 className="font-bold font-mono text-text-primary text-sm mb-1">{skill.title}</h3>
+                    <p className="text-xs text-text-secondary leading-relaxed">{skill.description}</p>
+                  </div>
+                </motion.div>
               )
             })}
           </div>
-        </div>
+        </motion.div>
 
-        {/* Technical Skills Used */}
-        <div className="modern-card !p-4 sm:!p-6 md:!p-8">
-          <h2 className="text-lg sm:text-xl md:text-2xl font-bold font-mono text-text-primary mb-4 sm:mb-6">Technical & Creative Tools</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            <div>
-              <h3 className="font-semibold font-mono text-primary mb-2 sm:mb-3 text-sm sm:text-base">Video Production</h3>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-text-secondary">
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Adobe Premiere Pro</li>
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>CapCut</li>
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>OBS Studio</li>
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>StreamYard</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold font-mono text-primary mb-2 sm:mb-3 text-sm sm:text-base">Design & Graphics</h3>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-text-secondary">
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Adobe Photoshop</li>
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Adobe Illustrator</li>
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Thumbnail Design</li>
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Brand Identity</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold font-mono text-primary mb-2 sm:mb-3 text-sm sm:text-base">Analytics & Strategy</h3>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-text-secondary">
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>YouTube Analytics</li>
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Instagram Insights</li>
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>SEO Optimization</li>
-                <li className="flex items-start"><span className="text-primary mr-2 font-mono">{'>'}</span>Growth Strategies</li>
-              </ul>
-            </div>
+        {/* Technical tools */}
+        <motion.div
+          className="modern-card"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-lg sm:text-xl font-bold font-mono text-text-primary mb-6">
+            Technical & Creative{' '}
+            <span className="gradient-text-purple">Tools</span>
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {Object.entries(tools).map(([category, items]) => (
+              <div key={category}>
+                <h3 className="font-semibold font-mono text-primary text-sm mb-3">{category}</h3>
+                <ul className="space-y-2">
+                  {items.map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-xs sm:text-sm text-text-secondary">
+                      <span className="text-primary font-mono flex-shrink-0">›</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   )

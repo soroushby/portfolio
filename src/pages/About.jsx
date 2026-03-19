@@ -1,634 +1,644 @@
-import { useState, useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { MapPin, Heart, Music, Plane, Award, BookOpen, Download, Layers, Database, Server, Shield } from 'lucide-react'
 import {
-  MapPin,
-  Heart,
-  Music,
-  Plane,
-  Code,
-  Award,
-  BookOpen,
-  Download,
-  Layers,
-} from "lucide-react";
-import profileImage from "../assets/profile.jpg";
+  RocketLaunchIcon as RocketLaunch,
+  BriefcaseIcon as Briefcase,
+  WavesIcon as Waves,
+  GraduationCapIcon as GraduationCap,
+  LightningIcon as Lightning,
+  RobotIcon as Robot,
+  FilmStripIcon as FilmStrip,
+  CertificateIcon as Certificate,
+  LaptopIcon as Laptop,
+  CodeIcon as Code,
+} from '@phosphor-icons/react'
+import clsx from 'clsx'
+import profileImage from '../assets/profile.jpg'
 
+gsap.registerPlugin(ScrollTrigger)
+
+const timeline = [
+  { year: '2020', event: 'Started web development training & launched YouTube football network', PhosphorIcon: RocketLaunch },
+  { year: '2021', event: 'First developer role at MD Swiss Pharma GmbH', PhosphorIcon: Briefcase },
+  { year: '2022', event: 'Joined Ultimate System as Web Developer in Vancouver', PhosphorIcon: Waves },
+  { year: '2025–26', event: 'Graduated BCIT — New Media Design & Web Development', PhosphorIcon: GraduationCap },
+  { year: '2026', event: 'Deepening React 19, Next.js 15 & AI-assisted development', PhosphorIcon: Lightning },
+]
+
+const heroCards = [
+  {
+    title: 'React & Next.js Engineering',
+    subtitle: 'Full-Stack Frontend Mastery',
+    badge: '<React 19 + Next.js 15 />',
+    primaryColor: 'text-cyan-400',
+    borderColor: 'border-cyan-500/25',
+    accentLine: 'from-cyan-500 via-primary to-primary',
+    headerGradient: 'from-cyan-500/10 via-primary/5 to-transparent',
+    tagBorder: 'border-cyan-500/25',
+    tagBg: 'bg-cyan-500/5',
+    topics: [
+      'React 19 hooks deep dive: useState, useEffect, useRef, useContext, useReducer, use()',
+      'Next.js 15 App Router — Server Components, file-based routing, API routes, SSR/SSG/ISR',
+      'TanStack Router & Query — type-safe routing, caching, mutations, optimistic updates',
+      'React Router v7 — nested routes, data loaders, actions, protected routes',
+      'TypeScript + Zod — strict typing, generics, interfaces, schema-driven validation',
+      'Tailwind CSS v4, shadcn/ui, Radix UI — utility-first, accessible component systems',
+      'Auth with Clerk + Supabase — sessions, middleware, protected routes, role guards',
+    ],
+    techTags: ['React 19', 'Next.js 15', 'TypeScript', 'TanStack Query', 'React Router v7', 'Tailwind v4', 'shadcn/ui', 'Zod', 'Clerk'],
+  },
+  {
+    title: 'AI-Assisted Development',
+    subtitle: 'Production AI Workflow Mastery',
+    badge: '<AI Dev Workflow />',
+    primaryColor: 'text-fuchsia',
+    borderColor: 'border-fuchsia/25',
+    accentLine: 'from-fuchsia via-primary to-primary',
+    headerGradient: 'from-fuchsia/10 via-primary/5 to-transparent',
+    tagBorder: 'border-fuchsia/25',
+    tagBg: 'bg-fuchsia/5',
+    topics: [
+      'Repeatable AI-assisted workflow: planning, scaffolding, review, and deployment',
+      'Writing effective prompts for consistent, production-ready code generation',
+      'Structuring CLAUDE.md context files so AI understands your full codebase',
+      'Building custom skills, subagents, and MCP server integrations with Claude Code',
+      'Reviewing, testing, and security auditing of AI-generated code for production',
+      'Claude API integration for real product features (QuoteCraft AI quoting engine)',
+      'VS Code + Claude Code plan mode for large refactors and architecture decisions',
+    ],
+    techTags: ['Claude Code', 'Claude API', 'ChatGPT', 'GitHub Copilot', 'MCP Servers', 'Prompt Engineering', 'Plan Mode'],
+  },
+]
+
+const backendSkills = [
+  {
+    title: 'Databases',
+    icon: Database,
+    color: 'text-emerald-400',
+    bg: 'bg-emerald-500/10 border-emerald-500/20',
+    skills: ['PostgreSQL', 'Neon (serverless)', 'Supabase', 'MongoDB'],
+  },
+  {
+    title: 'ORMs & Schema',
+    icon: Layers,
+    color: 'text-blue-400',
+    bg: 'bg-blue-500/10 border-blue-500/20',
+    skills: ['Drizzle ORM', 'Prisma', 'Zod validation', 'Mongoose'],
+  },
+  {
+    title: 'Auth & Email',
+    icon: Shield,
+    color: 'text-amber-400',
+    bg: 'bg-amber-500/10 border-amber-500/20',
+    skills: ['Clerk (full auth)', 'Supabase Auth', 'JWT / Sessions', 'Resend (email)'],
+  },
+  {
+    title: 'APIs & Server',
+    icon: Server,
+    color: 'text-rose-400',
+    bg: 'bg-rose-500/10 border-rose-500/20',
+    skills: ['REST API design', 'Next.js API Routes', 'Node.js + Express', 'Edge Functions'],
+  },
+]
+
+const skillCategories = [
+  {
+    category: 'Frontend',
+    PhosphorIcon: Code,
+    color: 'text-cyan-400',
+    bg: 'bg-cyan-500/10 border-cyan-500/20',
+    dotColor: 'bg-cyan-400',
+    skills: [
+      { name: 'React 18/19 + Next.js', desc: 'Modern component patterns, App Router, SSR/SSG', level: 5 },
+      { name: 'TypeScript', desc: 'Type safety, interfaces, generics, utility types', level: 4 },
+      { name: 'Remix', desc: 'Full-stack React, nested routing, server actions', level: 3 },
+      { name: 'Tailwind CSS + shadcn/ui', desc: 'Utility-first styling, accessible components', level: 5 },
+      { name: 'GSAP + Framer Motion', desc: 'Scroll animations, transitions, physics', level: 4 },
+      { name: 'Angular + RxJS', desc: 'Enterprise SPA with Material UI', level: 3 },
+    ],
+  },
+  {
+    category: 'AI & Tools',
+    PhosphorIcon: Robot,
+    color: 'text-fuchsia',
+    bg: 'bg-fuchsia/10 border-fuchsia/20',
+    dotColor: 'bg-fuchsia',
+    skills: [
+      { name: 'Anthropic Claude API', desc: 'Prompt engineering, structured outputs, agentic workflows', level: 4 },
+      { name: 'ChatGPT + Copilot', desc: 'AI-assisted development and code review', level: 4 },
+      { name: 'Vite + Git/GitHub + Vercel', desc: 'Modern build tooling and CI/CD', level: 5 },
+      { name: 'Figma', desc: 'UI/UX design, prototyping, design systems', level: 3 },
+    ],
+  },
+  {
+    category: 'Content Creation',
+    PhosphorIcon: FilmStrip,
+    color: 'text-red-400',
+    bg: 'bg-red-500/10 border-red-500/20',
+    dotColor: 'bg-red-400',
+    skills: [
+      { name: 'Adobe Premiere Pro + Final Cut', desc: 'Video editing and post-production', level: 4 },
+      { name: 'OBS Studio + StreamYard', desc: 'Live broadcasting and production', level: 4 },
+      { name: 'YouTube Studio + VidIQ', desc: 'Channel management, SEO, analytics', level: 5 },
+      { name: 'Social Media Strategy', desc: 'Multi-platform growth to 230K+ followers', level: 5 },
+    ],
+  },
+]
+
+const hobbies = [
+  { icon: Heart, label: 'Football Analysis', desc: 'Tactical analysis and the beautiful game', color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/20' },
+  { icon: Music, label: 'House / Techno', desc: 'Electronic music events and discovery', color: 'text-purple-400', bg: 'bg-purple-500/10 border-purple-500/20' },
+  { icon: BookOpen, label: 'Tech Exploration', desc: 'New frameworks, tools, best practices', color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20' },
+  { icon: Plane, label: 'Travel', desc: 'Exploring new places, cultures, perspectives', color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20' },
+]
+
+const education = [
+  {
+    PhosphorIcon: GraduationCap,
+    iconBg: 'bg-primary/10 border-primary/20',
+    iconColor: 'text-primary',
+    title: 'Diploma — New Media Design & Web Development',
+    institution: 'British Columbia Institute of Technology (BCIT)',
+    year: '2025 – 2026',
+  },
+  {
+    PhosphorIcon: Certificate,
+    iconBg: 'bg-accent/10 border-accent/20',
+    iconColor: 'text-accent',
+    title: 'Front-End JavaScript Frameworks (Angular)',
+    institution: 'University of Michigan — Coursera',
+    year: '2021 · HTML5 & JavaScript Interactivity',
+  },
+  {
+    PhosphorIcon: Certificate,
+    iconBg: 'bg-accent/10 border-accent/20',
+    iconColor: 'text-accent',
+    title: 'Front-End JavaScript Frameworks',
+    institution: 'HK University of Science & Technology — Coursera',
+    year: '2021 · Angular framework specialization',
+  },
+  {
+    PhosphorIcon: Certificate,
+    iconBg: 'bg-fuchsia/10 border-fuchsia/20',
+    iconColor: 'text-fuchsia',
+    title: 'Web Development Fundamentals',
+    institution: 'Sematec Institute',
+    year: '2020 · HTML, CSS, JavaScript, Bootstrap',
+  },
+  {
+    PhosphorIcon: Laptop,
+    iconBg: 'bg-emerald-500/10 border-emerald-500/20',
+    iconColor: 'text-emerald-400',
+    title: 'Self-Taught Learning',
+    institution: 'Udemy, Frontend Masters, Packt, Pluralsight',
+    year: 'Ongoing · React, Next.js, TypeScript, and more',
+  },
+]
 
 const About = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  const timelineRef = useRef(null);
-  const skillCardsRef = useRef(null);
+  const timelineRef = useRef(null)
+  const skillCardsRef = useRef(null)
 
   useEffect(() => {
-    setIsVisible(true);
-
-  }, []);
-
-  useEffect(() => {
-    // Timeline items stagger in from alternating sides
     if (timelineRef.current) {
-      const items = timelineRef.current.querySelectorAll(".gsap-timeline-item");
+      const items = timelineRef.current.querySelectorAll('.gsap-timeline-item')
       items.forEach((item, i) => {
-        const fromLeft = i % 2 === 0;
         gsap.fromTo(
           item,
-          { opacity: 0, x: fromLeft ? -60 : 60 },
+          { opacity: 0, x: i % 2 === 0 ? -50 : 50 },
           {
-            opacity: 1,
-            x: 0,
-            duration: 0.7,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
+            opacity: 1, x: 0, duration: 0.65, ease: 'power3.out',
+            scrollTrigger: { trigger: item, start: 'top 85%', toggleActions: 'play none none none' },
           }
-        );
-      });
+        )
+      })
     }
-
-    // Skill category cards fade + slide up with stagger
     if (skillCardsRef.current) {
-      const cards = skillCardsRef.current.querySelectorAll(".gsap-skill-card");
+      const cards = skillCardsRef.current.querySelectorAll('.gsap-skill-card')
       gsap.fromTo(
         cards,
-        { opacity: 0, y: 50 },
+        { opacity: 0, y: 40 },
         {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power3.out",
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: skillCardsRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
+          opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.12,
+          scrollTrigger: { trigger: skillCardsRef.current, start: 'top 80%', toggleActions: 'play none none none' },
         }
-      );
+      )
     }
-
-    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
-  }, []);
-
-  const featuredCourses = [
-    {
-      title: "React 18/19",
-      badge: "React 18/19",
-      topics: [
-        "React 18/19: hooks (useState, useEffect, useRef, useContext, useReducer, useMemo, useCallback), custom hooks, component composition, Context API",
-        "React Router v7 — client-side routing, nested routes, dynamic route parameters, data loaders, protected routes, SSR",
-        "TanStack Router — multi-page routing, lazy loading, route parameters, protected routes",
-        "TanStack Query — data fetching, caching strategies, mutations, optimistic updates, infinite queries",
-        "Next.js — App Router, Server Components, API routes, SSR/SSG, image optimization",
-        "Built projects: portfolio website, notes app, shopping cart UI, idea sharing app",
-        "Portfolio website with Strapi Headless CMS integration",
-        "Full-stack MERN app with refresh tokens for authentication",
-      ],
-    },
-    {
-      title: "AI-Assisted Development Workflow",
-      badge: "AI Dev Workflow",
-      topics: [
-        "Repeatable AI-assisted workflow — from feature planning and context setup to implementation, testing, and deployment",
-        "Writing effective prompts that produce consistent, high-quality code instead of random trial and error",
-        "Structuring project context files and specs so AI understands your codebase and follows your standards",
-        "Building custom skills, subagents, and MCP server integrations to automate repetitive development tasks",
-        "Reviewing, testing, and auditing AI-generated code to ship with confidence",
-        "Modern full-stack patterns: Next.js App Router, TypeScript, Prisma, Tailwind CSS v4, and server actions",
-        "Using Claude Code with plan mode, context files, slash commands, and VS Code integration",
-        "Implementing AI-powered features: auto-tagging, code explanation, and prompt optimization using OpenAI",
-        "Production deployment, environment management, and migration workflows",
-      ],
-    },
-  ];
-
-  const skillCategories = [
-    {
-      category: "Frontend & Backend Development",
-      skills: [
-        {
-          name: "Remix",
-          description: "Full-stack React framework, server-side rendering, nested routing, data mutations with actions and loaders",
-        },
-        {
-          name: "TypeScript",
-          description: "Type safety, interfaces, generics, utility types, type inference",
-        },
-        {
-          name: "Express",
-          description: "RESTful API development, middleware, routing, error handling",
-        },
-        {
-          name: "MongoDB",
-          description: "NoSQL database, document-based data storage, aggregation pipelines, indexing",
-        },
-        {
-          name: "Mongoose",
-          description: "MongoDB ODM, schema modeling, validation, data relationships, query building",
-        },
-        {
-          name: "Tailwind CSS / shadcn/ui",
-          description: "Utility-first styling, custom configurations, responsive design, dark mode, and pre-built accessible components",
-        },
-        {
-          name: "Vite",
-          description: "Modern build tool, fast HMR, optimized production builds",
-        },
-        {
-          name: "Git/GitHub",
-          description: "Version control, branching strategies, pull requests, collaborative workflows",
-        },
-        {
-          name: "Vercel",
-          description: "Deployment platform, serverless functions, preview deployments, CI/CD integration",
-        },
-        {
-          name: "Supabase",
-          description: "Serverless PostgreSQL backend, real-time subscriptions, row-level security, and usage tracking via @supabase/supabase-js",
-        },
-        {
-          name: "Resend",
-          description: "Transactional email delivery API for sending professional client-facing emails from Next.js server actions",
-        },
-        {
-          name: "Angular",
-          description: "Enterprise application development with RxJS and Angular Material",
-        },
-      ],
-    },
-    {
-      category: "Content Creation & Media",
-      skills: [
-        { name: "StreamYard", description: "Live streaming and production" },
-        {
-          name: "OBS Studio",
-          description: "Professional broadcasting software",
-        },
-        {
-          name: "Adobe Premiere Pro",
-          description: "Video editing and post-production",
-        },
-        {
-          name: "Final Cut Pro",
-          description: "Advanced video editing workflows",
-        },
-        {
-          name: "Canva",
-          description: "Quick design and social media graphics",
-        },
-        {
-          name: "YouTube Studio",
-          description: "Channel management and analytics",
-        },
-        { name: "VidIQ / TubeBuddy", description: "YouTube SEO, optimization, and content growth tools" },
-        {
-          name: "SEO & Analytics",
-          description: "Content optimization and performance tracking",
-        },
-        {
-          name: "Thumbnail Design",
-          description: "Click-worthy visual creation",
-        },
-        {
-          name: "Social Media Strategy",
-          description: "Multi-platform content planning",
-        },
-      ],
-    },
-    {
-      category: "AI & Tools",
-      skills: [
-        {
-          name: "ChatGPT",
-          description: "AI-assisted development and content creation",
-        },
-        { name: "Anthropic Claude API", description: "AI-powered feature development using @anthropic-ai/sdk — prompt engineering, structured outputs, and agentic workflows" },
-        { name: "GitHub Copilot", description: "AI pair programming" },
-        { name: "Midjourney", description: "AI image generation" },
-      ],
-    },
-    {
-      category: "UI/UX Design",
-      skills: [
-        { name: "Figma", description: "UI/UX design and prototyping" },
-        {
-          name: "Responsive Design",
-          description: "Mobile-first design principles",
-        },
-        { name: "User Experience", description: "Intuitive interface design" },
-        { name: "Accessibility", description: "WCAG-compliant web design" },
-      ],
-    },
-  ];
-
-  const timeline = [
-    {
-      year: "2020",
-      event: "Web development training & launched YouTube network",
-    },
-    { year: "2021", event: "First developer role at MD Swiss Pharma" },
-    { year: "2022", event: "Joined Ultimate System as Web Developer" },
-    {
-      year: "2025-2026",
-      event: "Graduated BCIT - New Media Design & Web Development",
-    },
-    { year: "2025", event: "Expanding React/Next.js expertise" },
-  ];
+    return () => ScrollTrigger.getAll().forEach((t) => t.kill())
+  }, [])
 
   return (
-    <div className="pt-20 sm:pt-24 pb-12 sm:pb-20 px-4 sm:px-6 bg-background-secondary min-h-screen tech-grid">
-      <div className="max-w-6xl mx-auto">
-        {/* Hero Section with Photo */}
-        <div
-          className={`text-center mb-12 sm:mb-20 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+    <div className="pt-20 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 bg-background-secondary min-h-screen tech-grid">
+      <div className="max-w-5xl mx-auto">
+
+        {/* Hero / Profile */}
+        <motion.div
+          className="text-center mb-14 sm:mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
         >
-          {/* Profile Photo */}
-          <div className="mb-6 sm:mb-8 flex justify-center">
-            <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-primary shadow-glow-lg ring-4 ring-primary/20 hover:ring-8 hover:ring-primary/30 transition-all duration-300">
-              <img
-                src={profileImage}
-                alt="Soroush Bayanati"
-                className="w-full h-full object-cover object-center scale-[1.6] hover:scale-[1.7] transition-transform duration-300"
-                style={{ objectPosition: "0% 80%" }}
+          <div className="mb-8 flex justify-center">
+            <div className="relative">
+              <div className="absolute inset-[-30%] rounded-full bg-gradient-radial from-primary/15 to-transparent blur-2xl" />
+              <motion.div
+                className="absolute -inset-2 rounded-full"
+                style={{
+                  background: 'conic-gradient(from 0deg, #7c3aed, #22d3ee, #e879f9, #7c3aed)',
+                  filter: 'blur(2px)',
+                }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
               />
+              <div className="absolute -inset-1 rounded-full bg-background-secondary" />
+              <div className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 rounded-full overflow-hidden">
+                <img
+                  src={profileImage}
+                  alt="Soroush Bayanati"
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  style={{ objectPosition: '0% 80%', transform: 'scale(1.6)' }}
+                />
+              </div>
             </div>
           </div>
 
-          <p className="code-comment text-sm mb-3">Developer Profile</p>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-mono text-text-primary mb-4">
-            <span className="text-primary">const</span> developer
-            <span className="text-text-muted"> = </span>
-            <span className="text-primary neon-glow">"Soroush Bayanati"</span>
+          <p className="section-label mb-3">Developer Profile</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-mono text-text-primary mb-3">
+            <span className="text-primary">const</span>{' '}
+            <span className="gradient-text-animate">Soroush Bayanati</span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-text-secondary mb-6 font-mono">
-            <span className="text-primary">role</span>:{" "}
-            <span className="font-semibold">
-              "Frontend Developer & Content Creator"
-            </span>
+          <p className="text-base sm:text-lg text-text-secondary mb-5 font-mono">
+            <span className="text-primary">role</span>:{' '}
+            <span className="text-text-primary">"Full-Stack Developer & Content Creator"</span>
           </p>
-          <div className="flex items-center justify-center space-x-2 text-text-secondary mb-6">
-            <MapPin className="w-5 h-5 text-primary" />
-            <span>Vancouver, BC, Canada</span>
+
+          <div className="flex items-center justify-center gap-2 text-text-secondary mb-7">
+            <MapPin className="w-4 h-4 text-accent" />
+            <span className="text-sm">Vancouver, BC, Canada</span>
           </div>
 
-          {/* Download Resume Button */}
           <a
             href={`${import.meta.env.BASE_URL}Soroush_B_Resume.pdf`}
             download="Soroush_B_Resume.pdf"
-            className="inline-flex items-center space-x-2 modern-btn group"
+            className="inline-flex items-center gap-2 modern-btn"
           >
-            <Download className="w-5 h-5" />
-            <span>Download Resume</span>
+            <Download className="w-4 h-4" />
+            Download Resume
           </a>
-        </div>
+        </motion.div>
 
-        {/* My Journey Story */}
-        <div
-          className={`modern-card mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          style={{ transitionDelay: "100ms" }}
+        {/* Story */}
+        <motion.div
+          className="modern-card mb-14"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
-          <p className="code-comment text-sm mb-3">Personal Story</p>
-          <h2 className="text-3xl font-bold font-mono text-primary mb-6">
-            journey<span className="text-text-muted">.</span>story
-            <span className="text-text-muted">()</span>
+          <p className="section-label mb-3">Personal Story</p>
+          <h2 className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-6">
+            journey<span className="text-text-muted">.story()</span>
           </h2>
 
-          <div className="prose prose-lg max-w-none text-text-secondary space-y-4">
+          <div className="space-y-4 text-text-secondary text-sm sm:text-base leading-relaxed">
             <p>
-              I'm a frontend developer born in 1995, based in Vancouver, BC. My
-              journey into web development began in 2017 when I moved to Canada
-              from Iran, driven by a passion for technology and creativity.
+              I'm a full-stack developer born in 1995, based in Vancouver, BC. My journey into web development began when I
+              moved to Canada from Iran in 2017, driven by a passion for technology and creativity.
             </p>
-
             <p>
-              I discovered my true calling in web development through the
-              ability to build interactive experiences that millions of people
-              could use. I dove deep into learning through multiple
-              paths—Coursera certifications from the University of Michigan and
-              Hong Kong University of Science & Technology, Sematec Institute
-              training, and countless hours of self-teaching through platforms
-              like Udemy, Frontend Masters, Packt, and Pluralsight.
+              I discovered my calling through the ability to build interactive experiences that real users rely on. I dove deep
+              through multiple paths — Coursera certifications, Sematec Institute, and countless hours on Udemy, Frontend
+              Masters, Packt, and Pluralsight. In 2026, I graduated from BCIT's New Media Design & Web Development program.
             </p>
-
             <p>
-              In 2026, I graduated from BCIT's New Media Design & Web
-              Development program, which gave me a comprehensive foundation in
-              both the technical and creative aspects of web development. This
-              formal education, combined with my self-taught skills, equipped me
-              to build production-grade applications.
+              Since 2021 I've built real-world applications at MD Swiss Pharma and Ultimate System using Angular, React,
+              TypeScript, and modern web tech. Today my focus is full-stack development — React 19, Next.js 15, and backend
+              work with PostgreSQL, Supabase, Drizzle ORM, and Prisma. I also integrate AI deeply into how I build: using
+              Claude Code and the Claude API to ship faster and smarter.
             </p>
-
             <p>
-              Since 2021, I've been building real-world web applications at MD
-              Swiss Pharma and Ultimate System, working with Angular, React,
-              TypeScript, and modern web technologies. But my path hasn't been
-              just about code—in 2020, I also built and scaled a multi-channel
-              football media network to over 40,000 YouTube subscribers and
-              190,000 Instagram followers.
+              But my path hasn't been just about code — in 2020, I also built and scaled a multi-channel football media
+              network to over <span className="text-primary font-medium">40,000 YouTube subscribers</span> and{' '}
+              <span className="text-accent font-medium">190,000 Instagram followers</span>.
             </p>
-
-            <p>
-              This unique combination has taught me to think beyond just writing
-              code. I understand user engagement, analytics, product growth, and
-              visual design. I build applications that not only work technically
-              but also connect with users and achieve business goals.
-            </p>
-
-            <p className="font-semibold text-primary">
-              Today, I specialize in React, Next.js, and TypeScript, creating
-              modern web applications with clean code, thoughtful UX, and
-              measurable impact. I'm excited to bring my technical skills and
-              creative problem-solving to innovative teams building products
-              that matter.
+            <p className="text-text-primary font-semibold">
+              Today I specialize in React, Next.js, and TypeScript — shipping full-stack apps with real database
+              backends and AI-powered features that connect with users and achieve business goals.
             </p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Timeline */}
-        <div
-          className={`mb-12 sm:mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          style={{ transitionDelay: "200ms" }}
-        >
-          <p className="code-comment text-sm mb-3 text-center">Career Path</p>
-          <h2 className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-6 sm:mb-8 text-center">
-            timeline<span className="text-text-muted">[]</span>
-          </h2>
+        <div className="mb-14">
+          <motion.div
+            className="text-center mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className="section-label mb-3">Career Path</p>
+            <h2 className="text-2xl sm:text-3xl font-bold font-mono">
+              <span className="gradient-text-purple">timeline</span>
+              <span className="text-text-muted">[]</span>
+            </h2>
+          </motion.div>
+
           <div className="relative">
-            {/* Timeline Line - Desktop */}
-            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-primary/30"></div>
-            {/* Timeline Line - Mobile */}
-            <div className="md:hidden absolute left-4 top-0 w-0.5 h-full bg-primary/30"></div>
+            <div className="hidden md:block absolute left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-primary/40 via-primary/20 to-transparent" />
+            <div className="md:hidden absolute left-5 top-0 w-px h-full bg-gradient-to-b from-primary/40 to-transparent" />
 
-            {/* Timeline Items */}
             <div ref={timelineRef} className="space-y-6 sm:space-y-8">
-              {timeline.map((item, index) => (
-                <div
-                  key={index}
-                  className={`gsap-timeline-item flex items-start md:items-center ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
-                >
-                  {/* Mobile dot */}
-                  <div className="md:hidden w-3 h-3 bg-primary rounded-full border-2 border-background-secondary shadow-glow-sm z-10 flex-shrink-0 mt-5 mr-4"></div>
+              {timeline.map((item, index) => {
+                const Icon = item.PhosphorIcon
+                return (
                   <div
-                    className={`flex-1 ${index % 2 === 0 ? "md:pr-8" : "md:pl-8"}`}
+                    key={index}
+                    className={clsx('gsap-timeline-item flex items-center', index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse')}
                   >
-                    <div className="bg-background-tertiary border border-primary/30 rounded-lg p-3 sm:p-4 shadow-glow-sm hover:shadow-glow-md hover:border-primary/50 transition-all text-left">
-                      <span className="inline-block px-2 sm:px-3 py-1 bg-primary/20 border border-primary/30 text-primary text-xs sm:text-sm font-semibold rounded-full mb-2">
-                        {item.year}
-                      </span>
-                      <p className="text-sm sm:text-base text-text-secondary">{item.event}</p>
-                    </div>
-                  </div>
-                  {/* Desktop dot */}
-                  <div className="hidden md:block w-4 h-4 bg-primary rounded-full border-4 border-background-secondary shadow-glow-sm z-10 flex-shrink-0"></div>
-                  <div className="hidden md:block flex-1"></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Skills Breakdown */}
-        <div
-          className={`mb-12 sm:mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          style={{ transitionDelay: "300ms" }}
-        >
-          <p className="code-comment text-sm mb-3 text-center">
-            Technical Stack
-          </p>
-          <h2 className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-6 sm:mb-8 text-center">
-            skills<span className="text-text-muted">.</span>map
-            <span className="text-text-muted">()</span>
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-6 mb-6 sm:mb-8">
-            {featuredCourses.map((course, index) => (
-              <div key={index} className="modern-card !p-4 sm:!p-6 md:!p-8 col-span-1">
-                <div className="flex items-center justify-between mb-4 sm:mb-6">
-                  <div>
-                    <span className="inline-block px-2 py-1 glass border border-primary/30 text-primary text-xs font-mono font-semibold rounded-lg mb-2">
-                      <span className="text-text-muted">{"<"}</span>{course.badge}<span className="text-text-muted">{" />"}</span>
-                    </span>
-                    <h3 className="text-base sm:text-lg md:text-xl font-bold font-mono text-text-primary">
-                      {course.title}
-                    </h3>
-                  </div>
-                  <Layers className="w-8 h-8 text-primary/40 flex-shrink-0 ml-4" />
-                </div>
-                <ul className="space-y-2 sm:space-y-3">
-                  {course.topics.map((topic, i) => (
-                    <li key={i} className="flex items-start space-x-2 sm:space-x-3 group/item">
-                      <span className="text-primary mt-0.5 flex-shrink-0 font-mono group-hover/item:scale-125 transition-transform text-xs sm:text-base">{">"}</span>
-                      <span className="text-xs sm:text-sm text-text-secondary leading-relaxed">{topic}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-          <div ref={skillCardsRef} className="space-y-6 sm:space-y-8">
-            {skillCategories.map((category, index) => (
-              <div key={index} className="gsap-skill-card modern-card !p-4 sm:!p-6 md:!p-8">
-                <h3 className="text-base sm:text-lg md:text-xl font-bold font-mono text-text-primary mb-4 sm:mb-6 flex items-center flex-wrap">
-                  <Code className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-primary" />
-                  <span className="text-primary break-all">
-                    {category.category.toLowerCase().replace(/ /g, "_")}
-                  </span>
-                  <span className="text-text-muted">: {"{"}</span>
-                </h3>
-                <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 pl-2 sm:pl-6">
-                  {category.skills.map((skill, skillIndex) => (
-                    <div
-                      key={skillIndex}
-                      className="flex items-start space-x-2 sm:space-x-3 p-3 sm:p-4 glass border border-primary/20 rounded-lg hover:border-primary/50 hover:shadow-glow-md transition-all duration-200 group"
-                    >
-                      <div className="flex-1 min-w-0">
-                        <div className="mb-1 flex items-center">
-                          <span className="text-primary font-mono mr-2 group-hover:scale-125 transition-transform flex-shrink-0">
-                            {">"}
-                          </span>
-                          <span className="font-semibold font-mono text-text-primary text-sm sm:text-base truncate">
-                            {skill.name}
+                    <div className="md:hidden w-2.5 h-2.5 bg-primary rounded-full border-2 border-background-secondary z-10 flex-shrink-0 ml-[14px] mr-5 shadow-glow-sm" />
+                    <div className={clsx('flex-1', index % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8 md:text-left')}>
+                      <div className="bg-background-tertiary border border-primary/20 rounded-xl p-4 sm:p-5 hover:border-primary/40 hover:shadow-glow-sm transition-all duration-300 inline-block w-full">
+                        <div className={clsx('flex items-center gap-2 mb-2', index % 2 === 0 ? 'md:flex-row-reverse md:justify-end' : '')}>
+                          <div className="w-7 h-7 rounded-lg bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
+                            <Icon size={14} weight="bold" className="text-primary" />
+                          </div>
+                          <span className="inline-block px-3 py-1 bg-primary/15 border border-primary/25 text-primary text-xs font-mono font-semibold rounded-full">
+                            {item.year}
                           </span>
                         </div>
-                        <p className="text-xs sm:text-sm text-text-secondary pl-4">
-                          {skill.description}
-                        </p>
+                        <p className="text-sm sm:text-base text-text-secondary">{item.event}</p>
                       </div>
                     </div>
-                  ))}
+                    <div className="hidden md:flex w-4 h-4 bg-primary rounded-full border-4 border-background-secondary shadow-glow-sm z-10 flex-shrink-0 mx-2" />
+                    <div className="hidden md:block flex-1" />
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Technical Expertise */}
+        <div className="mb-14">
+          <motion.div
+            className="text-center mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className="section-label mb-3">Technical Expertise</p>
+            <h2 className="text-2xl sm:text-3xl font-bold font-mono">
+              <span className="gradient-text-purple">skills</span>
+              <span className="text-text-muted">.map()</span>
+            </h2>
+          </motion.div>
+
+          {/* 2 Hero Skill Cards */}
+          <div className="space-y-5 mb-10">
+            {heroCards.map((card, index) => (
+              <motion.div
+                key={index}
+                className="modern-card !p-0 overflow-hidden"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                {/* Top accent line */}
+                <div className={clsx('h-0.5 w-full bg-gradient-to-r', card.accentLine)} />
+
+                {/* Header */}
+                <div className={clsx('px-6 sm:px-8 py-5 sm:py-6 bg-gradient-to-r', card.headerGradient)}>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-1 min-w-0">
+                      <span className={clsx(
+                        'inline-block px-2.5 py-1 border text-xs font-mono font-semibold rounded-lg mb-2',
+                        card.borderColor, card.tagBg, card.primaryColor
+                      )}>
+                        {card.badge}
+                      </span>
+                      <h3 className="text-xl sm:text-2xl font-bold font-mono text-text-primary leading-tight">
+                        {card.title}
+                      </h3>
+                      <p className={clsx('text-sm font-mono mt-0.5', card.primaryColor)}>{card.subtitle}</p>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-xl font-mono text-text-muted mt-4">{"}"}</p>
-              </div>
+
+                {/* Body — topics left, tech tags right */}
+                <div className="px-6 sm:px-8 py-6 lg:grid lg:grid-cols-[1fr_190px] lg:gap-8">
+                  <ul className="space-y-2.5 mb-6 lg:mb-0">
+                    {card.topics.map((topic, i) => (
+                      <li key={i} className="flex items-start gap-2.5 group/item">
+                        <span className={clsx('mt-0.5 flex-shrink-0 font-mono text-sm group-hover/item:scale-125 transition-transform', card.primaryColor)}>›</span>
+                        <span className="text-xs sm:text-sm text-text-secondary leading-relaxed">{topic}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="flex-shrink-0">
+                    <p className="text-xs font-mono text-text-muted mb-2">
+                      <span className={card.primaryColor}>stack</span>: [
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 lg:flex-col">
+                      {card.techTags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className={clsx(
+                            'px-2.5 py-1 glass border text-xs font-mono rounded-lg hover:bg-primary/10 transition-all duration-200',
+                            card.tagBorder, card.primaryColor
+                          )}
+                        >
+                          "{tag}"
+                        </span>
+                      ))}
+                    </div>
+                    <p className="text-xs font-mono text-text-muted mt-2">]</p>
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
-        </div>
 
-        {/* Hobbies & Interests */}
-        <div
-          className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          style={{ transitionDelay: "400ms" }}
-        >
-          <p className="code-comment text-sm mb-3 text-center">
-            Personal Interests
-          </p>
-          <h2 className="text-2xl sm:text-3xl font-bold font-mono text-primary mb-6 sm:mb-8 text-center">
-            hobbies<span className="text-text-muted">.</span>list
-            <span className="text-text-muted">()</span>
-          </h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-            <div className="bg-background-tertiary border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-3 sm:mb-4 border border-primary/30">
-                <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+          {/* Backend & Database */}
+          <motion.div
+            className="mb-10"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="modern-card">
+              <div className="flex items-center gap-2.5 mb-6">
+                <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                  <Database className="w-4 h-4 text-emerald-400" />
+                </div>
+                <h3 className="text-base sm:text-lg font-bold font-mono text-text-primary">
+                  <span className="text-emerald-400">backend</span>
+                  <span className="text-text-muted">.</span>
+                  <span className="text-primary">skills</span>
+                  <span className="text-text-muted">()</span>
+                </h3>
               </div>
-              <h3 className="font-bold text-text-primary mb-1 sm:mb-2 text-sm sm:text-base">
-                Football Analysis
-              </h3>
-              <p className="text-xs sm:text-sm text-text-secondary">
-                Passionate about tactical analysis and the beautiful game
-              </p>
-            </div>
 
-            <div className="bg-background-tertiary border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-3 sm:mb-4 border border-primary/30">
-                <Music className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                {backendSkills.map((cat, i) => {
+                  const Icon = cat.icon
+                  return (
+                    <motion.div
+                      key={i}
+                      className={clsx('p-4 rounded-xl border', cat.bg)}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: i * 0.07 }}
+                    >
+                      <div className="flex items-center gap-2 mb-3">
+                        <Icon className={clsx('w-4 h-4 flex-shrink-0', cat.color)} />
+                        <h4 className={clsx('font-mono font-semibold text-xs sm:text-sm', cat.color)}>{cat.title}</h4>
+                      </div>
+                      <ul className="space-y-1.5">
+                        {cat.skills.map((skill, si) => (
+                          <li key={si} className="flex items-center gap-2">
+                            <span className={clsx('text-xs font-mono flex-shrink-0', cat.color)}>›</span>
+                            <span className="text-xs text-text-secondary">{skill}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  )
+                })}
               </div>
-              <h3 className="font-bold text-text-primary mb-1 sm:mb-2 text-sm sm:text-base">
-                House/Techno
-              </h3>
-              <p className="text-xs sm:text-sm text-text-secondary">
-                Discovering artists and attending electronic music events
-              </p>
             </div>
+          </motion.div>
 
-            <div className="bg-background-tertiary border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-3 sm:mb-4 border border-primary/30">
-                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-              </div>
-              <h3 className="font-bold text-text-primary mb-1 sm:mb-2 text-sm sm:text-base">
-                Tech Exploration
-              </h3>
-              <p className="text-xs sm:text-sm text-text-secondary">
-                Learning new frameworks, tools, and best practices
-              </p>
-            </div>
-
-            <div className="bg-background-tertiary border border-primary/30 rounded-lg p-4 sm:p-6 hover:shadow-glow-md hover:border-primary/50 transition-all">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-3 sm:mb-4 border border-primary/30">
-                <Plane className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-              </div>
-              <h3 className="font-bold text-text-primary mb-1 sm:mb-2 text-sm sm:text-base">Travel</h3>
-              <p className="text-xs sm:text-sm text-text-secondary">
-                Exploring new places, cultures, and perspectives
-              </p>
-            </div>
+          {/* Skill categories */}
+          <div ref={skillCardsRef} className="space-y-5">
+            {skillCategories.map((category, index) => {
+              const Icon = category.PhosphorIcon
+              return (
+                <div key={index} className="gsap-skill-card modern-card">
+                  <h3 className="text-base sm:text-lg font-bold font-mono text-text-primary mb-5 flex items-center gap-2.5">
+                    <div className={clsx('w-7 h-7 rounded-lg border flex items-center justify-center flex-shrink-0', category.bg)}>
+                      <Icon size={15} weight="bold" className={category.color} />
+                    </div>
+                    <span className={category.color}>{category.category.toLowerCase().replace(/ /g, '_')}</span>
+                    <span className="text-text-muted">: &#123;</span>
+                  </h3>
+                  <div className="grid sm:grid-cols-2 gap-3 pl-4">
+                    {category.skills.map((skill, si) => (
+                      <div
+                        key={si}
+                        className="flex items-start gap-2.5 p-3 glass border border-primary/15 rounded-lg hover:border-primary/35 hover:shadow-glow-sm transition-all duration-200 group"
+                      >
+                        <span className={clsx('mt-0.5 flex-shrink-0 font-mono text-sm group-hover:scale-125 transition-transform', category.color)}>›</span>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-semibold font-mono text-text-primary text-xs sm:text-sm">{skill.name}</p>
+                          <p className="text-xs text-text-muted mt-0.5 leading-relaxed">{skill.desc}</p>
+                          <div className="flex gap-1 mt-2">
+                            {[1, 2, 3, 4, 5].map((dot) => (
+                              <div
+                                key={dot}
+                                className={clsx(
+                                  'w-1.5 h-1.5 rounded-full transition-opacity',
+                                  dot <= skill.level ? category.dotColor : 'bg-text-muted/25'
+                                )}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-text-muted font-mono mt-4">&#125;</p>
+                </div>
+              )
+            })}
           </div>
         </div>
 
-        {/* Education & Certifications */}
-        <div
-          className={`mt-12 sm:mt-16 modern-card !p-4 sm:!p-6 md:!p-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          style={{ transitionDelay: "500ms" }}
+        {/* Hobbies */}
+        <div className="mb-14">
+          <motion.div
+            className="text-center mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className="section-label mb-3">Personal Interests</p>
+            <h2 className="text-2xl sm:text-3xl font-bold font-mono">
+              <span className="gradient-text-purple">hobbies</span>
+              <span className="text-text-muted">.list()</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            {hobbies.map((hobby, index) => {
+              const Icon = hobby.icon
+              return (
+                <motion.div
+                  key={index}
+                  className="modern-card !p-4 sm:!p-5 text-center hover:shadow-card-hover group cursor-default"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.08 }}
+                  whileHover={{ y: -6 }}
+                >
+                  <div className={clsx('w-10 h-10 sm:w-12 sm:h-12 rounded-xl border flex items-center justify-center mx-auto mb-3 transition-transform duration-300 group-hover:scale-110', hobby.bg)}>
+                    <Icon className={clsx('w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:scale-110', hobby.color)} />
+                  </div>
+                  <h3 className="font-bold text-text-primary text-sm sm:text-base mb-1 group-hover:text-text-primary transition-colors">{hobby.label}</h3>
+                  <p className="text-xs text-text-muted group-hover:text-text-secondary transition-colors">{hobby.desc}</p>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Education */}
+        <motion.div
+          className="modern-card"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
-          <p className="code-comment text-sm mb-3">Academic Background</p>
-          <h2 className="text-xl sm:text-2xl font-bold font-mono text-text-primary mb-4 sm:mb-6 flex items-center">
-            <Award className="w-6 h-6 sm:w-7 sm:h-7 mr-2 sm:mr-3 text-primary" />
+          <p className="section-label mb-3">Academic Background</p>
+          <h2 className="text-xl sm:text-2xl font-bold font-mono text-text-primary mb-6 flex items-center gap-2">
+            <Award className="w-6 h-6 text-primary" />
             <span className="text-primary">education</span>
             <span className="text-text-muted">[]</span>
           </h2>
-          <div className="space-y-4 sm:space-y-6">
-            <div className="flex items-start space-x-3 sm:space-x-4">
-              <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
-                <span className="text-xl sm:text-2xl">🎓</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-text-primary text-sm sm:text-base">
-                  Diploma - New Media Design & Web Development
-                </h3>
-                <p className="text-primary font-semibold text-sm sm:text-base">
-                  British Columbia Institute of Technology (BCIT)
-                </p>
-                <p className="text-xs sm:text-sm text-text-secondary">
-                  2025 - 2026 (Completed)
-                </p>
-              </div>
-            </div>
 
-            <div className="flex items-start space-x-3 sm:space-x-4">
-              <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
-                <span className="text-xl sm:text-2xl">📜</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-text-primary text-sm sm:text-base">
-                  Front-End JavaScript Frameworks (Angular)
-                </h3>
-                <p className="text-primary font-semibold text-sm sm:text-base">
-                  University of Michigan - Coursera
-                </p>
-                <p className="text-xs sm:text-sm text-text-secondary">
-                  2021 • Includes HTML5 & JavaScript Interactivity
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-3 sm:space-x-4">
-              <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
-                <span className="text-xl sm:text-2xl">📜</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-text-primary text-sm sm:text-base">
-                  Front-End JavaScript Frameworks
-                </h3>
-                <p className="text-primary font-semibold text-sm sm:text-base truncate">
-                  HK University of Science & Technology - Coursera
-                </p>
-                <p className="text-xs sm:text-sm text-text-secondary">
-                  2021 • Angular framework specialization
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-3 sm:space-x-4">
-              <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
-                <span className="text-xl sm:text-2xl">📜</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-text-primary text-sm sm:text-base">
-                  Web Development Fundamentals
-                </h3>
-                <p className="text-primary font-semibold text-sm sm:text-base">Sematec Institute</p>
-                <p className="text-xs sm:text-sm text-text-secondary">
-                  2020 • HTML, CSS, JavaScript, Bootstrap
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-3 sm:space-x-4">
-              <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
-                <span className="text-xl sm:text-2xl">💻</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-text-primary text-sm sm:text-base">
-                  Self-Taught Learning
-                </h3>
-                <p className="text-primary font-semibold text-sm sm:text-base">
-                  Udemy, Frontend Masters, Packt, Pluralsight
-                </p>
-                <p className="text-xs sm:text-sm text-text-secondary">
-                  Ongoing • React, Next.js, TypeScript, Testing, and more
-                </p>
-              </div>
-            </div>
+          <div className="space-y-5">
+            {education.map((edu, index) => {
+              const Icon = edu.PhosphorIcon
+              return (
+                <div key={index} className="flex items-start gap-4">
+                  <div className={clsx('flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 border rounded-xl flex items-center justify-center', edu.iconBg)}>
+                    <Icon size={20} weight="bold" className={edu.iconColor} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-text-primary text-sm sm:text-base">{edu.title}</h3>
+                    <p className="text-primary font-semibold text-xs sm:text-sm mt-0.5">{edu.institution}</p>
+                    <p className="text-xs text-text-muted mt-0.5">{edu.year}</p>
+                  </div>
+                </div>
+              )
+            })}
           </div>
-        </div>
+        </motion.div>
+
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default About;
+export default About
