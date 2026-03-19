@@ -369,7 +369,7 @@ const Home = ({ setCurrentPage }) => {
                     src={profileImage}
                     alt="Soroush Bayanati"
                     className="w-full h-full object-cover"
-                    style={{ objectPosition: 'center 22%', transform: 'scale(1.4)', filter: 'grayscale(1)' }}
+                    style={{ objectPosition: 'center 37%', transform: 'scale(1.4)', filter: 'grayscale(1)' }}
                   />
                 </div>
 
