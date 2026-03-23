@@ -51,8 +51,11 @@ function App() {
     return () => clearTimeout(timer)
   }, [])
 
-  // Lenis smooth scroll synced to GSAP ticker
+  // Lenis smooth scroll — desktop only (touch devices use native scroll)
   useEffect(() => {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+    if (isTouchDevice) return
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
