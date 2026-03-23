@@ -97,10 +97,10 @@ const socials = [
 
 // ---- Stats ----
 const stats = [
-  { label: 'Years Experience', value: '3+', icon: Briefcase },
-  { label: 'Projects Delivered', value: '15+', icon: Code2 },
-  { label: 'YouTube Subscribers', value: '40K+', icon: Users },
-  { label: 'Lines of Code', value: '100K+', icon: Rocket },
+  { label: 'Years Experience', value: '3+', icon: Briefcase, iconBg: 'bg-violet-500/12 border-violet-500/20', iconColor: 'text-violet-400' },
+  { label: 'Projects Delivered', value: '15+', icon: Code2, iconBg: 'bg-cyan-500/12 border-cyan-500/20', iconColor: 'text-cyan-400' },
+  { label: 'YouTube Subscribers', value: '40K+', icon: Users, iconBg: 'bg-rose-500/12 border-rose-500/20', iconColor: 'text-rose-400' },
+  { label: 'Lines of Code', value: '100K+', icon: Rocket, iconBg: 'bg-amber-500/12 border-amber-500/20', iconColor: 'text-amber-400' },
 ]
 
 // ---- Coding skills (categorized) ----
@@ -426,8 +426,10 @@ const Home = ({ setCurrentPage }) => {
                   whileHover={{ y: -4, scale: 1.02 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
-                  <Icon className="w-5 h-5 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                  <p className="text-2xl sm:text-3xl font-bold font-mono text-primary neon-glow">
+                  <div className={clsx('mb-3 p-2.5 rounded-xl border transition-all duration-300 group-hover:scale-110', stat.iconBg)}>
+                    <Icon className={clsx('w-5 h-5', stat.iconColor)} />
+                  </div>
+                  <p className={clsx('text-2xl sm:text-3xl font-bold font-mono neon-glow', stat.iconColor)}>
                     <AnimatedCounter value={stat.value} duration={2 + index * 0.2} />
                   </p>
                   <p className="text-[10px] sm:text-xs text-text-muted font-mono mt-1">{stat.label}</p>
@@ -466,10 +468,10 @@ const Home = ({ setCurrentPage }) => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {[
-              { name: 'React', logo: reactLogo, description: 'Component-based UI', tag: '19.x' },
-              { name: 'Next.js', logo: nextjsLogo, description: 'Full-stack framework', tag: '15.x' },
-              { name: 'TypeScript', logo: typescriptLogo, description: 'Type-safe development', tag: '5.x' },
-              { name: 'Claude AI', logo: claudeLogo, description: 'AI-powered development', tag: 'API' },
+              { name: 'React', logo: reactLogo, description: 'Component-based UI', tag: '19.x', glowColor: 'rgba(56,189,248,0.18)', glowHover: 'rgba(56,189,248,0.30)' },
+              { name: 'Next.js', logo: nextjsLogo, description: 'Full-stack framework', tag: '15.x', glowColor: 'rgba(255,255,255,0.08)', glowHover: 'rgba(255,255,255,0.14)' },
+              { name: 'TypeScript', logo: typescriptLogo, description: 'Type-safe development', tag: '5.x', glowColor: 'rgba(49,120,198,0.22)', glowHover: 'rgba(49,120,198,0.35)' },
+              { name: 'Claude AI', logo: claudeLogo, description: 'AI-powered development', tag: 'API', glowColor: 'rgba(251,146,60,0.15)', glowHover: 'rgba(251,146,60,0.26)' },
             ].map((skill, index) => (
               <motion.div
                 key={index}
@@ -484,8 +486,9 @@ const Home = ({ setCurrentPage }) => {
                   {skill.tag}
                 </div>
                 <motion.div
-                  className="w-14 h-14 sm:w-16 sm:h-16 mb-4 flex items-center justify-center"
-                  whileHover={{ scale: 1.15, rotate: 5 }}
+                  className="w-16 h-16 sm:w-20 sm:h-20 mb-5 rounded-2xl flex items-center justify-center p-3 border border-white/5 transition-all duration-300"
+                  style={{ background: skill.glowColor, boxShadow: `0 0 32px ${skill.glowColor}` }}
+                  whileHover={{ scale: 1.12, rotate: 4, boxShadow: `0 0 40px ${skill.glowHover}` }}
                   transition={{ type: 'spring', stiffness: 300 }}
                 >
                   <img

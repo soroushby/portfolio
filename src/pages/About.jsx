@@ -244,15 +244,32 @@ const About = () => {
           <div className="mb-8 flex justify-center">
             <div className="relative">
               <div className="absolute inset-[-30%] rounded-full bg-gradient-radial from-primary/15 to-transparent blur-2xl" />
-              <motion.div
-                className="absolute -inset-2 rounded-full"
-                style={{
-                  background: 'conic-gradient(from 0deg, #7c3aed, #22d3ee, #e879f9, #7c3aed)',
-                  filter: 'blur(2px)',
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-              />
+              {/* SVG spinner rings around About photo */}
+              <div className="absolute -inset-4 flex items-center justify-center pointer-events-none">
+                <svg className="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <motion.circle cx="50" cy="50" r="46"
+                    stroke="url(#aboutRing1)" strokeWidth="0.8" strokeLinecap="round" strokeDasharray="55 234"
+                    animate={{ rotate: 360 }} transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}
+                    style={{ transformOrigin: '50px 50px' }}
+                  />
+                  <motion.circle cx="50" cy="50" r="38"
+                    stroke="url(#aboutRing2)" strokeWidth="0.5" strokeLinecap="round" strokeDasharray="4 15"
+                    animate={{ rotate: -360 }} transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+                    style={{ transformOrigin: '50px 50px' }}
+                  />
+                  <defs>
+                    <linearGradient id="aboutRing1" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#7c3aed" stopOpacity="0.9" />
+                      <stop offset="50%" stopColor="#22d3ee" stopOpacity="0.8" />
+                      <stop offset="100%" stopColor="#e879f9" stopOpacity="0" />
+                    </linearGradient>
+                    <linearGradient id="aboutRing2" x1="100" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#e879f9" stopOpacity="0.5" />
+                      <stop offset="100%" stopColor="#7c3aed" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
               <div className="absolute -inset-1 rounded-full bg-background-secondary" />
               <div className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 rounded-full overflow-hidden">
                 <img

@@ -85,7 +85,7 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
                   {currentPage === item.id && (
                     <motion.div
                       layoutId="nav-pill"
-                      className="absolute inset-0 bg-primary/20 border border-primary/30 rounded-lg"
+                      className="absolute inset-0 bg-primary/18 border border-primary/35 rounded-lg shadow-[0_0_12px_rgba(139,92,246,0.2)]"
                       transition={{ type: 'spring', stiffness: 400, damping: 35 }}
                     />
                   )}
