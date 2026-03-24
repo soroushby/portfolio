@@ -1,12 +1,13 @@
+import { useNavigate } from 'react-router-dom'
 import { Github, Linkedin, Mail, Youtube, MapPin } from 'lucide-react'
 import clsx from 'clsx'
 
 const footerNav = [
-  { id: 'home', label: 'Home' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'content-creation', label: 'Content' },
-  { id: 'about', label: 'About' },
-  { id: 'contact', label: 'Contact' },
+  { path: '/', label: 'Home' },
+  { path: '/projects', label: 'Projects' },
+  { path: '/content-creation', label: 'Content' },
+  { path: '/about', label: 'About' },
+  { path: '/contact', label: 'Contact' },
 ]
 
 const footerSocials = [
@@ -16,9 +17,11 @@ const footerSocials = [
   { href: 'https://youtube.com/@soccerpodcast', icon: Youtube, label: 'YouTube', color: 'hover:text-red-400' },
 ]
 
-const Footer = ({ setCurrentPage }) => {
-  const handleNav = (id) => {
-    setCurrentPage(id)
+const Footer = () => {
+  const navigate = useNavigate()
+
+  const handleNav = (path) => {
+    navigate(path)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -36,7 +39,7 @@ const Footer = ({ setCurrentPage }) => {
           {/* Brand */}
           <div>
             <button
-              onClick={() => handleNav('home')}
+              onClick={() => handleNav('/')}
               className="font-mono text-xl font-bold mb-4 block hover:opacity-80 transition-opacity"
             >
               <span className="text-primary-light">&lt;</span>
@@ -61,9 +64,9 @@ const Footer = ({ setCurrentPage }) => {
             <p className="text-[10px] font-mono text-text-muted uppercase tracking-widest mb-4">Navigate</p>
             <ul className="space-y-2.5">
               {footerNav.map((link) => (
-                <li key={link.id}>
+                <li key={link.path}>
                   <button
-                    onClick={() => handleNav(link.id)}
+                    onClick={() => handleNav(link.path)}
                     className="text-sm text-text-secondary hover:text-primary-light transition-colors duration-200 font-mono flex items-center gap-1.5 group"
                   >
                     <span className="text-primary/40 group-hover:text-primary transition-colors">›</span>

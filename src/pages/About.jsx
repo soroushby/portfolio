@@ -482,7 +482,7 @@ const About = () => {
             ))}
           </div>
 
-          {/* Backend & Database */}
+          {/* Backend & Database — bento grid */}
           <motion.div
             className="mb-10"
             initial={{ opacity: 0, y: 24 }}
@@ -503,26 +503,36 @@ const About = () => {
                 </h3>
               </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+              {/* Asymmetric bento grid */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 auto-rows-fr">
+                {/* Databases — tall/wide on lg */}
                 {backendSkills.map((cat, i) => {
                   const Icon = cat.icon
+                  const isWide = i === 0 // Databases spans 2 cols on lg
                   return (
                     <motion.div
                       key={i}
-                      className={clsx('p-4 rounded-xl border', cat.bg)}
+                      className={clsx(
+                        'p-4 sm:p-5 rounded-xl border transition-all duration-300 hover:shadow-glow-sm group',
+                        cat.bg,
+                        isWide && 'lg:col-span-2'
+                      )}
                       initial={{ opacity: 0, y: 16 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: i * 0.07 }}
+                      whileHover={{ y: -3 }}
                     >
                       <div className="flex items-center gap-2 mb-3">
-                        <Icon className={clsx('w-4 h-4 flex-shrink-0', cat.color)} />
+                        <div className={clsx('w-7 h-7 rounded-lg border flex items-center justify-center flex-shrink-0', cat.bg)}>
+                          <Icon className={clsx('w-4 h-4', cat.color)} />
+                        </div>
                         <h4 className={clsx('font-mono font-semibold text-xs sm:text-sm', cat.color)}>{cat.title}</h4>
                       </div>
-                      <ul className="space-y-1.5">
+                      <ul className={clsx('gap-1.5', isWide ? 'grid grid-cols-2 sm:grid-cols-2' : 'space-y-1.5')}>
                         {cat.skills.map((skill, si) => (
                           <li key={si} className="flex items-center gap-2">
-                            <span className={clsx('text-xs font-mono flex-shrink-0', cat.color)}>›</span>
+                            <span className={clsx('text-xs font-mono flex-shrink-0 group-hover:translate-x-0.5 transition-transform', cat.color)}>›</span>
                             <span className="text-xs text-text-secondary">{skill}</span>
                           </li>
                         ))}
@@ -534,12 +544,19 @@ const About = () => {
             </div>
           </motion.div>
 
-          {/* Skill categories */}
-          <div ref={skillCardsRef} className="space-y-5">
+          {/* Skill categories — bento layout */}
+          <div ref={skillCardsRef} className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             {skillCategories.map((category, index) => {
               const Icon = category.PhosphorIcon
+              const isFeatured = index === 0 // Frontend spans 2 cols
               return (
-                <div key={index} className="gsap-skill-card modern-card">
+                <div
+                  key={index}
+                  className={clsx(
+                    'gsap-skill-card modern-card',
+                    isFeatured && 'lg:col-span-2'
+                  )}
+                >
                   <h3 className="text-base sm:text-lg font-bold font-mono text-text-primary mb-5 flex items-center gap-2.5">
                     <div className={clsx('w-7 h-7 rounded-lg border flex items-center justify-center flex-shrink-0', category.bg)}>
                       <Icon size={15} weight="bold" className={category.color} />
@@ -547,18 +564,36 @@ const About = () => {
                     <span className={category.color}>{category.category.toLowerCase().replace(/ /g, '_')}</span>
                     <span className="text-text-muted">: &#123;</span>
                   </h3>
-                  <div className="grid sm:grid-cols-2 gap-3 pl-4">
+                  <div className={clsx('gap-3 pl-4', isFeatured ? 'grid sm:grid-cols-2' : 'space-y-3')}>
                     {category.skills.map((skill, si) => (
-                      <div
+                      <motion.div
                         key={si}
                         className="flex items-start gap-2.5 p-3 glass border border-primary/15 rounded-lg hover:border-primary/35 hover:shadow-glow-sm transition-all duration-200 group"
+                        initial={{ opacity: 0, x: -8 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.35, delay: si * 0.05 }}
                       >
-                        <span className={clsx('mt-0.5 flex-shrink-0 font-mono text-sm group-hover:scale-125 transition-transform', category.color)}>›</span>
+                        <span className={clsx('mt-0.5 flex-shrink-0 font-mono text-sm group-hover:translate-x-0.5 transition-transform', category.color)}>›</span>
                         <div className="min-w-0 flex-1">
                           <p className="font-semibold font-mono text-text-primary text-xs sm:text-sm">{skill.name}</p>
                           <p className="text-xs text-text-muted mt-0.5 leading-relaxed">{skill.desc}</p>
+                          {/* Skill level dots */}
+                          <div className="flex gap-1 mt-1.5">
+                            {Array.from({ length: 5 }).map((_, di) => (
+                              <div
+                                key={di}
+                                className={clsx(
+                                  'w-1.5 h-1.5 rounded-full transition-all duration-300',
+                                  di < skill.level
+                                    ? clsx(category.dotColor, 'opacity-90')
+                                    : 'bg-text-muted/20'
+                                )}
+                              />
+                            ))}
+                          </div>
                         </div>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
                   <p className="text-text-muted font-mono mt-4">&#125;</p>

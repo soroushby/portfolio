@@ -1,27 +1,29 @@
-import { useState, useEffect, useRef } from 'react'
+import { lazy, Suspense, useState, useEffect, useRef } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navigation from './components/Navigation'
-import Home from './pages/Home'
-import Projects from './pages/Projects'
-import ContentCreation from './pages/ContentCreation'
-import About from './pages/About'
-import Contact from './pages/Contact'
 import ScrollToTop from './components/ScrollToTop'
 import CursorGlow from './components/CursorGlow'
 import LoadingScreen from './components/LoadingScreen'
 import Footer from './components/Footer'
 
+const Home = lazy(() => import('./pages/Home'))
+const Projects = lazy(() => import('./pages/Projects'))
+const ContentCreation = lazy(() => import('./pages/ContentCreation'))
+const About = lazy(() => import('./pages/About'))
+const Contact = lazy(() => import('./pages/Contact'))
+
 gsap.registerPlugin(ScrollTrigger)
 
 const PAGE_TITLES = {
-  home: 'Soroush Bayanati — Frontend Developer',
-  projects: 'Projects — Soroush Bayanati',
-  'content-creation': 'Content Creation — Soroush Bayanati',
-  about: 'About — Soroush Bayanati',
-  contact: 'Contact — Soroush Bayanati',
+  '/': 'Soroush Bayanati — Frontend Developer',
+  '/projects': 'Projects — Soroush Bayanati',
+  '/content-creation': 'Content Creation — Soroush Bayanati',
+  '/about': 'About — Soroush Bayanati',
+  '/contact': 'Contact — Soroush Bayanati',
 }
 
 const pageVariants = {
@@ -41,9 +43,9 @@ const pageVariants = {
 }
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('home')
   const [isLoading, setIsLoading] = useState(true)
   const lenisRef = useRef(null)
+  const location = useLocation()
 
   // Loading screen timer
   useEffect(() => {
@@ -74,45 +76,46 @@ function App() {
     }
   }, [])
 
-  // Scroll to top + refresh ScrollTrigger on page change
+  // Scroll to top + refresh ScrollTrigger on route change
   useEffect(() => {
     lenisRef.current?.scrollTo(0, { immediate: true })
+    document.title = PAGE_TITLES[location.pathname] ?? PAGE_TITLES['/']
     setTimeout(() => ScrollTrigger.refresh(), 100)
-  }, [currentPage])
-
-  // Update document title
-  useEffect(() => {
-    document.title = PAGE_TITLES[currentPage] ?? PAGE_TITLES.home
-  }, [currentPage])
+  }, [location.pathname])
 
   return (
     <div className="min-h-screen bg-background-primary">
       <LoadingScreen isLoading={isLoading} />
 
       <CursorGlow />
-      <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Navigation />
 
       <main>
         <AnimatePresence mode="wait">
           <motion.div
-            key={currentPage}
+            key={location.pathname}
             variants={pageVariants}
             initial="initial"
             animate="animate"
             exit="exit"
           >
-            {currentPage === 'home' && <Home setCurrentPage={setCurrentPage} />}
-            {currentPage === 'projects' && <Projects />}
-            {currentPage === 'content-creation' && <ContentCreation />}
-            {currentPage === 'about' && <About />}
-            {currentPage === 'contact' && <Contact />}
+            <Suspense fallback={null}>
+              <Routes location={location}>
+                <Route path="/" element={<Home />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/content-creation" element={<ContentCreation />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="*" element={<Home />} />
+              </Routes>
+            </Suspense>
           </motion.div>
         </AnimatePresence>
       </main>
 
       <ScrollToTop />
 
-      <Footer setCurrentPage={setCurrentPage} />
+      <Footer />
     </div>
   )
 }

@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, lazy, Suspense } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { motion, useMotionValue, useTransform, useInView, animate } from 'framer-motion'
 import { Code2, Rocket, Users, Briefcase, ArrowRight, Github, Linkedin, Mail, Youtube, MapPin, Trophy, Sparkles } from 'lucide-react'
 import clsx from 'clsx'
@@ -8,6 +9,65 @@ import typescriptLogo from '../assets/typescript.svg'
 import claudeLogo from '../assets/Claude_AI_symbol.svg'
 import profileImage from '../assets/Home-page-profile.jpg'
 import ParticleCanvas from '../components/ParticleCanvas'
+
+const HeroScene = lazy(() => import('../components/HeroScene'))
+
+// ---- SplitText — character-level animation ----
+const SplitText = ({ text, className, charDelay = 0, charStagger = 0.04 }) => (
+  <span className={className} aria-label={text}>
+    {text.split('').map((char, i) => (
+      <motion.span
+        key={i}
+        className="inline-block"
+        initial={{ opacity: 0, y: 36, rotateX: -80 }}
+        animate={{ opacity: 1, y: 0, rotateX: 0 }}
+        transition={{
+          delay: charDelay + i * charStagger,
+          duration: 0.55,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        }}
+        style={{ transformOrigin: 'bottom center' }}
+      >
+        {char === ' ' ? '\u00A0' : char}
+      </motion.span>
+    ))}
+  </span>
+)
+
+// ---- MagneticButton — follows cursor on hover ----
+const MagneticButton = ({ children, className, onClick }) => {
+  const ref = useRef(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return
+    const rect = ref.current.getBoundingClientRect()
+    const deltaX = (e.clientX - rect.left - rect.width / 2) * 0.32
+    const deltaY = (e.clientY - rect.top - rect.height / 2) * 0.32
+    x.set(deltaX)
+    y.set(deltaY)
+  }
+
+  const handleMouseLeave = () => {
+    animate(x, 0, { type: 'spring', stiffness: 260, damping: 22 })
+    animate(y, 0, { type: 'spring', stiffness: 260, damping: 22 })
+  }
+
+  return (
+    <motion.button
+      ref={ref}
+      style={{ x, y }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+      className={className}
+      whileTap={{ scale: 0.97 }}
+    >
+      {children}
+    </motion.button>
+  )
+}
 
 // ---- Typewriter ----
 const TypeWriter = ({ words }) => {
@@ -145,7 +205,8 @@ const skillLegend = [
   { cat: 'ai', label: 'AI', color: 'text-fuchsia' },
 ]
 
-const Home = ({ setCurrentPage }) => {
+const Home = () => {
+  const navigate = useNavigate()
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   const heroRef = useRef(null)
@@ -185,35 +246,42 @@ const Home = ({ setCurrentPage }) => {
           />
         </div>
 
-        {/* Gradient orbs — boosted vibrancy */}
+        {/* Gradient orbs */}
         <GradientOrb
           style={{ width: 580, height: 580, left: '-12%', top: '-12%',
             background: 'radial-gradient(circle, rgba(124, 58, 237, 0.30), transparent 70%)' }}
-          animateProps={{ x: [0, 60, -30, 0], y: [0, -80, 40, 0], scale: [1, 1.15, 0.95, 1] }}
+          animate={{ x: [0, 60, -30, 0], y: [0, -80, 40, 0], scale: [1, 1.15, 0.95, 1] }}
           transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
         />
         <GradientOrb
           style={{ width: 400, height: 400, right: '3%', top: '15%',
             background: 'radial-gradient(circle, rgba(6, 182, 212, 0.22), transparent 70%)' }}
-          animateProps={{ x: [0, -50, 30, 0], y: [0, 60, -40, 0], scale: [1, 1.1, 0.9, 1] }}
+          animate={{ x: [0, -50, 30, 0], y: [0, 60, -40, 0], scale: [1, 1.1, 0.9, 1] }}
           transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
         />
         <GradientOrb
           style={{ width: 300, height: 300, left: '40%', bottom: '8%',
             background: 'radial-gradient(circle, rgba(232, 121, 249, 0.20), transparent 70%)' }}
-          animateProps={{ x: [0, 40, -20, 0], y: [0, -40, 20, 0], scale: [1, 1.2, 0.85, 1] }}
+          animate={{ x: [0, 40, -20, 0], y: [0, -40, 20, 0], scale: [1, 1.2, 0.85, 1] }}
           transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
         />
         <GradientOrb
           style={{ width: 260, height: 260, right: '20%', bottom: '20%',
             background: 'radial-gradient(circle, rgba(139, 92, 246, 0.18), transparent 70%)' }}
-          animateProps={{ x: [0, -30, 20, 0], y: [0, 30, -50, 0], scale: [1, 1.1, 0.9, 1] }}
+          animate={{ x: [0, -30, 20, 0], y: [0, 30, -50, 0], scale: [1, 1.1, 0.9, 1] }}
           transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
         />
 
         {/* Particle canvas */}
         <div className="absolute inset-0">
           <ParticleCanvas />
+        </div>
+
+        {/* 3D floating geometry — desktop only */}
+        <div className="hidden md:block absolute inset-0 pointer-events-none">
+          <Suspense fallback={null}>
+            <HeroScene />
+          </Suspense>
         </div>
 
         {/* Mouse spotlight */}
@@ -246,26 +314,29 @@ const Home = ({ setCurrentPage }) => {
                 </span>
               </motion.div>
 
-              {/* Heading */}
-              <motion.div variants={itemVariants} className="space-y-2">
-                <p className="font-mono text-sm text-text-muted">
+              {/* Heading with SplitText */}
+              <div className="space-y-2">
+                <motion.p
+                  variants={itemVariants}
+                  className="font-mono text-sm text-text-muted"
+                >
                   <span className="text-primary">const</span>{' '}
                   <span className="text-text-secondary">developer</span>{' '}
                   <span className="text-text-muted">= &#123;</span>
-                </p>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] pl-4">
-                  Hi, I'm{' '}
-                  <span className="gradient-text-animate">Soroush</span>
+                </motion.p>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] pl-4" style={{ perspective: '600px' }}>
+                  <SplitText text="Hi, I'm " className="text-text-primary" charDelay={0.3} charStagger={0.035} />
+                  <SplitText text="Soroush" className="gradient-text-animate" charDelay={0.58} charStagger={0.04} />
                 </h1>
-                <div className="text-lg sm:text-xl md:text-2xl font-mono text-text-secondary pl-4">
+                <motion.div variants={itemVariants} className="text-lg sm:text-xl md:text-2xl font-mono text-text-secondary pl-4">
                   <span className="text-primary">role:</span>{' '}
                   <span className="text-text-secondary">"</span>
                   <TypeWriter words={['Frontend Developer', 'React Engineer', 'Content Creator', 'UI Craftsman']} />
                   <span className="text-text-secondary">"</span>
                   <span className="text-text-muted">,</span>
-                </div>
-                <p className="font-mono text-sm text-text-muted">&#125;</p>
-              </motion.div>
+                </motion.div>
+                <motion.p variants={itemVariants} className="font-mono text-sm text-text-muted">&#125;</motion.p>
+              </div>
 
               {/* Description */}
               <motion.p variants={itemVariants} className="text-base sm:text-lg text-text-secondary leading-relaxed max-w-lg">
@@ -287,25 +358,21 @@ const Home = ({ setCurrentPage }) => {
                 </div>
               </motion.div>
 
-              {/* CTA buttons */}
+              {/* CTA buttons — magnetic */}
               <motion.div variants={itemVariants} className="flex flex-wrap gap-3 pt-1">
-                <motion.button
-                  onClick={() => setCurrentPage('projects')}
+                <MagneticButton
+                  onClick={() => navigate('/projects')}
                   className="group modern-btn"
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
                 >
                   View Projects
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </motion.button>
-                <motion.button
-                  onClick={() => setCurrentPage('contact')}
+                </MagneticButton>
+                <MagneticButton
+                  onClick={() => navigate('/contact')}
                   className="modern-btn-outline"
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
                 >
                   Get in Touch
-                </motion.button>
+                </MagneticButton>
               </motion.div>
 
               {/* Social links */}
@@ -379,7 +446,6 @@ const Home = ({ setCurrentPage }) => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.1 }}
-                  style={{ animationDelay: '0s' }}
                 >
                   <span className="text-primary font-bold">3+</span>
                   <span className="text-text-secondary ml-1">yrs exp.</span>
@@ -549,7 +615,7 @@ const Home = ({ setCurrentPage }) => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
               whileHover={{ y: -4 }}
-              onClick={() => setCurrentPage('content-creation')}
+              onClick={() => navigate('/content-creation')}
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">

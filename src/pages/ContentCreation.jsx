@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion'
 import { TrendingUp, Users, Eye, Clock, Target, Zap, ExternalLink } from 'lucide-react'
 import { YoutubeLogoIcon as YoutubeLogo } from '@phosphor-icons/react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination, A11y } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 import clsx from 'clsx'
 import soccerPodcastLogo from '../assets/soccer-podcast-logo.jpg'
 import persianRedArmyLogo from '../assets/persian-red-army-logo.jpg'
@@ -202,86 +207,90 @@ const ContentCreation = () => {
           </p>
         </motion.div>
 
-        {/* Channels — horizontal scroll on mobile, grid on desktop */}
-        <div className="mb-12 sm:mb-16 relative">
-          <motion.div
-            className="flex gap-4 sm:gap-5 overflow-x-auto pb-4 snap-x snap-mandatory"
-            style={{ scrollbarColor: 'rgba(139,92,246,0.3) transparent' }}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+        {/* Channels — Swiper carousel */}
+        <motion.div
+          className="mb-12 sm:mb-16 channels-swiper"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <Swiper
+            modules={[Navigation, Pagination, A11y]}
+            spaceBetween={20}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+            className="pb-12"
           >
             {channels.map((channel, index) => (
-              <motion.div
-                key={index}
-                className="modern-card !p-0 overflow-hidden flex-shrink-0 snap-start hover:shadow-card-hover"
-                style={{ width: 'min(80vw, 380px)' }}
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                whileHover={{ y: -4 }}
-              >
-                {/* Gradient top bar */}
-                <div className={clsx('h-0.5 bg-gradient-to-r', channel.color)} />
+              <SwiperSlide key={index}>
+                <motion.div
+                  className="modern-card !p-0 overflow-hidden hover:shadow-card-hover h-full"
+                  whileHover={{ y: -4 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                >
+                  {/* Gradient top bar */}
+                  <div className={clsx('h-0.5 bg-gradient-to-r', channel.color)} />
 
-                <div className="p-5 sm:p-6 flex flex-col h-full">
-                  {/* Header */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <img
-                      src={channel.logo}
-                      alt={channel.name}
-                      className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 flex-shrink-0"
-                      loading="lazy"
-                    />
-                    <div>
-                      <h2 className="text-base sm:text-lg font-bold font-mono text-text-primary">{channel.name}</h2>
-                      <a
-                        href={channel.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-primary hover:text-primary-light transition-colors flex items-center gap-1"
-                      >
-                        {channel.handle}
-                        <ExternalLink className="w-2.5 h-2.5" />
-                      </a>
+                  <div className="p-5 sm:p-6 flex flex-col h-full">
+                    {/* Header */}
+                    <div className="flex items-center gap-3 mb-4">
+                      <img
+                        src={channel.logo}
+                        alt={channel.name}
+                        className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 flex-shrink-0"
+                        loading="lazy"
+                      />
+                      <div>
+                        <h2 className="text-base sm:text-lg font-bold font-mono text-text-primary">{channel.name}</h2>
+                        <a
+                          href={channel.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-primary hover:text-primary-light transition-colors flex items-center gap-1"
+                        >
+                          {channel.handle}
+                          <ExternalLink className="w-2.5 h-2.5" />
+                        </a>
+                      </div>
                     </div>
+
+                    {/* Stats */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className={clsx('inline-flex items-center gap-1 px-2.5 py-1 border text-xs font-mono font-semibold rounded-full', channel.accent)}>
+                        <YoutubeLogo size={12} />
+                        {channel.youtube}
+                      </span>
+                      <span className={clsx('inline-flex items-center gap-1 px-2.5 py-1 border text-xs font-mono font-semibold rounded-full', channel.accent)}>
+                        📸 {channel.instagram}
+                      </span>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-4 flex-1">
+                      {channel.description}
+                    </p>
+
+                    {/* Highlights */}
+                    <ul className="space-y-1.5">
+                      {channel.highlights.map((h, i) => (
+                        <li key={i} className="flex items-start gap-2 text-text-muted text-xs">
+                          <span className="text-primary mt-0.5 flex-shrink-0 font-mono">›</span>
+                          {h}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-
-                  {/* Stats */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className={clsx('inline-flex items-center gap-1 px-2.5 py-1 border text-xs font-mono font-semibold rounded-full', channel.accent)}>
-                      <YoutubeLogo size={12} />
-                      {channel.youtube}
-                    </span>
-                    <span className={clsx('inline-flex items-center gap-1 px-2.5 py-1 border text-xs font-mono font-semibold rounded-full', channel.accent)}>
-                      📸 {channel.instagram}
-                    </span>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-4 flex-1">
-                    {channel.description}
-                  </p>
-
-                  {/* Highlights */}
-                  <ul className="space-y-1.5">
-                    {channel.highlights.map((h, i) => (
-                      <li key={i} className="flex items-start gap-2 text-text-muted text-xs">
-                        <span className="text-primary mt-0.5 flex-shrink-0 font-mono">›</span>
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
+                </motion.div>
+              </SwiperSlide>
             ))}
-          </motion.div>
-          {/* Right fade edge scroll hint */}
-          <div className="absolute top-0 right-0 bottom-4 w-20 bg-gradient-to-l from-background-secondary to-transparent pointer-events-none rounded-r-xl" />
-          <p className="text-xs text-center text-text-muted font-mono mt-2 opacity-60">← scroll to explore →</p>
-        </div>
+          </Swiper>
+        </motion.div>
 
         {/* Transferable skills */}
         <motion.div

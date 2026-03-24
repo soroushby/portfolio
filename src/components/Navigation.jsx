@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { MoonIcon as Moon, SunIcon as Sun } from '@phosphor-icons/react'
@@ -6,19 +7,21 @@ import clsx from 'clsx'
 import { useTheme } from '../contexts/ThemeContext'
 
 const navItems = [
-  { id: 'home', label: 'Home' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'content-creation', label: 'Content' },
-  { id: 'about', label: 'About' },
-  { id: 'contact', label: 'Contact' },
+  { path: '/', label: 'Home' },
+  { path: '/projects', label: 'Projects' },
+  { path: '/content-creation', label: 'Content' },
+  { path: '/about', label: 'About' },
+  { path: '/contact', label: 'Contact' },
 ]
 
-const Navigation = ({ currentPage, setCurrentPage }) => {
+const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
+  const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 24)
@@ -26,11 +29,18 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleNavClick = (pageId) => {
-    setCurrentPage(pageId)
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+  }, [location.pathname])
+
+  const handleNavClick = (path) => {
+    navigate(path)
     setIsMobileMenuOpen(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  const isActive = (path) => location.pathname === path
 
   return (
     <nav
@@ -55,7 +65,7 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
 
           {/* Logo */}
           <motion.button
-            onClick={() => handleNavClick('home')}
+            onClick={() => handleNavClick('/')}
             className="group flex items-center flex-shrink-0"
             aria-label="Go to home"
             whileHover={{ filter: 'drop-shadow(0 0 10px rgba(139, 92, 246, 0.8))' }}
@@ -73,16 +83,16 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
             <div className="flex items-center p-1 bg-background-card/60 border border-primary/10 rounded-xl gap-0.5 backdrop-blur-md">
               {navItems.map((item) => (
                 <button
-                  key={item.id}
-                  onClick={() => handleNavClick(item.id)}
+                  key={item.path}
+                  onClick={() => handleNavClick(item.path)}
                   className={clsx(
                     'relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200',
-                    currentPage === item.id
+                    isActive(item.path)
                       ? 'text-text-primary font-semibold'
                       : 'text-text-secondary hover:text-text-primary'
                   )}
                 >
-                  {currentPage === item.id && (
+                  {isActive(item.path) && (
                     <motion.div
                       layoutId="nav-pill"
                       className="absolute inset-0 bg-primary/18 border border-primary/35 rounded-lg shadow-[0_0_12px_rgba(139,92,246,0.2)]"
@@ -175,14 +185,14 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
               <div className="py-3 space-y-1">
                 {navItems.map((item, i) => (
                   <motion.button
-                    key={item.id}
-                    onClick={() => handleNavClick(item.id)}
+                    key={item.path}
+                    onClick={() => handleNavClick(item.path)}
                     initial={{ opacity: 0, x: -14 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.045 }}
                     className={clsx(
                       'w-full text-left px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200',
-                      currentPage === item.id
+                      isActive(item.path)
                         ? 'bg-primary/15 text-primary-light border border-primary/25'
                         : 'text-text-secondary hover:text-text-primary hover:bg-primary/8'
                     )}
