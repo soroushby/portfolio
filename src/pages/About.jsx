@@ -503,12 +503,13 @@ const About = () => {
                 </h3>
               </div>
 
-              {/* Asymmetric bento grid */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 auto-rows-fr">
-                {/* Databases — tall/wide on lg */}
+              {/* Asymmetric bento grid — 3-col alternating wide pattern */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {backendSkills.map((cat, i) => {
                   const Icon = cat.icon
-                  const isWide = i === 0 // Databases spans 2 cols on lg
+                  // Row 1: [Databases 2cols][ORMs 1col]
+                  // Row 2: [Auth 1col][APIs 2cols]
+                  const isWide = i === 0 || i === 3
                   return (
                     <motion.div
                       key={i}
@@ -529,7 +530,7 @@ const About = () => {
                         </div>
                         <h4 className={clsx('font-mono font-semibold text-xs sm:text-sm', cat.color)}>{cat.title}</h4>
                       </div>
-                      <ul className={clsx('gap-1.5', isWide ? 'grid grid-cols-2 sm:grid-cols-2' : 'space-y-1.5')}>
+                      <ul className={clsx('gap-1.5', isWide ? 'grid grid-cols-1 sm:grid-cols-2' : 'space-y-1.5')}>
                         {cat.skills.map((skill, si) => (
                           <li key={si} className="flex items-center gap-2">
                             <span className={clsx('text-xs font-mono flex-shrink-0 group-hover:translate-x-0.5 transition-transform', cat.color)}>›</span>

@@ -326,7 +326,17 @@ const Home = () => {
                 </motion.p>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] pl-4" style={{ perspective: '600px' }}>
                   <SplitText text="Hi, I'm " className="text-text-primary" charDelay={0.3} charStagger={0.035} />
-                  <SplitText text="Soroush" className="gradient-text-animate" charDelay={0.58} charStagger={0.04} />
+                  {/* "Soroush" animates as a whole word — gradient-text-animate requires continuous text,
+                      not inline-block char splits (background-clip:text breaks on inline-block children) */}
+                  <motion.span
+                    className="gradient-text-animate inline-block"
+                    initial={{ opacity: 0, y: 36, rotateX: -80 }}
+                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                    transition={{ delay: 0.9, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    style={{ transformOrigin: 'bottom center' }}
+                  >
+                    Soroush
+                  </motion.span>
                 </h1>
                 <motion.div variants={itemVariants} className="text-lg sm:text-xl md:text-2xl font-mono text-text-secondary pl-4">
                   <span className="text-primary">role:</span>{' '}

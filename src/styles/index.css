@@ -512,6 +512,24 @@ body::after {
    SWIPER OVERRIDES — match portfolio dark theme
    ================================================================ */
 
+/* Equal-height slides */
+.channels-swiper .swiper-wrapper {
+  align-items: stretch;
+}
+
+.channels-swiper .swiper-slide {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.channels-swiper .swiper-slide > * {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+}
+
 .channels-swiper .swiper-button-next,
 .channels-swiper .swiper-button-prev {
   color: #8b5cf6;
