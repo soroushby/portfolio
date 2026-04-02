@@ -14,6 +14,7 @@ import {
   CertificateIcon as Certificate,
   LaptopIcon as Laptop,
   CodeIcon as Code,
+  CloudIcon as Cloud,
 } from '@phosphor-icons/react'
 import clsx from 'clsx'
 import profileImage from '../assets/about-page-profile.jpg'
@@ -118,6 +119,24 @@ const skillCategories = [
       { name: 'Tailwind CSS + shadcn/ui', desc: 'Utility-first styling, accessible components', level: 5 },
       { name: 'GSAP + Framer Motion', desc: 'Scroll animations, transitions, physics', level: 4 },
       { name: 'Angular + RxJS', desc: 'Enterprise SPA with Material UI', level: 3 },
+      { name: 'Framer Motion', desc: 'Production animations and micro-interactions for React applications', level: 4 },
+      { name: 'next-intl', desc: 'Full internationalization (i18n) with URL-based locale routing for Next.js', level: 4 },
+    ],
+  },
+  {
+    category: 'Backend & Infrastructure',
+    PhosphorIcon: Cloud,
+    color: 'text-emerald-400',
+    bg: 'bg-emerald-500/10 border-emerald-500/20',
+    dotColor: 'bg-emerald-400',
+    skills: [
+      { name: 'Supabase', desc: 'PostgreSQL database, auth, real-time, storage, and Edge Functions', level: 5 },
+      { name: 'Row Level Security', desc: 'Fine-grained database access control policies in PostgreSQL', level: 4 },
+      { name: 'Stripe', desc: 'Payment processing, webhook handling, and server-side checkout sessions', level: 4 },
+      { name: 'Resend', desc: 'Transactional email delivery for user notifications', level: 4 },
+      { name: 'Twilio WhatsApp API', desc: 'Automated WhatsApp notifications for real-time doctor alerts', level: 3 },
+      { name: 'Vercel', desc: 'Serverless deployment, CI/CD, and edge functions for Next.js apps', level: 5 },
+      { name: 'Next.js Server Actions', desc: 'Form submissions and mutations without separate API routes', level: 4 },
     ],
   },
   {
