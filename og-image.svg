@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0a14"/>
+      <stop offset="100%" stop-color="#0f0f1a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="50%" stop-color="#e879f9"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    <!-- Grid pattern -->
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(139,92,246,0.06)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Grid overlay -->
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <!-- Radial glow -->
+  <ellipse cx="600" cy="315" rx="500" ry="280" fill="rgba(124,58,237,0.07)"/>
+
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
+
+  <!-- Left accent line -->
+  <rect x="80" y="160" width="3" height="310" rx="2" fill="url(#accent)" opacity="0.6"/>
+
+  <!-- Name -->
+  <text x="120" y="260" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="64" font-weight="700" fill="#f1f5f9">Soroush Bayanati</text>
+
+  <!-- Role tag -->
+  <rect x="120" y="285" width="390" height="44" rx="8" fill="rgba(139,92,246,0.15)" stroke="rgba(139,92,246,0.35)" stroke-width="1"/>
+  <text x="140" y="313" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="18" font-weight="600" fill="#c084fc">Frontend Developer</text>
+
+  <!-- Tech stack chips -->
+  <rect x="120" y="350" width="100" height="34" rx="6" fill="rgba(34,211,238,0.1)" stroke="rgba(34,211,238,0.3)" stroke-width="1"/>
+  <text x="140" y="372" font-family="monospace" font-size="14" fill="#22d3ee">React 19</text>
+
+  <rect x="232" y="350" width="110" height="34" rx="6" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+  <text x="252" y="372" font-family="monospace" font-size="14" fill="#a78bfa">Next.js 15</text>
+
+  <rect x="354" y="350" width="130" height="34" rx="6" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+  <text x="374" y="372" font-family="monospace" font-size="14" fill="#60a5fa">TypeScript</text>
+
+  <rect x="496" y="350" width="90" height="34" rx="6" fill="rgba(251,191,36,0.1)" stroke="rgba(251,191,36,0.3)" stroke-width="1"/>
+  <text x="516" y="372" font-family="monospace" font-size="14" fill="#fbbf24">AI-Dev</text>
+
+  <!-- Location -->
+  <circle cx="124" cy="422" r="5" fill="#22d3ee" opacity="0.8"/>
+  <text x="140" y="428" font-family="sans-serif" font-size="16" fill="#94a3b8">Vancouver, BC, Canada · Open to Work</text>
+
+  <!-- Stats area -->
+  <rect x="780" y="160" width="340" height="310" rx="16" fill="rgba(15,15,26,0.8)" stroke="rgba(139,92,246,0.2)" stroke-width="1"/>
+  <text x="800" y="210" font-family="monospace" font-size="13" fill="#6d6d8a">// portfolio</text>
+
+  <text x="800" y="250" font-family="monospace" font-size="14" fill="#8b5cf6">projects</text>
+  <text x="920" y="250" font-family="monospace" font-size="14" fill="#f1f5f9">: 5</text>
+
+  <text x="800" y="285" font-family="monospace" font-size="14" fill="#8b5cf6">experience</text>
+  <text x="920" y="285" font-family="monospace" font-size="14" fill="#f1f5f9">: "3+ yrs"</text>
+
+  <text x="800" y="320" font-family="monospace" font-size="14" fill="#8b5cf6">stack</text>
+  <text x="920" y="320" font-family="monospace" font-size="14" fill="#f1f5f9">: "Full-Stack"</text>
+
+  <text x="800" y="355" font-family="monospace" font-size="14" fill="#8b5cf6">location</text>
+  <text x="920" y="355" font-family="monospace" font-size="14" fill="#f1f5f9">: "Vancouver"</text>
+
+  <text x="800" y="390" font-family="monospace" font-size="14" fill="#8b5cf6">edu</text>
+  <text x="920" y="390" font-family="monospace" font-size="14" fill="#f1f5f9">: "BCIT NMD"</text>
+
+  <text x="800" y="430" font-family="monospace" font-size="14" fill="#6d6d8a">}</text>
+
+  <!-- URL -->
+  <text x="120" y="580" font-family="monospace" font-size="15" fill="rgba(139,92,246,0.7)">soroushby.github.io/portfolio</text>
+</svg>
