@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -251,6 +252,10 @@ const About = () => {
 
   return (
     <div className="pt-20 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 bg-background-secondary min-h-screen">
+      <Helmet>
+        <title>About — Soroush Bayanati</title>
+        <meta name="description" content="Learn about Soroush Bayanati — his background, career journey from Iran to Vancouver, full-stack development skills, and intentions to secure a practicum in the new media industry." />
+      </Helmet>
       <div className="max-w-5xl mx-auto">
 
         {/* Hero / Profile */}
@@ -662,6 +667,46 @@ const About = () => {
             })}
           </div>
         </div>
+
+        {/* Practicum & Career Goals */}
+        <motion.div
+          className="modern-card mb-14"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="section-label mb-3">Career Goals</p>
+          <h2 className="text-xl sm:text-2xl font-bold font-mono text-primary mb-6 flex items-center gap-2">
+            <Briefcase size={22} weight="bold" className="text-primary" />
+            <span className="text-primary">practicum</span>
+            <span className="text-text-muted">.goals()</span>
+          </h2>
+          <div className="space-y-4 text-text-secondary text-sm sm:text-base leading-relaxed">
+            <p>
+              As I complete the New Media Design & Web Development program at BCIT, I am actively seeking a practicum
+              placement with a forward-thinking company or agency where I can contribute to real-world projects and
+              continue growing as a developer.
+            </p>
+            <p>
+              My ideal host would be a product-focused company, digital agency, or startup that values modern web
+              technology — particularly teams working with React, Next.js, or full-stack JavaScript. I am also open to
+              companies integrating AI into their development workflows, an area where I have hands-on experience with
+              the Claude API and AI-assisted development practices.
+            </p>
+            <p>
+              Beyond practicum, I am open to freelance contracts and full-time junior developer roles in Vancouver or
+              remotely. If you are building something interesting and need a developer who ships clean, performant,
+              user-focused interfaces, I would love to connect.
+            </p>
+            <p className="text-text-primary font-semibold">
+              Reach me at{' '}
+              <a href="mailto:sorosh.bayanati@gmail.com" className="text-primary hover:underline">
+                sorosh.bayanati@gmail.com
+              </a>
+            </p>
+          </div>
+        </motion.div>
 
         {/* Education */}
         <motion.div

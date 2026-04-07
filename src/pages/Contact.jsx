@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { Mail, Github, Linkedin, Youtube, MapPin, MessageSquare, Send, CheckCircle } from 'lucide-react'
 import clsx from 'clsx'
@@ -50,6 +51,8 @@ const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [sendError, setSendError] = useState('')
 
   const validate = () => {
     const errs = {}
@@ -63,7 +66,7 @@ const Contact = () => {
     return errs
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const validationErrors = validate()
     if (Object.keys(validationErrors).length > 0) {
@@ -71,11 +74,31 @@ const Contact = () => {
       return
     }
     setErrors({})
-    const subject = encodeURIComponent(`Portfolio Contact from ${formData.name}`)
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)
-    window.location.href = `mailto:sorosh.bayanati@gmail.com?subject=${subject}&body=${body}`
-    setSubmitted(true)
-    setFormData({ name: '', email: '', message: '' })
+    setSendError('')
+    setSending(true)
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/sorosh.bayanati@gmail.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `Portfolio Contact from ${formData.name}`,
+        }),
+      })
+      const data = await res.json()
+      if (data.success === 'true' || data.success === true) {
+        setSubmitted(true)
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        setSendError('Something went wrong. Please email me directly.')
+      }
+    } catch {
+      setSendError('Could not send message. Please email me directly.')
+    } finally {
+      setSending(false)
+    }
   }
 
   const handleChange = (e) => {
@@ -90,6 +113,10 @@ const Contact = () => {
 
   return (
     <div className="pt-20 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 min-h-screen bg-background-secondary tech-grid">
+      <Helmet>
+        <title>Contact — Soroush Bayanati</title>
+        <meta name="description" content="Get in touch with Soroush Bayanati. Available for freelance projects, practicum opportunities, and internships in web development and new media." />
+      </Helmet>
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
@@ -238,7 +265,7 @@ const Contact = () => {
                 </div>
                 <h3 className="text-text-primary font-bold text-lg font-mono">Message sent!</h3>
                 <p className="text-text-secondary text-sm max-w-xs">
-                  Your email client should have opened. I'll get back to you soon.
+                  Thanks for reaching out — I'll get back to you soon.
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
@@ -297,19 +324,20 @@ const Contact = () => {
                   {errors.message && <p className="mt-1.5 text-xs text-red-400 font-mono">{errors.message}</p>}
                 </div>
 
+                {sendError && (
+                  <p className="text-xs text-red-400 font-mono text-center">{sendError}</p>
+                )}
+
                 <motion.button
                   type="submit"
-                  className="w-full modern-btn justify-center text-base py-3.5"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={sending}
+                  className="w-full modern-btn justify-center text-base py-3.5 disabled:opacity-60 disabled:cursor-not-allowed"
+                  whileHover={{ scale: sending ? 1 : 1.01 }}
+                  whileTap={{ scale: sending ? 1 : 0.98 }}
                 >
                   <Send className="w-4 h-4" />
-                  Send Message
+                  {sending ? 'Sending…' : 'Send Message'}
                 </motion.button>
-
-                <p className="text-xs text-text-muted text-center font-mono">
-                  Opens your default email client
-                </p>
               </form>
             )}
           </motion.div>

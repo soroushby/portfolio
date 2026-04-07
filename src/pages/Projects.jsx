@@ -1,4 +1,5 @@
 import { useState, useRef, useMemo } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Code2, Calendar, Layers, ExternalLink, ChevronDown, ChevronUp, Sparkles } from 'lucide-react'
 import { GithubLogoIcon as GithubLogo } from '@phosphor-icons/react'
@@ -310,6 +311,10 @@ const Projects = () => {
 
   return (
     <div className="pt-20 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 bg-background-secondary min-h-screen tech-grid">
+      <Helmet>
+        <title>Projects — Soroush Bayanati</title>
+        <meta name="description" content="Browse Soroush Bayanati's portfolio of full-stack web projects including SaaS platforms, AI-powered tools, and open-source applications built with React, Next.js, and TypeScript." />
+      </Helmet>
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}

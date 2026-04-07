@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { TrendingUp, Users, Eye, Clock, Target, Zap, ExternalLink } from 'lucide-react'
 import { YoutubeLogoIcon as YoutubeLogo } from '@phosphor-icons/react'
@@ -136,6 +137,10 @@ const itemVariants = {
 const ContentCreation = () => {
   return (
     <div className="pt-20 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 bg-background-secondary min-h-screen dot-grid">
+      <Helmet>
+        <title>Content Creation — Soroush Bayanati</title>
+        <meta name="description" content="Soroush Bayanati's content creation work — a football media network spanning 4 YouTube channels with 40,000+ subscribers and 190,000+ Instagram followers." />
+      </Helmet>
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}

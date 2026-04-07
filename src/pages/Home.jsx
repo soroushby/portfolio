@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { motion, useMotionValue, useTransform, useInView, animate } from 'framer-motion'
 import { Code2, Rocket, Users, Briefcase, ArrowRight, Github, Linkedin, Mail, Youtube, MapPin, Trophy, Sparkles } from 'lucide-react'
@@ -223,6 +224,10 @@ const Home = () => {
 
   return (
     <div className="pt-16">
+      <Helmet>
+        <title>Soroush Bayanati — Frontend Developer</title>
+        <meta name="description" content="Soroush Bayanati is a Vancouver-based frontend developer specialising in React 19, Next.js 15, and TypeScript. Explore his portfolio of full-stack web apps and AI-integrated projects." />
+      </Helmet>
       {/* ================================================================
           HERO
           ================================================================ */}
