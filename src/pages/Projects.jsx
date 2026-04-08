@@ -105,7 +105,7 @@ const projects = [
     type: 'Full-Stack SaaS Web Application',
     category: 'Full-Stack',
     featured: true,
-    live: 'https://www.dermionline.com',
+    live: 'https://dermionline.vercel.app/en',
     color: 'from-teal-600/20 to-emerald-600/10',
     accent: 'text-teal-400',
     accentBg: 'bg-teal-500/10 border-teal-500/20',
