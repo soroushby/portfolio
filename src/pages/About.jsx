@@ -112,7 +112,6 @@ const skillCategories = [
     PhosphorIcon: Code,
     color: 'text-cyan-400',
     bg: 'bg-cyan-500/10 border-cyan-500/20',
-    dotColor: 'bg-cyan-400',
     skills: [
       { name: 'React 18/19 + Next.js', desc: 'Modern component patterns, App Router, SSR/SSG', level: 5 },
       { name: 'TypeScript', desc: 'Type safety, interfaces, generics, utility types', level: 4 },
@@ -129,7 +128,6 @@ const skillCategories = [
     PhosphorIcon: Cloud,
     color: 'text-emerald-400',
     bg: 'bg-emerald-500/10 border-emerald-500/20',
-    dotColor: 'bg-emerald-400',
     skills: [
       { name: 'Supabase', desc: 'PostgreSQL database, auth, real-time, storage, and Edge Functions', level: 5 },
       { name: 'Row Level Security', desc: 'Fine-grained database access control policies in PostgreSQL', level: 4 },
@@ -145,7 +143,6 @@ const skillCategories = [
     PhosphorIcon: Robot,
     color: 'text-fuchsia',
     bg: 'bg-fuchsia/10 border-fuchsia/20',
-    dotColor: 'bg-fuchsia',
     skills: [
       { name: 'Anthropic Claude API', desc: 'Prompt engineering, structured outputs, agentic workflows', level: 4 },
       { name: 'ChatGPT + Copilot', desc: 'AI-assisted development and code review', level: 4 },
@@ -158,7 +155,6 @@ const skillCategories = [
     PhosphorIcon: FilmStrip,
     color: 'text-red-400',
     bg: 'bg-red-500/10 border-red-500/20',
-    dotColor: 'bg-red-400',
     skills: [
       { name: 'Adobe Premiere Pro + Final Cut', desc: 'Video editing and post-production', level: 4 },
       { name: 'OBS Studio + StreamYard', desc: 'Live broadcasting and production', level: 4 },

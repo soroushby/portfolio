@@ -212,6 +212,7 @@ const Home = () => {
   const mouseY = useMotionValue(0)
   const heroRef = useRef(null)
   const isTouch = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)
+  const isSafari = typeof window !== 'undefined' && /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
 
   const spotlightX = useTransform(mouseX, [0, 1], ['-10%', '10%'])
   const spotlightY = useTransform(mouseY, [0, 1], ['-10%', '10%'])
@@ -283,8 +284,8 @@ const Home = () => {
           <ParticleCanvas />
         </div>
 
-        {/* 3D floating geometry — desktop non-touch only */}
-        {!isTouch && (
+        {/* 3D floating geometry — desktop non-touch, non-Safari only */}
+        {!isTouch && !isSafari && (
           <div className="hidden md:block absolute inset-0 pointer-events-none">
             <Suspense fallback={null}>
               <HeroScene />
