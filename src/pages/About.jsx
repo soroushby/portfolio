@@ -569,13 +569,14 @@ const About = () => {
           <div ref={skillCardsRef} className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             {skillCategories.map((category, index) => {
               const Icon = category.PhosphorIcon
-              const isFeatured = index === 0 // Frontend spans 2 cols
+              // index 0 = Frontend: 2 cols | index 3 = Content Creation: 2 cols to fill row 2
+              const colSpan2 = index === 0 || index === 3
               return (
                 <div
                   key={index}
                   className={clsx(
-                    'gsap-skill-card modern-card',
-                    isFeatured ? 'lg:col-span-2 self-start' : ''
+                    'gsap-skill-card modern-card self-start',
+                    colSpan2 && 'lg:col-span-2'
                   )}
                 >
                   <h3 className="text-base sm:text-lg font-bold font-mono text-text-primary mb-5 flex items-center gap-2.5">
@@ -585,7 +586,7 @@ const About = () => {
                     <span className={category.color}>{category.category.toLowerCase().replace(/ /g, '_')}</span>
                     <span className="text-text-muted">: &#123;</span>
                   </h3>
-                  <div className={clsx('gap-3 pl-4', isFeatured ? 'grid sm:grid-cols-2' : 'space-y-3')}>
+                  <div className={clsx('gap-3 pl-4', colSpan2 ? 'grid sm:grid-cols-2' : 'space-y-3')}>
                     {category.skills.map((skill, si) => (
                       <motion.div
                         key={si}
