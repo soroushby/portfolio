@@ -566,7 +566,7 @@ const About = () => {
           </motion.div>
 
           {/* Skill categories — bento layout */}
-          <div ref={skillCardsRef} className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div ref={skillCardsRef} className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-start">
             {skillCategories.map((category, index) => {
               const Icon = category.PhosphorIcon
               // index 0 = Frontend: 2 cols | index 3 = Content Creation: 2 cols to fill row 2
