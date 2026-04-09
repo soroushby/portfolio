@@ -211,12 +211,13 @@ const Home = () => {
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   const heroRef = useRef(null)
+  const isTouch = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)
 
   const spotlightX = useTransform(mouseX, [0, 1], ['-10%', '10%'])
   const spotlightY = useTransform(mouseY, [0, 1], ['-10%', '10%'])
 
   const handleMouseMove = (e) => {
-    if (!heroRef.current) return
+    if (isTouch || !heroRef.current) return
     const rect = heroRef.current.getBoundingClientRect()
     mouseX.set((e.clientX - rect.left) / rect.width)
     mouseY.set((e.clientY - rect.top) / rect.height)
@@ -251,43 +252,45 @@ const Home = () => {
           />
         </div>
 
-        {/* Gradient orbs */}
+        {/* Gradient orbs — static on touch, animated on desktop */}
         <GradientOrb
           style={{ width: 580, height: 580, left: '-12%', top: '-12%',
             background: 'radial-gradient(circle, rgba(124, 58, 237, 0.30), transparent 70%)' }}
-          animate={{ x: [0, 60, -30, 0], y: [0, -80, 40, 0], scale: [1, 1.15, 0.95, 1] }}
+          animate={isTouch ? {} : { x: [0, 60, -30, 0], y: [0, -80, 40, 0], scale: [1, 1.15, 0.95, 1] }}
           transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
         />
         <GradientOrb
           style={{ width: 400, height: 400, right: '3%', top: '15%',
             background: 'radial-gradient(circle, rgba(6, 182, 212, 0.22), transparent 70%)' }}
-          animate={{ x: [0, -50, 30, 0], y: [0, 60, -40, 0], scale: [1, 1.1, 0.9, 1] }}
+          animate={isTouch ? {} : { x: [0, -50, 30, 0], y: [0, 60, -40, 0], scale: [1, 1.1, 0.9, 1] }}
           transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
         />
         <GradientOrb
           style={{ width: 300, height: 300, left: '40%', bottom: '8%',
             background: 'radial-gradient(circle, rgba(232, 121, 249, 0.20), transparent 70%)' }}
-          animate={{ x: [0, 40, -20, 0], y: [0, -40, 20, 0], scale: [1, 1.2, 0.85, 1] }}
+          animate={isTouch ? {} : { x: [0, 40, -20, 0], y: [0, -40, 20, 0], scale: [1, 1.2, 0.85, 1] }}
           transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
         />
         <GradientOrb
           style={{ width: 260, height: 260, right: '20%', bottom: '20%',
             background: 'radial-gradient(circle, rgba(139, 92, 246, 0.18), transparent 70%)' }}
-          animate={{ x: [0, -30, 20, 0], y: [0, 30, -50, 0], scale: [1, 1.1, 0.9, 1] }}
+          animate={isTouch ? {} : { x: [0, -30, 20, 0], y: [0, 30, -50, 0], scale: [1, 1.1, 0.9, 1] }}
           transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
         />
 
-        {/* Particle canvas */}
+        {/* Particle canvas — desktop only */}
         <div className="absolute inset-0">
           <ParticleCanvas />
         </div>
 
-        {/* 3D floating geometry — desktop only */}
-        <div className="hidden md:block absolute inset-0 pointer-events-none">
-          <Suspense fallback={null}>
-            <HeroScene />
-          </Suspense>
-        </div>
+        {/* 3D floating geometry — desktop non-touch only */}
+        {!isTouch && (
+          <div className="hidden md:block absolute inset-0 pointer-events-none">
+            <Suspense fallback={null}>
+              <HeroScene />
+            </Suspense>
+          </div>
+        )}
 
         {/* Mouse spotlight */}
         <motion.div

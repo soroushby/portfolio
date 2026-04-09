@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 
-const PARTICLE_COUNT = 70
-const CONNECT_DIST = 130
-const MOUSE_DIST = 160
+const PARTICLE_COUNT = 40
+const CONNECT_DIST = 110
+const MOUSE_DIST = 140
 
 const ParticleCanvas = () => {
   const canvasRef = useRef(null)
@@ -11,13 +11,16 @@ const ParticleCanvas = () => {
   const rafRef = useRef(null)
 
   useEffect(() => {
+    // Skip entirely on touch/mobile — too expensive
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+    if (isTouchDevice) return
+
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
 
     const resize = () => {
       canvas.width = canvas.offsetWidth
       canvas.height = canvas.offsetHeight
-      // Re-scatter particles on resize
       particlesRef.current = Array.from({ length: PARTICLE_COUNT }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -53,13 +56,11 @@ const ParticleCanvas = () => {
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1
 
-        // Draw dot
         ctx.beginPath()
         ctx.arc(p.x, p.y, 1.98, 0, Math.PI * 2)
         ctx.fillStyle = 'rgba(139,92,246,0.55)'
         ctx.fill()
 
-        // Connect particles
         for (let j = i + 1; j < pts.length; j++) {
           const p2 = pts[j]
           const dx = p.x - p2.x
@@ -75,7 +76,6 @@ const ParticleCanvas = () => {
           }
         }
 
-        // Connect to mouse
         const mdx = p.x - mx
         const mdy = p.y - my
         const md = Math.sqrt(mdx * mdx + mdy * mdy)

@@ -579,7 +579,7 @@ const About = () => {
                   key={index}
                   className={clsx(
                     'gsap-skill-card modern-card',
-                    isFeatured && 'lg:col-span-2'
+                    isFeatured ? 'lg:col-span-2 self-start' : ''
                   )}
                 >
                   <h3 className="text-base sm:text-lg font-bold font-mono text-text-primary mb-5 flex items-center gap-2.5">
@@ -603,20 +603,6 @@ const About = () => {
                         <div className="min-w-0 flex-1">
                           <p className="font-semibold font-mono text-text-primary text-xs sm:text-sm">{skill.name}</p>
                           <p className="text-xs text-text-muted mt-0.5 leading-relaxed">{skill.desc}</p>
-                          {/* Skill level dots */}
-                          <div className="flex gap-1 mt-1.5">
-                            {Array.from({ length: 5 }).map((_, di) => (
-                              <div
-                                key={di}
-                                className={clsx(
-                                  'w-1.5 h-1.5 rounded-full transition-all duration-300',
-                                  di < skill.level
-                                    ? clsx(category.dotColor, 'opacity-90')
-                                    : 'bg-text-muted/20'
-                                )}
-                              />
-                            ))}
-                          </div>
                         </div>
                       </motion.div>
                     ))}
