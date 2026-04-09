@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { motion, useMotionValue, useTransform, useInView, animate } from 'framer-motion'
-import { Code2, Rocket, Users, Briefcase, ArrowRight, Github, Linkedin, Mail, Youtube, MapPin, Trophy, Sparkles } from 'lucide-react'
+import { Code2, Rocket, Users, Briefcase, ArrowRight, Github, Linkedin, Mail, Youtube, MapPin, Trophy, Sparkles, ExternalLink } from 'lucide-react'
 import clsx from 'clsx'
 import reactLogo from '../assets/React-icon.svg.png'
 import nextjsLogo from '../assets/nextjs.svg'
@@ -226,7 +226,7 @@ const Home = () => {
     <div className="pt-16">
       <Helmet>
         <title>Soroush Bayanati — Frontend Developer</title>
-        <meta name="description" content="Soroush Bayanati is a Vancouver-based frontend developer specialising in React 19, Next.js 15, and TypeScript. Explore his portfolio of full-stack web apps and AI-integrated projects." />
+        <meta name="description" content="Soroush Bayanati is a Vancouver-based frontend developer specializing in React 19, Next.js 15, and TypeScript. Explore his portfolio of full-stack web apps and AI-integrated projects." />
       </Helmet>
       {/* ================================================================
           HERO
@@ -733,6 +733,121 @@ const Home = () => {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          FEATURED PROJECT
+          ================================================================ */}
+      <section className="py-16 sm:py-24 px-4 sm:px-6 bg-background-secondary tech-grid relative overflow-hidden">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            className="text-center mb-10 sm:mb-14"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="section-label mb-3">Featured Project</p>
+            <h2 className="text-3xl sm:text-4xl font-bold font-mono">
+              <span className="gradient-text">latest</span>
+              <span className="text-text-muted">.work()</span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            className="modern-card !p-0 overflow-hidden"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Top accent bar */}
+            <div className="h-1 w-full bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500" />
+
+            <div className="p-6 sm:p-8 lg:grid lg:grid-cols-2 lg:gap-10 lg:items-center">
+              {/* Left: info */}
+              <div>
+                <div className="flex flex-wrap items-center gap-2 mb-4">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-mono font-semibold rounded-full">
+                    <Sparkles className="w-3 h-3" />
+                    Featured
+                  </span>
+                  <span className="px-3 py-1 glass border border-primary/20 text-text-muted text-xs font-mono rounded-full">Full-Stack SaaS</span>
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-bold font-mono text-text-primary mb-3">
+                  DermIOnline —{' '}
+                  <span className="text-teal-400">Async Dermatology Platform</span>
+                </h3>
+
+                <p className="text-sm sm:text-base text-text-secondary leading-relaxed mb-5">
+                  A live telemedicine platform where patients submit skin photos and a symptom form, and
+                  a certified Swiss dermatologist responds within 48 hours. Built end-to-end with multi-role
+                  auth, Stripe payments, PDF export, and full internationalization in English, French, and German.
+                </p>
+
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {['Next.js 15', 'TypeScript', 'Supabase', 'PostgreSQL', 'Stripe', 'next-intl'].map((tech) => (
+                    <span key={tech} className="px-2.5 py-1 glass border border-teal-500/20 text-teal-400 text-xs font-mono rounded-lg">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href="https://dermionline.vercel.app/en"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="modern-btn text-sm py-2.5 px-5"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    View Live Site
+                  </a>
+                  <button
+                    onClick={() => navigate('/projects')}
+                    className="modern-btn-outline text-sm py-2.5 px-5"
+                  >
+                    All Projects
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Right: browser mockup */}
+              <div className="mt-8 lg:mt-0">
+                <div className="rounded-xl overflow-hidden border border-primary/15 shadow-card bg-background-tertiary">
+                  <div className="flex items-center gap-2 px-3 py-2.5 border-b border-white/5 bg-background-tertiary">
+                    <div className="flex gap-1.5 flex-shrink-0">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
+                    </div>
+                    <div className="flex-1 mx-2 h-5 bg-background-primary/60 rounded border border-white/5 flex items-center justify-center overflow-hidden">
+                      <span className="text-[9px] text-text-muted font-mono truncate px-2">dermionline.vercel.app/en</span>
+                    </div>
+                  </div>
+                  <div className="p-6 bg-gradient-to-br from-teal-500/5 to-transparent min-h-[180px] flex flex-col justify-center">
+                    <div className="space-y-3">
+                      {[
+                        'Multi-role auth (patient, doctor, admin)',
+                        'Stripe payment integration',
+                        'Secure photo uploads + PDF export',
+                        'GDPR & Swiss MedBG compliant',
+                        'i18n: English, French, German',
+                      ].map((feat) => (
+                        <div key={feat} className="flex items-center gap-2.5">
+                          <div className="w-1.5 h-1.5 rounded-full bg-teal-400 flex-shrink-0" />
+                          <span className="text-xs text-text-secondary font-mono">{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
