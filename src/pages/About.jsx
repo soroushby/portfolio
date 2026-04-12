@@ -113,41 +113,14 @@ const skillCategories = [
     color: 'text-cyan-400',
     bg: 'bg-cyan-500/10 border-cyan-500/20',
     skills: [
-      { name: 'React 18/19 + Next.js', desc: 'Modern component patterns, App Router, SSR/SSG', level: 5 },
-      { name: 'TypeScript', desc: 'Type safety, interfaces, generics, utility types', level: 4 },
-      { name: 'Remix', desc: 'Full-stack React, nested routing, server actions', level: 3 },
-      { name: 'Tailwind CSS + shadcn/ui', desc: 'Utility-first styling, accessible components', level: 5 },
-      { name: 'GSAP + Framer Motion', desc: 'Scroll animations, transitions, physics', level: 4 },
-      { name: 'Angular + RxJS', desc: 'Enterprise SPA with Material UI', level: 3 },
-      { name: 'Framer Motion', desc: 'Production animations and micro-interactions for React applications', level: 4 },
-      { name: 'next-intl', desc: 'Full internationalization (i18n) with URL-based locale routing for Next.js', level: 4 },
-    ],
-  },
-  {
-    category: 'Backend & Infrastructure',
-    PhosphorIcon: Cloud,
-    color: 'text-emerald-400',
-    bg: 'bg-emerald-500/10 border-emerald-500/20',
-    skills: [
-      { name: 'Supabase', desc: 'PostgreSQL database, auth, real-time, storage, and Edge Functions', level: 5 },
-      { name: 'Row Level Security', desc: 'Fine-grained database access control policies in PostgreSQL', level: 4 },
-      { name: 'Stripe', desc: 'Payment processing, webhook handling, and server-side checkout sessions', level: 4 },
-      { name: 'Resend', desc: 'Transactional email delivery for user notifications', level: 4 },
-      { name: 'Twilio WhatsApp API', desc: 'Automated WhatsApp notifications for real-time doctor alerts', level: 3 },
-      { name: 'Vercel', desc: 'Serverless deployment, CI/CD, and edge functions for Next.js apps', level: 5 },
-      { name: 'Next.js Server Actions', desc: 'Form submissions and mutations without separate API routes', level: 4 },
-    ],
-  },
-  {
-    category: 'AI & Tools',
-    PhosphorIcon: Robot,
-    color: 'text-fuchsia',
-    bg: 'bg-fuchsia/10 border-fuchsia/20',
-    skills: [
-      { name: 'Anthropic Claude API', desc: 'Prompt engineering, structured outputs, agentic workflows', level: 4 },
-      { name: 'ChatGPT + Copilot', desc: 'AI-assisted development and code review', level: 4 },
-      { name: 'Vite + Git/GitHub + Vercel', desc: 'Modern build tooling and CI/CD', level: 5 },
-      { name: 'Figma', desc: 'UI/UX design, prototyping, design systems', level: 3 },
+      { name: 'React 18/19 + Next.js', desc: 'Modern component patterns, App Router, SSR/SSG' },
+      { name: 'TypeScript', desc: 'Type safety, interfaces, generics, utility types' },
+      { name: 'Remix', desc: 'Full-stack React, nested routing, server actions' },
+      { name: 'Tailwind CSS + shadcn/ui', desc: 'Utility-first styling, accessible components' },
+      { name: 'GSAP + Framer Motion', desc: 'Scroll animations, transitions, physics' },
+      { name: 'Angular + RxJS', desc: 'Enterprise SPA with Material UI' },
+      { name: 'Framer Motion', desc: 'Production animations and micro-interactions for React applications' },
+      { name: 'next-intl', desc: 'Full internationalization (i18n) with URL-based locale routing for Next.js' },
     ],
   },
   {
@@ -156,10 +129,37 @@ const skillCategories = [
     color: 'text-red-400',
     bg: 'bg-red-500/10 border-red-500/20',
     skills: [
-      { name: 'Adobe Premiere Pro + Final Cut', desc: 'Video editing and post-production', level: 4 },
-      { name: 'OBS Studio + StreamYard', desc: 'Live broadcasting and production', level: 4 },
-      { name: 'YouTube Studio + VidIQ', desc: 'Channel management, SEO, analytics', level: 5 },
-      { name: 'Social Media Strategy', desc: 'Multi-platform growth to 230K+ followers', level: 5 },
+      { name: 'Adobe Premiere Pro + Final Cut', desc: 'Video editing and post-production' },
+      { name: 'OBS Studio + StreamYard', desc: 'Live broadcasting and production' },
+      { name: 'YouTube Studio + VidIQ', desc: 'Channel management, SEO, analytics' },
+      { name: 'Social Media Strategy', desc: 'Multi-platform growth to 230K+ followers' },
+    ],
+  },
+  {
+    category: 'Backend & Infrastructure',
+    PhosphorIcon: Cloud,
+    color: 'text-emerald-400',
+    bg: 'bg-emerald-500/10 border-emerald-500/20',
+    skills: [
+      { name: 'Supabase', desc: 'PostgreSQL database, auth, real-time, storage, and Edge Functions' },
+      { name: 'Row Level Security', desc: 'Fine-grained database access control policies in PostgreSQL' },
+      { name: 'Stripe', desc: 'Payment processing, webhook handling, and server-side checkout sessions' },
+      { name: 'Resend', desc: 'Transactional email delivery for user notifications' },
+      { name: 'Twilio WhatsApp API', desc: 'Automated WhatsApp notifications for real-time doctor alerts' },
+      { name: 'Vercel', desc: 'Serverless deployment, CI/CD, and edge functions for Next.js apps' },
+      { name: 'Next.js Server Actions', desc: 'Form submissions and mutations without separate API routes' },
+    ],
+  },
+  {
+    category: 'AI & Tools',
+    PhosphorIcon: Robot,
+    color: 'text-fuchsia',
+    bg: 'bg-fuchsia/10 border-fuchsia/20',
+    skills: [
+      { name: 'Anthropic Claude API', desc: 'Prompt engineering, structured outputs, agentic workflows' },
+      { name: 'ChatGPT + Copilot', desc: 'AI-assisted development and code review' },
+      { name: 'Vite + Git/GitHub + Vercel', desc: 'Modern build tooling and CI/CD' },
+      { name: 'Figma', desc: 'UI/UX design, prototyping, design systems' },
     ],
   },
 ]
@@ -569,8 +569,10 @@ const About = () => {
           <div ref={skillCardsRef} className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-start">
             {skillCategories.map((category, index) => {
               const Icon = category.PhosphorIcon
-              // index 0 = Frontend: 2 cols | index 3 = Content Creation: 2 cols to fill row 2
-              const colSpan2 = index === 0 || index === 3
+              // Row 1: Frontend(2) + ContentCreation(1) | Row 2: Backend(2) + AI(1 horizontal)
+              const colSpan2 = index === 0 || index === 2
+              // AI card (index 3): 2-col inner grid to fill horizontally
+              const innerGrid = colSpan2 ? 'grid sm:grid-cols-2' : index === 3 ? 'grid grid-cols-2' : 'space-y-3'
               return (
                 <div
                   key={index}
@@ -586,7 +588,7 @@ const About = () => {
                     <span className={category.color}>{category.category.toLowerCase().replace(/ /g, '_')}</span>
                     <span className="text-text-muted">: &#123;</span>
                   </h3>
-                  <div className={clsx('gap-3 pl-4', colSpan2 ? 'grid sm:grid-cols-2' : 'space-y-3')}>
+                  <div className={clsx('gap-3 pl-4', innerGrid)}>
                     {category.skills.map((skill, si) => (
                       <motion.div
                         key={si}
