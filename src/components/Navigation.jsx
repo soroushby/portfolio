@@ -9,7 +9,7 @@ import { useTheme } from '../contexts/ThemeContext'
 const navItems = [
   { path: '/', label: 'Home' },
   { path: '/projects', label: 'Projects' },
-  { path: '/content-creation', label: 'Content' },
+  { path: '/content-creation', label: 'Beyond Code' },
   { path: '/about', label: 'About' },
   { path: '/contact', label: 'Contact' },
 ]
