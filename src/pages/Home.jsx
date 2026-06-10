@@ -786,9 +786,10 @@ const Home = () => {
                 </h3>
 
                 <p className="text-sm sm:text-base text-text-secondary leading-relaxed mb-5">
-                  A live telemedicine platform where patients submit skin photos and a symptom form, and
-                  a certified Swiss dermatologist responds within 48 hours. Built end-to-end with multi-role
-                  auth, Stripe payments, PDF export, and full internationalization in English, French, and German.
+                  A live telemedicine platform where patients submit skin photos and a structured symptom form,
+                  and a certified Swiss dermatologist responds within 48 hours. Built end-to-end with multi-role
+                  auth, Stripe payments with server-side verification, secure photo uploads, PDF export, and full
+                  internationalization in English, French, and German. Swiss MedBG &amp; GDPR compliant.
                 </p>
 
                 <div className="flex flex-wrap gap-1.5 mb-6">
@@ -801,7 +802,7 @@ const Home = () => {
 
                 <div className="flex flex-wrap gap-3">
                   <a
-                    href="https://dermionline.vercel.app/en"
+                    href="https://dermionline.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="modern-btn text-sm py-2.5 px-5"
@@ -829,7 +830,7 @@ const Home = () => {
                       <div className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
                     </div>
                     <div className="flex-1 mx-2 h-5 bg-background-primary/60 rounded border border-white/5 flex items-center justify-center overflow-hidden">
-                      <span className="text-[9px] text-text-muted font-mono truncate px-2">dermionline.vercel.app/en</span>
+                      <span className="text-[9px] text-text-muted font-mono truncate px-2">dermionline.com</span>
                     </div>
                   </div>
                   <div className="p-6 bg-gradient-to-br from-teal-500/5 to-transparent min-h-[180px] flex flex-col justify-center">
